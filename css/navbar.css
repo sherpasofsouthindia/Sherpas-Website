@@ -1,1 +1,70 @@
+.navbar{
 
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:9999;
+
+    background:rgba(10,15,30,.82);
+
+    backdrop-filter:blur(12px);
+
+    padding:18px 45px;
+
+}
+
+.logo{
+
+    height:80px;
+
+    transition:.3s;
+
+}
+
+.logo:hover{
+
+    transform:scale(1.05);
+
+}
+
+.nav-link{
+
+    color:white !important;
+
+    margin-left:20px;
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:#FBBF24 !important;
+
+}
+
+.btn-member{
+
+    background:#F97316;
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:10px 22px;
+
+    font-weight:600;
+
+}
+
+.btn-member:hover{
+
+    background:#ea580c;
+
+    color:white;
+
+}
