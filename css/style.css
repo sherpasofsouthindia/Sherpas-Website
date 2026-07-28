@@ -1,1 +1,59 @@
-Sstyle
+*{
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f8f9fa;
+    overflow-x:hidden;
+}
+
+.hero-content h1{
+    animation:fadeDown 1s ease;
+}
+
+.hero-content h3,
+.hero-content p,
+.hero-buttons{
+    animation:fadeUp 1.4s ease;
+}
+
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes bounce{
+    0%,20%,50%,80%,100%{
+        transform:translate(-50%,0);
+    }
+    40%{
+        transform:translate(-50%,-10px);
+    }
+    60%{
+        transform:translate(-50%,-5px);
+    }
+}
