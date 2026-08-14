@@ -1,0 +1,1095 @@
+/*====================================================
+SHERPAS MEMBERSHIP APPLICATION
+====================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:
+    linear-gradient(
+        rgba(7,12,20,.88),
+        rgba(7,12,20,.88)
+    ),
+    url("../assets/hero-bike.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:#ffffff;
+
+}
+
+/*====================================================
+NAVBAR
+====================================================*/
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:78px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 35px;
+
+    background:#101826;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    z-index:9999;
+
+}
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    cursor:pointer;
+
+}
+
+.logo img{
+
+    height:55px;
+    width:auto;
+
+}
+
+.logo span{
+
+    color:#ffffff;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+/*====================================================
+MAIN CONTAINER
+====================================================*/
+
+.container{
+
+    width:100%;
+    max-width:1350px;
+
+    margin:110px auto 50px;
+
+    padding:0 25px;
+
+}
+
+.content{
+
+    width:100%;
+
+}
+
+/*====================================================
+PAGE TITLE
+====================================================*/
+
+.page-title{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+.page-title h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.page-title p{
+
+    color:#b7c3d8;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+}
+
+/*====================================================
+PROGRESS
+====================================================*/
+
+.progress-card{
+
+    background:rgba(20,30,48,.90);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    margin-bottom:30px;
+
+    backdrop-filter:blur(14px);
+
+}
+
+.progress-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+.progress-header span{
+
+    font-weight:600;
+
+    color:#ffffff;
+
+}
+
+.progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:#243246;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+}
+
+.progress-fill{
+
+    width:8%;
+
+    height:100%;
+
+    background:#F97316;
+
+    transition:.4s;
+
+}
+
+/*====================================================
+FORM SECTIONS
+====================================================*/
+
+.section{
+
+    display:none;
+
+    background:rgba(22,33,52,.92);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:18px;
+
+    padding:30px;
+
+    margin-bottom:25px;
+
+    backdrop-filter:blur(16px);
+
+}
+
+.section.active-step{
+
+    display:block;
+
+    animation:fadeSlide .35s;
+
+}
+
+.section h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:#F97316;
+
+    font-size:28px;
+
+    margin-bottom:25px;
+
+}
+
+.section-number{
+
+    display:none;
+
+}
+
+/*====================================================
+GRID
+====================================================*/
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:22px;
+
+}
+
+.full{
+
+    grid-column:1 / span 2;
+
+}
+
+/*====================================================
+FIELDS
+====================================================*/
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#d7dce6;
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    background:#0e1727;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    color:#ffffff;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:#F97316;
+
+    box-shadow:0 0 15px rgba(249,115,22,.25);
+
+}
+
+#vehiclereg,
+#license{
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    font-weight:600;
+
+}
+
+/*====================================================
+WIZARD BUTTONS
+====================================================*/
+
+.wizard-buttons{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:35px;
+
+}
+
+.next-btn,
+.prev-btn{
+
+    background:#F97316;
+
+    color:#ffffff;
+
+    border:none;
+
+    padding:14px 30px;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.next-btn:hover,
+.prev-btn:hover{
+
+    background:#EA580C;
+
+    transform:translateY(-2px);
+
+}
+
+.next-btn:disabled,
+.prev-btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+/*====================================================
+PHOTO UPLOAD
+====================================================*/
+
+.photo-upload-container{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:25px;
+
+}
+
+#photoPreview{
+
+    width:230px;
+
+    height:230px;
+
+    border-radius:50%;
+
+    border:4px dashed #F97316;
+
+    background:#0e1727;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+}
+
+#photoPreview img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+#photoPreview i{
+
+    font-size:75px;
+
+    color:#64748b;
+
+}
+
+.upload-btn{
+
+    background:#F97316;
+
+    color:#ffffff;
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.upload-btn:hover{
+
+    background:#EA580C;
+
+}
+
+.photo-note,
+.photo-file-name{
+
+    margin-top:15px;
+
+    color:#94a3b8;
+
+    text-align:center;
+
+}
+
+/*====================================================
+SIGNATURE
+====================================================*/
+
+.signature-wrapper{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+#signature-pad{
+
+    width:100%;
+
+    max-width:900px;
+
+    height:250px;
+
+    background:#ffffff;
+
+    border:3px dashed #F97316;
+
+    border-radius:14px;
+
+    cursor:crosshair;
+
+}
+
+.signature-actions{
+
+    margin-top:20px;
+
+}
+
+.clear-signature{
+
+    background:#dc3545;
+
+    color:#ffffff;
+
+    border:none;
+
+    padding:12px 28px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.clear-signature:hover{
+
+    background:#b91c1c;
+
+}
+
+/*====================================================
+PAYMENT
+====================================================*/
+
+.payment-card{
+
+    display:grid;
+
+    grid-template-columns:1fr 260px;
+
+    gap:35px;
+
+    align-items:center;
+
+}
+
+.payment-left h3{
+
+    margin-bottom:8px;
+
+}
+
+.payment-left h1{
+
+    font-size:50px;
+
+    color:#F97316;
+
+    margin-bottom:15px;
+
+}
+
+.payment-details{
+
+    margin-top:20px;
+
+}
+
+.payment-details p{
+
+    margin-top:15px;
+
+    font-weight:600;
+
+}
+
+.payment-details span{
+
+    color:#cbd5e1;
+
+}
+
+.payment-right{
+
+    text-align:center;
+
+}
+
+.payment-qr{
+
+    width:220px;
+
+    background:#ffffff;
+
+    padding:10px;
+
+    border-radius:12px;
+
+}
+
+.upload-payment{
+
+    margin-top:35px;
+
+    text-align:center;
+
+}
+
+.payment-preview{
+
+    display:block;
+
+    margin:20px auto 0;
+
+    width:220px;
+
+    border-radius:12px;
+
+    border:3px solid #F97316;
+
+}
+
+/*====================================================
+DECLARATION
+====================================================*/
+
+.checkbox-container{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+    line-height:1.8;
+
+    color:#d6dce8;
+
+}
+
+.checkbox-container input{
+
+    width:20px;
+
+    height:20px;
+
+    margin-top:4px;
+
+}
+
+.submit-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    margin-top:40px;
+
+}
+
+.btn-primary,
+.btn-secondary{
+
+    border:none;
+
+    padding:15px 40px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.btn-primary{
+
+    background:#F97316;
+
+    color:#ffffff;
+
+}
+
+.btn-primary:hover{
+
+    background:#EA580C;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-secondary{
+
+    background:#475569;
+
+    color:#ffffff;
+
+}
+
+.btn-secondary:hover{
+
+    background:#64748b;
+
+}
+
+/*====================================================
+FOOTER
+====================================================*/
+
+.footer{
+
+    margin-top:60px;
+
+    padding:40px 20px;
+
+    background:#101826;
+
+    text-align:center;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.footer h3{
+
+    color:#F97316;
+
+    margin-bottom:15px;
+
+}
+
+.social-icons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.social-icons a{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    background:#1f2937;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.social-icons a:hover{
+
+    background:#F97316;
+
+    transform:translateY(-3px);
+
+}
+
+.copyright{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+}
+
+/*====================================================
+MEMBER INFO CARD
+====================================================*/
+
+.member-info-card{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+}
+
+.info-box{
+
+    background:#0e1727;
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:12px;
+
+    padding:18px;
+
+}
+
+.info-box label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    color:#94a3b8;
+
+}
+
+.info-box input{
+
+    width:100%;
+
+    background:transparent;
+
+    border:none;
+
+    color:#F97316;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    pointer-events:none;
+
+}
+
+/*====================================================
+ANIMATION
+====================================================*/
+
+@keyframes fadeSlide{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/*====================================================
+SCROLLBAR
+====================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#111827;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#F97316;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#EA580C;
+
+}
+
+/*====================================================
+RESPONSIVE
+====================================================*/
+
+@media(max-width:992px){
+
+    .container{
+
+        margin-top:100px;
+
+        padding:0 20px;
+
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .full{
+
+        grid-column:1;
+
+    }
+
+    .payment-card{
+
+        grid-template-columns:1fr;
+
+        text-align:center;
+
+    }
+
+    .payment-right{
+
+        order:-1;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .navbar{
+
+        height:70px;
+
+        padding:0 20px;
+
+    }
+
+    .logo span{
+
+        font-size:18px;
+
+    }
+
+    .logo img{
+
+        height:45px;
+
+    }
+
+    .page-title h1{
+
+        font-size:32px;
+
+    }
+
+    .page-title p{
+
+        font-size:15px;
+
+    }
+
+    .section{
+
+        padding:20px;
+
+    }
+
+    .section h2{
+
+        font-size:22px;
+
+    }
+
+    .wizard-buttons{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    .next-btn,
+    .prev-btn{
+
+        width:100%;
+
+    }
+
+    #photoPreview{
+
+        width:180px;
+
+        height:180px;
+
+    }
+
+    .payment-qr{
+
+        width:180px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .logo span{
+
+        display:none;
+
+    }
+
+    .page-title{
+
+        margin-bottom:25px;
+
+    }
+
+    .page-title h1{
+
+        font-size:28px;
+
+    }
+
+    .progress-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:8px;
+
+    }
+
+}

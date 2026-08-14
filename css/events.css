@@ -1,0 +1,439 @@
+/*==========================================
+        UPCOMING EVENTS
+==========================================*/
+
+.events{
+
+    background:#0e1629;
+
+    padding:60px 7%;
+
+}
+
+.events-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,280px));
+
+    justify-content:center;
+
+    gap:25px;
+
+    margin-top:30px;
+
+}
+
+.event-card{
+
+    background:#1f2937;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.4s;
+
+    position:relative;
+
+    cursor:pointer;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.28);
+
+}
+
+.event-card:hover{
+
+    transform:translateY(-10px) scale(1.02);
+
+    box-shadow:0 25px 60px rgba(249,115,22,.30);
+
+    border-color:#F97316;
+
+}
+
+.event-image{
+
+    height:300px;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.event-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+.event-card:hover .event-image img{
+
+    transform:scale(1.08);
+
+}
+
+.event-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.event-image::after{
+
+    content:"View Poster";
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    opacity:0;
+
+    transition:.3s;
+
+}
+
+.event-card:hover .event-image::after{
+
+    opacity:1;
+
+}
+
+.event-category{
+
+    position:absolute;
+
+    top:18px;
+
+    left:18px;
+
+    z-index:5;
+
+    background:#F97316;
+
+    color:#fff;
+
+    padding:8px 18px;
+
+    border-radius:40px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.event-body{
+
+     padding:10px 14px;
+
+}
+
+.event-date{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:#293548;
+
+    color:#FDBA21;
+
+    padding:6px 10px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    margin-bottom:18px;
+
+}
+
+.event-title{
+
+    font-size:16x;
+
+    color:#fff;
+
+    font-weight:700;
+
+    line-height:1;
+
+    margin-bottom:6px 0;
+
+}
+
+.event-meta{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+}
+
+.event-meta div{
+
+    color:#cbd5e1;
+
+}
+
+.event-meta i{
+
+    width:24px;
+
+    color:#F97316;
+
+}
+
+.event-desc{
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+    margin-bottom:25px;
+
+    min-height:85px;
+
+}
+
+.event-btn{
+
+    display:block;
+
+    text-align:center;
+
+    background:#F97316;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:10px;
+
+    font-size:15px;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.event-btn:hover{
+
+    background:#ea580c;
+
+    letter-spacing:.5px;
+
+}
+
+.loading-events{
+
+    grid-column:1/-1;
+
+    text-align:center;
+
+    color:#cbd5e1;
+
+    font-size:22px;
+
+    padding:80px;
+
+}
+
+/*==========================
+      POSTER POPUP
+==========================*/
+
+.poster-modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.92);
+
+    z-index:99999;
+
+    justify-content:center;
+
+    align-items:center;
+
+    animation:fadeIn .3s;
+
+}
+
+.poster-modal img{
+
+    max-width:90%;
+
+    max-height:92vh;
+
+    border-radius:15px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.5);
+
+    animation:zoomIn .35s;
+
+}
+
+.close-poster{
+
+    position:absolute;
+
+    top:25px;
+
+    right:35px;
+
+    color:white;
+
+    font-size:50px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.close-poster:hover{
+
+    color:#F97316;
+
+    transform:rotate(90deg);
+
+}
+
+@keyframes zoomIn{
+
+from{
+
+transform:scale(.7);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.events{
+
+padding:90px 20px;
+
+}
+
+.events-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+/*========================================
+        POSTER MODAL
+========================================*/
+
+#posterModal {
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*========================================
+        POSTER IMAGE
+========================================*/
+
+#posterImage {
+
+    max-width: 90vw;
+    max-height: 90vh;
+
+    object-fit: contain;
+
+    transition:
+        transform 0.1s ease;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    transform-origin:
+        center center;
+
+    cursor: zoom-in;
+
+}
+
+
+/*
+Allow enlarged poster to be viewed
+*/
+
+#posterModal .poster-container {
+
+    
+    max-width: 95vw;
+    max-height: 95vh;
+
+}
+

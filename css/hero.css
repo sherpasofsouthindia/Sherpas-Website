@@ -1,64 +1,82 @@
 .hero{
 
     height:100vh;
-
     position:relative;
+    overflow:hidden;
 
     background-image:url("../assets/hero1.png");
-
     background-size:cover;
-
     background-position:center;
-
     background-repeat:no-repeat;
 
-    transition:background-image 1s ease-in-out;
+    animation:kenburns 10s ease-in-out infinite alternate;
 
+    transition:background-image 1.2s ease-in-out;
 }
 
 .overlay{
 
     position:absolute;
-
     inset:0;
 
-    background:linear-gradient(
-
-    rgba(0,0,0,.60),
-
-    rgba(0,0,0,.35),
-
-    rgba(0,0,0,.60)
-
-    );
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.72),
+        rgba(0,0,0,.45),            
+        rgba(0,0,0,.72)
+    );
 
 }
 
 .hero-content{
 
+    width:900px;
+    max-width:90%;
+
+    padding:60px;
+
     text-align:center;
 
-    color:white;
+    border-radius:30px;
+
+    background:rgba(10,20,35,.35);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
 
 }
 
 .hero-content h1{
 
     font-size:72px;
-
     font-weight:800;
+
+    line-height:1.05;
 
     letter-spacing:2px;
 
-    text-transform:uppercase;
+    color:white;
 
-    margin-bottom:20px;
+    margin-bottom:30px;
+
+}
+
+.hero-content h2{
+
+    color:#FDBA21;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
 
 }
 
@@ -76,9 +94,11 @@
 
 .hero-content p{
 
-    font-size:24px;
+    color:white;
 
-    margin-bottom:40px;
+    font-size:22px;
+
+    margin-bottom:45px;
 
 }
 
@@ -131,5 +151,69 @@
     font-size:32px;
 
     animation:bounce 2s infinite;
+
+}
+
+@keyframes kenburns{
+
+    from{
+        background-size:100%;
+        background-position:center;
+    }
+
+    to{
+        background-size:112%;
+        background-position:center;
+    }
+
+}
+
+.btn-primary,
+.btn-secondary{
+
+    transition:.35s;
+
+}
+
+.btn-primary:hover,
+.btn-secondary:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+
+}
+
+.scroll-down{
+
+    position:absolute;
+
+    bottom:30px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    color:white;
+
+    font-size:34px;
+
+    animation:bounce 2s infinite;
+
+}
+
+@keyframes bounce{
+
+    0%,20%,50%,80%,100%{
+        transform:translate(-50%,0);
+    }
+
+    40%{
+        transform:translate(-50%,-10px);
+    }
+
+    60%{
+        transform:translate(-50%,-5px);
+    }
 
 }

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Member | Sherpas Admin</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/member-form.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <img src="assets/logo.png" class="logo">
+
+        <h2>SHERPAS</h2>
+
+        <p>Ride • Explore • Conquer</p>
+
+        <nav>
+
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+
+            <a href="members.html"><i class="fa-solid fa-users"></i> Members</a>
+
+            <a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events & Rides</a>
+
+            <a href="gallery.html"><i class="fa-solid fa-image"></i> Gallery</a>
+
+            <a href="messages.html"><i class="fa-solid fa-envelope"></i> Messages</a>
+
+            <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+            <a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+
+        </nav>
+
+    </aside>
+
+    <!-- Content -->
+
+    <main class="content">
+
+        <div class="page-title">
+
+            <div>
+
+                <h1>Edit Member</h1>
+
+                <p>Update member information</p>
+
+            </div>
+
+            <a href="members.html" class="back-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+        <!-- FORM START -->
+
+
+        <form id="memberForm" novalidate>
+
+            <div class="member-info-card">
+
+                <div class="info-box">
+                    <label>Membership ID</label>
+                    <input id="memberID" readonly>
+                </div>
+
+                <div class="info-box">
+                    <label>Application Date</label>
+                    <input id="applicationDateView" readonly>
+                </div>
+
+                <div class="info-box">
+                    <label>Status</label>
+                    <input id="memberStatus" readonly>
+                </div>
+
+            </div>
+
+            
+            <!-- ==========================
+                PERSONAL INFORMATION
+            =========================== -->
+
+            <div class="section" id="step1">
+
+                <div class="section-header">
+
+                    <h2>
+
+                    <span class="section-number">01</span>
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    Personal Information
+
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+
+                            <label>Full Name *</label>
+
+                            <input
+                                type="text"
+                                id="fullname"
+                                name="fullname"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Date of Birth *</label>
+
+                            <input
+                                type="date"
+                                id="dob"
+                                name="dob"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Gender *</label>
+
+                            <select
+                                id="gender"
+                                name="gender"
+                                required>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Marital Status</label>
+
+                            <select
+                                id="maritalstatus"
+                                name="maritalstatus">
+                            </select>
+
+                        </div>
+
+                        <div class="form-group full">
+
+                            <label>Aadhaar Number</label>
+
+                            <input
+                                type="text"
+                                id="aadhaar"
+                                name="aadhaar"
+                                maxlength="12"
+                                placeholder="123412341234">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Blood Group *</label>
+
+                            <select
+                                id="bloodgroup"
+                                name="bloodgroup"
+                                required>
+
+                                <option value="">Select</option>
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Father Name</label>
+
+                            <input
+                                type="text"
+                                id="fathername"
+                                name="father">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Mother Name</label>
+
+                            <input
+                                type="text"
+                                id="mothername"
+                                name="mother">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>                                              
+            </div>
+
+
+            <!-- ==========================
+                HEALTH INFORMATION
+            =========================== -->
+
+            <div class="section" id="step2">
+
+                <div class="section-header">
+
+                    <h2>
+
+                    <span class="section-number">02</span>
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    Health Information
+
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Any Health Issues?</label>
+
+                            <select
+                                name="healthissues"
+                                id="healthissues">
+
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+
+                            </select>
+
+                        </div>
+
+                        <div
+                            class="form-group full"
+                            id="healthDetailsBox"
+                            style="display:none;">
+
+                            <label>If Yes, Mention Details</label>
+
+                            <textarea
+                                id="healthDetails"
+                                name="healthdetails"
+                                rows="4"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================
+                CONTACT INFORMATION
+            =========================== -->
+
+            <div class="section" id="step3">
+
+                <div class="section-header">
+
+                    <h2>
+
+                    <span class="section-number">03</span>
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    Contact Information
+
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Phone Number *</label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                maxlength="10"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Email ID *</label>
+
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                required>
+
+                        </div>
+
+                        <div class="form-group full">
+
+                            <label>Address *</label>
+
+                            <textarea
+                                id="address"
+                                name="address"
+                                rows="3"
+                                required></textarea>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>State *</label>
+
+                            <select
+                                id="state"
+                                name="state"
+                                required>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>District *</label>
+
+                            <select
+                                id="district"
+                                name="district"
+                                required>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>PIN Code</label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                name="pincode"
+                                maxlength="6">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+            </div>
+
+            <!-- ==========================
+                VEHICLE INFORMATION
+            =========================== -->
+
+            <div class="section" id="step4">
+
+                <div class="section-header">
+
+                    <h2>
+
+                    <span class="section-number">04</span>
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    Vehicle Information
+
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Motorcycle</label>
+
+                            <select
+                                id="motorcyclemodel"
+                                name="motorcyclemodel">
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Vehicle Colour / Variant</label>
+
+                            <select
+                                id="vehiclevariant"
+                                name="vehiclevariant">
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Engine Number</label>
+
+                            <input
+                                type="text"
+                                id="enginenumber"
+                                name="enginenumber">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Chassis Number</label>
+
+                            <input
+                                type="text"
+                                id="chassisnumber"
+                                name="chassisnumber">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Registration Number *</label>
+
+                            <input
+                                id="vehiclereg"
+                                type="text"
+                                name="vehiclereg"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Driving Licence Number *</label>
+
+                            <input
+                                id="license"
+                                type="text"
+                                name="license"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Profession / Occupation</label>
+
+                            <input
+                                id="working"
+                                type="text"
+                                name="working">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================
+                RIDING CLUB INFORMATION
+            =========================== -->
+
+            <div class="section" id="step5">
+
+                <div class="section-header">
+
+                    <h2>
+
+                    <span class="section-number">05</span>
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    Riding Club Information
+
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Member of Any Other Rider Club?</label>
+
+                            <select
+                                name="otherclub"
+                                id="otherclub">
+
+                                <option>No</option>
+                                <option>Yes</option>
+
+                            </select>
+
+                        </div>
+
+                        <div
+                            class="form-group full"
+                            id="otherClubBox"
+                            style="display:none;">
+
+                            <label>Club Name</label>
+
+                            <input
+                                id="clubdetails"
+                                type="text"
+                                name="otherclubdetails">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Holding Any Official Post?</label>
+
+                            <select
+                                name="officialpost"
+                                id="officialpost">
+
+                                <option>No</option>
+                                <option>Yes</option>
+
+                            </select>
+
+                        </div>
+
+                        <div
+                            class="form-group full"
+                            id="officialPostBox"
+                            style="display:none;">
+
+                            <label>Official Position</label>
+
+                            <input
+                                id="officialdetails"
+                                type="text"
+                                name="officialpostdetails">
+
+                        </div>
+
+                        <div class="form-group full">
+
+                            <label>Instagram  ID</label>
+
+                            <input
+                                id="socialmedia"
+                                type="text"
+                                name="social">
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- 07 EMERGENCY CONTACT -->
+            <!-- ========================================= -->
+
+            <div class="section" id="step6">
+
+                <div class="section-header">
+
+                    <h2>
+                        <span class="section-number">06</span>
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Emergency Contact
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Emergency Contact 1 *</label>
+
+                            <input
+                                type="text"
+                                name="emergency1"
+                                id="emergency1"
+                                placeholder="Primary Emergency Contact"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Relationship</label>
+
+                            <input
+                                type="text"
+                                name="relationship1"
+                                id="relationship1"
+                                placeholder="Father / Mother / Wife / Husband / Friend">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Emergency Contact 2</label>
+
+                            <input
+                                type="text"
+                                name="emergency2"
+                                id="emergency2"
+                                placeholder="Secondary Emergency Contact">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Relationship</label>
+
+                            <input
+                                type="text"
+                                name="relationship2"
+                                id="relationship2"
+                                placeholder="Relationship">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- 08 ACCIDENT HISTORY -->
+            <!-- ========================================= -->
+
+            <div class="section" id="step7">
+
+                <div class="section-header">
+
+                    <h2>
+                        <span class="section-number">07</span>
+                        <i class="fa-solid fa-car-burst"></i>
+                        Accident History
+                    </h2>
+
+                   
+                </div>
+
+                <div class="section-content">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Any Accident History?</label>
+
+                            <select
+                                name="accidentHistory"
+                                id="accidentHistory">
+
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="form-group"
+                        id="accidentDetailsBox"
+                        style="display:none; margin-top:20px;">
+
+                        <label>Accident Details</label>
+
+                        <textarea
+                            id="accidentDetails"
+                            name="accidentdetails"
+                            rows="5"
+                            placeholder="Mention accident history, injuries, surgery, recovery etc."></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- 09 MEMBER PHOTO -->
+            <!-- ========================================= -->
+
+            <div class="section" id="step8">
+
+                <div class="section-header">
+
+                    <h2>
+                        <span class="section-number">08</span>
+                        <i class="fa-solid fa-camera"></i>
+                        Member Photo
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="photo-upload-container">
+
+                        <div id="photoPreview" class="photo-placeholder">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+                        <label class="upload-btn">
+
+                            <i class="fa-solid fa-upload"></i>
+
+                            Replace  Photo
+
+                            <input
+                                type="file"
+                                id="photo"
+                                accept="image/*"
+                                hidden>
+
+                        </label>
+
+                        <p class="photo-note">
+
+                            Upload Passport Size Photo (JPG / PNG)
+
+                        </p>
+
+                        <p id="photoFileName" class="photo-file-name">No file selected</p>
+
+                    </div>
+
+                </div>
+
+                <div class="wizard-buttons">
+
+                <button
+                type="button"
+                class="prev-btn">
+
+                ← Previous
+
+                </button>
+
+                <button
+                type="button"
+                class="next-btn">
+
+                Next →
+
+                </button>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- 09 DIGITAL SIGNATURE -->
+            <!-- ========================================= -->
+
+            <div class="section" id="step9">
+
+                <div class="section-header">
+
+                    <h2>
+                        <span class="section-number">09</span>
+                        <i class="fa-solid fa-signature"></i>
+                        Member Signature
+                    </h2>
+
+                    
+                </div>
+
+                <div class="section-content">
+
+                    <div class="photo-upload-container">
+
+                        <img
+                            id="signaturePreview"
+                            class="signature-preview"
+                            style="display:none;">
+
+                        <label class="upload-btn">
+
+                            <i class="fa-solid fa-upload"></i>
+
+                            Replace Signature
+
+                            <input
+                                type="file"
+                                id="signatureFile"
+                                accept="image/*"
+                                hidden>
+
+                        </label>
+
+                        <p class="photo-note">
+                            Leave empty if signature is unchanged.
+                        </p>
+
+                    </div>
+
+                </div>
+                    
+               
+                <div class="wizard-buttons">
+
+                    <button
+                        type="button"
+                        class="prev-btn">
+
+                        ← Previous
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primary">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+                
+
+            </div>
+
+            
+            
+        </form>
+
+    </main>
+
+</div>
+
+<script src="js/form-data.js"></script>
+<script src="js/form-utils.js"></script>
+<script src="js/form-wizard.js"></script>
+<script src="js/edit-member.js"></script>
+<script src="js/admin-auth.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>

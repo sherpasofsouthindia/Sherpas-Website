@@ -17,6 +17,14 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/navbar.css">
 <link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/rides.css">
+<link rel="stylesheet" href="css/gallery.css">
+<link rel="stylesheet" href="css/contact.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/events.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -24,37 +32,37 @@
 
 <header>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-<div class="logo">
+        <div class="logo">
 
-<img src="assets/logo.png" alt="Sherpas Logo">
+            <img src="assets/logo.png" alt="Sherpas Logo">
 
-</div>
+        </div>
 
-<ul class="nav-links">
+        <ul class="nav-links">
 
-<li><a href="#">Home</a></li>
+            <li><a href="#">Home</a></li>
 
-<li><a href="#about">About</a></li>
+            <li><a href="#about">About</a></li>
 
-<li><a href="#rides">Rides</a></li>
+            <li><a href="#rides">Rides</a></li>
 
-<li><a href="#gallery">Gallery</a></li>
+            <li><a href="#gallery">Gallery</a></li>
 
-<li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Contact</a></li>
 
-<li>
+            <li>
 
-<a class="join-btn" href="#">
-Become a Sherpa
-</a>
+            <a class="join-btn" href="membership.html">
+                Become a Sherpa
+            </a>
 
-</li>
+            </li>
 
-</ul>
+        </ul>
 
-</nav>
+    </nav>
 
 </header>
 
@@ -74,19 +82,60 @@ Where Every Ride Becomes A Story
 
 </p>
 
-<div class="buttons">
+<div class="hero-buttons">
 
-<a href="#" class="btn-primary">
+    <a href="membership.html" class="join-btn">
+        Become a Sherpa
+    </a>
 
-Become a Sherpa
+    <a href="index.html#events" class="btn-secondary">
+    Explore Events
+        </a>
 
-</a>
+</div>
 
-<a href="#" class="btn-secondary">
+</div>
 
-Explore Rides
+</div>
 
-</a>
+
+<div class="scroll-down">
+    ↓
+</div>
+
+</section>
+
+<section id="about" class="about">
+
+<div class="about-container">
+
+<div class="about-image">
+
+<img src="assets/about.png" alt="Sherpas Ride">
+
+</div>
+
+<div class="about-text">
+
+<h2>ABOUT SHERPAS</h2>
+
+<h3>Ride Together. Explore Together.</h3>
+
+<p>
+
+Sherpas of South India is a community of passionate riders who believe that every journey is more than reaching a destination. Every ride creates friendships, unforgettable memories and a spirit of adventure.
+
+</p>
+
+<div class="about-features">
+
+<div>🏍 Weekend Rides</div>
+
+<div>🏔 Adventure Touring</div>
+
+<div>🤝 Brotherhood</div>
+
+<div>🛡 Responsible Riding</div>
 
 </div>
 
@@ -96,8 +145,471 @@ Explore Rides
 
 </section>
 
+<!-- =========================
+     UPCOMING EVENTS
+========================= -->
+
+<section id="events" class="events">
+
+    <div class="section-title">
+
+        <h2>UPCOMING EVENTS & RIDES</h2>
+
+        <h3>Your Next Adventure Starts Here</h3>
+
+        <p class="section-subtitle">
+
+            Discover upcoming rides, club events and adventures organised by Sherpas of South India.
+
+        </p>
+
+    </div>
+
+    <div id="eventsContainer" class="events-grid">
+
+        <div class="loading-events">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            Loading Upcoming Events...
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="rides" class="rides">
+
+    <div class="section-title">
+        <h2>FEATURED RIDES</h2>
+        <h3>Our Adventure Awaits</h3>
+    </div>
+
+    <div class="rides-grid">
+
+        <div class="ride-card">
+            <img src="assets/ride1.jpg" alt="Mountain Ride">
+            <div class="ride-info">
+                <h4>Munnar Escape</h4>
+                <p>Weekend ride through Kerala's beautiful tea plantations.</p>
+            </div>
+        </div>
+
+        <div class="ride-card">
+            <img src="assets/ride2.jpg" alt="Coastal Ride">
+            <div class="ride-info">
+                <h4>Coastal Explorer</h4>
+                <p>Ride along South India's breathtaking coastline.</p>
+            </div>
+        </div>
+
+        <div class="ride-card">
+            <img src="assets/ride3.jpg" alt="Adventure Ride">
+            <div class="ride-info">
+                <h4>Off-Road Challenge</h4>
+                <p>Experience trails, forests and unforgettable adventures.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="gallery" id="gallery">
+
+    <div class="section-title">
+        <h2>ADVENTURE GALLERY</h2>
+        <h3>Every Picture Tells a Story</h3>
+    </div>
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item">
+            <img src="assets/gallery1.jpg" alt="Gallery 1">
+        </div>
+
+        <div class="gallery-item">
+            <img src="assets/gallery2.jpg" alt="Gallery 2">
+        </div>
+
+        <div class="gallery-item">
+            <img src="assets/gallery3.jpg" alt="Gallery 3">
+        </div>
+
+        <div class="gallery-item">
+            <img src="assets/gallery4.jpg" alt="Gallery 4">
+        </div>
+
+        <div class="gallery-item">
+            <img src="assets/gallery5.jpg" alt="Gallery 5">
+        </div>
+
+        <div class="gallery-item">
+            <img src="assets/gallery6.jpg" alt="Gallery 6">
+        </div>
+
+    </div>
+
+</section>
+
+<section id="contact" class="contact">
+
+    <div class="contact-divider"></div>
+
+    <div class="section-title">
+        <h2>CONTACT US</h2>
+        <h3>Meet Our Leadership Team</h3>
+
+        <p class="section-subtitle">
+            Dedicated riders, experienced leaders, 
+            and passionate volunteers working together to make every Sherpas journey safe, 
+            memorable, and unforgettable.
+        </p>
+    </div>
+
+    <div class="admin-team">
+
+        <div class="admin-card">
+            <img src="assets/admin1.jpg" alt="Arunlal">
+            <h4>Arunlal</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">President</h5>
+
+            <p class="admin-quote">
+            Leads the vision of Sherpas, inspiring members through responsible riding,
+            strong leadership, and unforgettable adventures.
+            </p>
+
+            <div class="admin-buttons">
+
+                <a href="tel:+919387743288" title="Call Arunlal">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/919387743288"
+                target="_blank"
+                title="WhatsApp Arunlal">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="admin-card">
+            <img src="assets/admin2.jpg" alt="Jaikrishnan">
+            <h4>Jaikrishnan</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">Vice President</h5>
+
+            <p class="admin-quote">
+            Supports club operations, coordinates activities, and strengthens
+            member engagement across the Sherpas community.
+            </p>
+
+            <div class="admin-buttons">
+
+                <a href="tel:+918129502340" title="Call Jaikrishnan">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/918129502340"
+                target="_blank"
+                title="WhatsApp Jaikrishnan">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+        </div>
+
+
+
+        <div class="admin-card">
+            <img src="assets/admin3.jpg" alt="Anto">
+            <h4>Anto</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">Secretary</h5>
+
+            <p class="admin-quote">
+            Manages club administration, communications, and coordinates
+            official rides and organizational activities.
+            </p>
+
+            <div class="admin-buttons">
+
+                <a href="tel:+918129349845" title="Call Anto">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/918129349845"
+                target="_blank"
+                title="WhatsApp Anto">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <img src="assets/admin4.jpg" alt="Manu">
+            <h4>Manu</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">Treasurer</h5>
+
+            <p class="admin-quote">
+            Oversees memberships and club finances while ensuring
+            transparent and efficient financial management.
+            </p>
+
+            <div class="admin-buttons">
+           
+                <a href="tel:+916238915364" title="Call Manu">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/916238915364"
+                target="_blank"
+                title="WhatsApp Manu">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <img src="assets/admin5.jpg" alt="Aravind">
+            <h4>Aravind</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">Executive Committee Member</h5>
+
+            <p class="admin-quote">
+            Assists in organizing rides, coordinating events,
+            and strengthening the Sherpas riding community.
+            </p>
+
+            <div class="admin-buttons">
+                <a href="tel:+919074445255" title="Call Aravind">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/919074445255"
+                target="_blank"
+                title="WhatsApp Aravind">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <img src="assets/admin6.jpg" alt="Robin">
+            <h4>Robin</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">Executive Committee Member</h5>
+
+            <p class="admin-quote">
+            Supports membership management, technology initiatives,
+            and contributes to the club's digital development.
+            </p>
+
+            <div class="admin-buttons">
+                <a href="tel:+919895886667" title="Call Robin">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/919895886667"
+                target="_blank"
+                title="WhatsApp Robin">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+        </div>
+        
+        <div class="admin-card">
+            <img src="assets/admin7.jpg" alt="Arunlal">
+            <h4>Harikrishnan</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">Executive Committee Member</h5>
+
+            <p class="admin-quote">
+            Supports official club activities and promotes teamwork,
+            safe riding, and member engagement.
+            </p>
+
+            <div class="admin-buttons">
+                <a href="tel:+918129234163" title="Call Arunlal">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/918129234163"
+                target="_blank"
+                title="WhatsApp Arunlal">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <img src="assets/admin8.jpg" alt="ArunKrish">
+            <h4>Arun Krish</h4>
+
+            <span class="admin-role">Admin</span>
+
+            <h5 class="designation">
+            Executive Committee Member<br>
+            Support Team Handler
+            </h5>
+
+            <p class="admin-quote">
+            Leads the support team, coordinates ride logistics,
+            and ensures smooth execution of club events.
+            </p>
+
+            <div class="admin-buttons">
+                <a href="tel:+919895322323" title="Call ArunKrish">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+                <a href="https://wa.me/919895322323"
+                target="_blank"
+                title="WhatsApp ArunKrish">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div class="contact-form">
+
+        <h3>Have a Question?</h3>
+
+        <p class="contact-text">
+        Whether you're interested in joining our rides, partnering with us,
+        or simply want to know more about Sherpas of South India,
+        we'd love to hear from you.
+        </p>
+
+        <form id="contactForm">
+
+            <input type="text" id="name" placeholder="Your Name*" required>
+
+            <input type="tel" id="phone" placeholder="Mobile Number" pattern="[6-9]{1}[0-9]{9}" maxlength="10" required>
+
+            <input type="text" id="subject" placeholder="Subject">
+
+            <textarea id="message" rows="6" placeholder="Your Message"></textarea>
+
+            <button type="submit">Send Message</button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <img src="assets/logo.png" alt="Sherpas Logo" class="footer-logo">
+
+        <h2>SHERPAS OF SOUTH INDIA</h2>
+
+        <p class="footer-tagline">
+            South India's Riding Brotherhood
+        </p>
+
+        <p class="footer-motto">
+            Ride • Explore • Conquer
+        </p>
+
+        <div class="footer-actions">
+
+            <a href="mailto:sherpasofsouthindia@gmail.com" class="footer-btn">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                Email Us
+
+            </a>
+
+            <a href="https://www.instagram.com/sherpasofsouth?igsh=MW8yOW5oN20zNGh5Ng=="
+               target="_blank"
+               class="footer-btn">
+
+                <i class="fa-brands fa-instagram"></i>
+
+                Follow on Instagram
+
+            </a>
+
+            <a href="admin/login.html" class="footer-btn admin-btn">
+                <i class="fa-solid fa-lock"></i>
+                Admin Portal
+            </a>
+
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <p class="copyright">
+
+            © 2026 Sherpas of South India
+
+        </p>
+
+        <p class="footer-quote">
+
+            Every Ride Becomes A Story
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- Poster Popup -->
+
+<div id="posterModal" class="poster-modal">
+
+    <span class="close-poster">&times;</span>
+
+    <img id="posterImage">
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+emailjs.init({
+    publicKey: "Y5aQDbWwqKQqdrKer",
+});
+</script>
 <script src="js/main.js"></script>
 <script src="js/slider.js"></script>
+<script src="js/events.js"></script>
 
 </body>
 

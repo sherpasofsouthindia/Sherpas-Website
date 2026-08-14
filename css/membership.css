@@ -1,0 +1,884 @@
+/*=========================================
+SHERPAS MEMBERSHIP PAGE
+=========================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f7fb;
+    color:#1f2937;
+    overflow-x:hidden;
+}
+
+/* =========================================
+WHOLE PAGE BACKGROUND
+========================================= */
+
+html,
+body{
+    background:
+    linear-gradient(
+        rgba(10,15,25,.45),
+        rgba(10,15,25,.45)
+    ),
+    url("../assets/hero-bike.jpg") center center / cover no-repeat fixed;
+
+    background-color:#10192b;
+}
+
+/*=========================================
+COLORS
+=========================================*/
+
+:root{
+
+    --orange:#ff6b00;
+    --orange-dark:#e95f00;
+
+    --navy:#10192b;
+
+    --white:#ffffff;
+
+    --light:#f4f7fb;
+
+    --text:#374151;
+
+}
+
+/*=========================================
+NAVBAR
+=========================================*/
+
+/*=====================================
+NAVBAR
+======================================*/
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    z-index:9999;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 70px;
+
+    background:rgba(10,18,32,.35);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.logo img{
+
+    height:58px;
+
+}
+
+.logo span{
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.navbar nav{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+}
+
+.navbar nav a{
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#ff6b00;
+}
+
+.join-btn{
+
+    background:#ff6b00;
+
+    color:#fff;
+
+    padding:14px 34px;
+
+    border-radius:50px;
+
+    font-weight:700;
+
+    transition:.35s;
+
+    box-shadow:0 10px 25px rgba(255,107,0,.35);
+}
+
+.join-btn:hover{
+
+    transform:translateY(-3px);
+
+    background:#ff7f1e;
+
+    box-shadow:0 18px 35px rgba(255,107,0,.55);
+}
+
+/*=========================================
+HERO
+=========================================*/
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(5,10,20,.45) 0%,
+        rgba(5,10,20,.55) 45%,
+        rgba(5,10,20,.80) 100%
+    ),
+    url("../assets/hero-bike.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+}
+
+.hero-overlay{
+
+    max-width:900px;
+
+}
+
+.hero h1{
+
+    color:#fff;
+
+    font-size:82px;
+
+    font-weight:800;
+
+    line-height:1.05;
+
+    margin-bottom:20px;
+
+}
+
+.hero h2{
+
+    color:var(--orange);
+
+    font-size:50px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+
+}
+
+.hero p{
+
+    color:#fff;
+
+    font-size:23px;
+
+    line-height:1.8;
+
+    margin-bottom:0px;
+
+}
+
+.hero-btn{
+
+    display:inline-block;
+
+    background:var(--orange);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    padding:18px 55px;
+
+    border-radius:60px;
+
+    transition:.3s;
+
+}
+
+.hero-btn:hover{
+
+    background:var(--orange-dark);
+
+    transform:translateY(-3px);
+
+}
+
+/*=========================================
+BACKGROUND FOR CONTENT
+=========================================
+
+.content-background{
+
+    background:
+
+    linear-gradient(
+        rgba(8,12,20,.35),
+        rgba(8,12,20,.35)
+    ),
+
+    url("../assets/hero-bike.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-attachment:Scroll;
+
+}*/
+
+/*=========================================
+MEMBERSHIP INFORMATION
+=========================================*/
+
+.membership-info{
+
+    background:transparent !important;
+    padding:30px 8%;
+    text-align:center;
+
+}
+
+.membership-info h2{
+
+    font-size:3rem;
+    font-weight:800;
+    color:#ffffff;
+    margin-bottom:50px;
+    text-shadow:0 3px 12px rgba(0,0,0,.5);
+
+}
+
+.info-grid{
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+
+}
+
+.info-box{
+
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+
+    border-radius:22px;
+
+    padding:25px 20px;
+
+    transition:.35s;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+}
+
+.info-box:hover{
+
+    transform:translateY(-10px);
+
+    background:rgba(255,255,255,.18);
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.45);
+}
+
+.info-box i{
+
+    font-size:30px;
+    color:#ff6b00;
+    margin-bottom:12px;
+
+}
+
+.info-box h3{
+
+    color:#ffffff;
+    font-size:20px;
+    margin-bottom:8px;
+
+}
+
+.info-box p{
+
+    color:#ff7a00;
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:8px;
+
+}
+
+.info-box span{
+
+    color:#ececec;
+
+    font-size:1.05rem;
+
+    line-height:1.6;
+
+}
+
+/*=========================================
+DOCUMENTS
+=========================================*/
+
+.documents{
+
+    background:transparent !important;
+
+    padding:60px 8%;
+
+}
+
+.section-title{
+
+    text-align:center;
+    margin-bottom:40px;
+
+}
+
+.section-title h2{
+
+    font-size:46px;
+    color:#cbcbcb;
+    margin-bottom:12px;
+
+}
+
+.section-title p{
+
+    font-size:20px;
+    color:#e9e9e9;
+
+}
+
+.documents-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:20px;
+
+}
+
+.document-card{
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    border-radius:20px;
+
+    padding:22px 18px;
+
+    min-height:150px;
+
+    transition:.35s;
+
+    box-shadow:0 8px 28px rgba(0,0,0,.28);
+
+    text-align:center;
+}
+
+.document-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.document-card i{
+
+    font-size:34px;
+
+    color:#ff6b00;
+
+    margin-bottom:15px;
+}
+
+.document-card h3{
+
+    color:#fff;
+
+    font-size:1.35rem;
+
+    margin-bottom:10px;
+}
+
+.document-card p{
+
+    color:#f2f2f2;
+
+    font-size:.95rem;
+}
+
+.info-box,
+.document-card{
+
+    background:rgba(255,255,255,.14);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.20);
+
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
+
+}
+
+/*=========================================
+READY TO JOIN
+=========================================*/
+
+.apply-section{
+
+    padding:70px 20px;
+
+    text-align:center;
+
+}
+
+.apply-section h2{
+
+    font-size:46px;
+
+    color:#17233a;
+
+    margin-bottom:20px;
+
+}
+
+.apply-section p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#64748b;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+}
+
+.apply-btn{
+
+    display:inline-block;
+
+    margin-top:35px;
+
+    padding:18px 55px;
+
+    background:#ff6b00;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    border-radius:60px;
+
+    transition:.3s;
+
+}
+
+.apply-btn:hover{
+
+    background:#e95f00;
+
+    transform:translateY(-3px);
+
+}
+
+.membership-info h2,
+.documents h2,
+.apply-section h2{
+
+    color:#ffffff;
+
+}
+
+.section-title p,
+.apply-section p{
+
+    color:#e2e8f0;
+
+}
+
+/*=========================================
+FOOTER
+=========================================*/
+
+.footer{
+
+    background:rgba(8,15,28,.95);
+
+    backdrop-filter:blur(20px);
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    padding:10px 20px 20px;
+
+    text-align:center;
+
+}
+
+.footer h3{
+
+    color:#ff6b00;
+
+    font-size:28px;
+
+    margin-bottom:20px;
+
+}
+
+.social-icons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+}
+
+.social-icons a{
+
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#1e293b;
+
+    color:#fff;
+
+    font-size:22px;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.social-icons a:hover{
+
+    background:#ff6b00;
+
+}
+
+.copyright{
+
+    margin-top:30px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    padding-top:18px;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+}
+
+/*=========================================
+RESPONSIVE
+=========================================*/
+
+@media(max-width:1200px){
+
+.info-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.documents-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.navbar{
+
+padding:0 20px;
+
+}
+
+.logo span{
+
+font-size:18px;
+
+}
+
+.hero h1{
+
+font-size:50px;
+
+}
+
+.hero h2{
+
+font-size:28px;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+}
+
+.info-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.documents-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.membership-info h2,
+.section-title h2,
+.apply-section h2{
+
+font-size:34px;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.documents-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.hero{
+
+padding:120px 20px 70px;
+
+}
+
+.hero h1{
+
+font-size:40px;
+
+}
+
+.hero h2{
+
+font-size:24px;
+
+}
+
+.hero-btn,
+.apply-btn{
+
+width:100%;
+
+padding:16px;
+
+}
+
+}
+
+.info-box,
+.document-card{
+
+    animation:floatCard 5s ease-in-out infinite;
+}
+
+.info-box:nth-child(2),
+.document-card:nth-child(2){
+
+    animation-delay:1.5s;
+}
+
+.info-box:nth-child(3),
+.document-card:nth-child(3){
+
+    animation-delay:.2s;
+}
+
+.info-box:nth-child(4),
+.document-card:nth-child(4){
+
+    animation-delay:.3s;
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+}   
+
+/*==========================================
+REVIEW
+==========================================*/
+
+.review-card{
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.15);
+
+backdrop-filter:blur(15px);
+
+padding:40px;
+
+border-radius:18px;
+
+text-align:center;
+
+}
+
+.review-card h3{
+
+font-size:30px;
+
+margin-bottom:20px;
+
+color:#ff7a00;
+
+}
+
+.review-card p{
+
+font-size:18px;
+
+line-height:1.8;
+
+color:#d1d5db;
+
+}
+
+/*==========================================
+CHECKBOX
+==========================================*/
+
+input[type="checkbox"]{
+
+width:22px;
+
+height:22px;
+
+accent-color:#ff7a00;
+
+cursor:pointer;
+
+}

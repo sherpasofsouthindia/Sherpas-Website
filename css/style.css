@@ -11,7 +11,11 @@ html{
 
 body{
     background:#f8f9fa;
-    overflow-x:hidden;
+    }
+
+html,
+body {
+    overflow-x: hidden;
 }
 
 .hero-content h1{
@@ -56,4 +60,15 @@ body{
     60%{
         transform:translate(-50%,-5px);
     }
+}
+
+.about-features div:hover{
+    background:#F97316;
+    color:white;
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(249,115,22,.35);
+}
+
+section{
+    scroll-margin-top:100px;
 }

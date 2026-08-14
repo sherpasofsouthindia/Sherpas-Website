@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Members | Sherpas Admin</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/members.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<img src="assets/logo.png" class="logo">
+
+<h2>SHERPAS</h2>
+
+<p>Ride • Explore • Conquer</p>
+
+        <nav>
+
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+
+            <a class="active"><i class="fa-solid fa-users"></i> Members</a>
+
+            <a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events & Rides</a>
+
+            <a href="gallery.html"><i class="fa-solid fa-image"></i> Gallery</a>
+
+            <a href="messages.html"><i class="fa-solid fa-envelope"></i> Messages</a>
+
+            <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+            <a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+        </nav>
+
+</aside>
+
+<!-- CONTENT -->
+
+<main class="content">
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Members Management</h1>
+
+        <p>Manage Sherpas Membership Database</p>
+
+    </div>
+
+    <div class="page-actions">
+
+        <input
+            type="text"
+            id="searchMember"
+            placeholder="Search Member...">
+
+        <button id="refreshBtn" class="refresh-btn">
+            <i class="fa-solid fa-rotate-right"></i>
+            Refresh
+        </button>
+
+        <a
+            href="add-member.html"
+            class="add-btn">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Add Member
+
+        </a>
+
+    </div>
+
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <h2 id="totalMembers">0</h2>
+        <p>Total Members</p>
+    </div>
+
+    <div class="stat-card">
+        <h2 id="approvedMembers">0</h2>
+        <p>Approved</p>
+    </div>
+
+    <div class="stat-card">
+        <h2 id="pendingMembers">0</h2>
+        <p>Pending</p>
+    </div>
+
+    <div class="stat-card">
+        <h2 id="rejectedMembers">0</h2>
+        <p>Rejected</p>
+    </div>
+
+</div>
+
+
+<div class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Photo</th>
+
+<th>Name</th>
+
+<th>Phone</th>
+
+<th>Vehicle No</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="membersTableBody">
+
+<tr>
+
+<td colspan="7">
+
+<i class="fa-solid fa-spinner fa-spin"></i>
+
+Loading Members...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<div
+    id="noMembers"
+    class="empty-state"
+    style="display:none;">
+
+    <i class="fa-solid fa-users"></i>
+
+    <h2>No Members Found</h2>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<!-- =======================================
+     MEMBER VIEW MODAL
+======================================= -->
+
+<div id="memberModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close-modal">&times;</span>
+
+        <div id="memberDetails">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div id="imageViewer" class="image-viewer" onclick="closeImageViewer()">
+    <span class="close-image">&times;</span>
+    <img id="viewerImage">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/form-utils.js"></script>
+<script src="js/members.js"></script>
+<script src="js/admin-auth.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,692 @@
+/* ==========================================
+   EVENTS & RIDES ADMIN
+========================================== */
+
+.events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.events-header h1 {
+    margin: 0;
+}
+
+
+/* ==========================================
+   ADD EVENT BUTTON
+========================================== */
+
+#addEventBtn {
+    background: #ff7518;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#addEventBtn:hover {
+    background: #ff8a35;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.search-box {
+    margin-bottom: 30px;
+}
+
+#searchEvent {
+    width: 380px;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    background: #202b3b;
+    color: white;
+
+    border: none;
+    outline: none;
+
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    font-size: 17px;
+}
+
+#searchEvent::placeholder {
+    color: #8fa1b8;
+}
+/* ==========================================
+   EVENTS LIST
+========================================== */
+
+#eventsTable {
+    width: 100%;
+    margin-top: 30px;
+}
+
+
+/* ==========================================
+   EVENT CARD
+========================================== */
+
+.event-row {
+
+    width: 100%;
+    box-sizing: border-box;
+
+    background: #202c3d;
+
+    border-radius: 22px;
+
+    padding: 28px 30px;
+
+    margin-bottom: 22px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 30px;
+
+}
+
+.event-row:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   EVENT MAIN
+========================================== */
+
+.event-main {
+    display: flex;
+
+    width: 100%;
+
+    min-height: 180px;
+
+    box-sizing: border-box;
+
+    padding: 24px;
+
+    gap: 25px;
+
+    align-items: flex-start;
+}
+
+
+/* ==========================================
+   EVENT IMAGE
+========================================== */
+
+.event-image {
+    width: 220px;
+    min-width: 220px;
+    height: 150px;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: #111827;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ==========================================
+   EVENT INFO
+========================================== */
+
+.event-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.event-info h2 {.registration-link
+
+    margin: 0 0 14px 0;
+
+    font-size: 27px;
+
+    line-height: 1.2;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+.event-info p {
+
+    margin: 0 0 20px 0;
+
+    color: #b8c6d8;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.event-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+}
+
+.event-title h3 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 24px;
+
+    line-height: 1.2;
+}
+
+.event-id {
+
+    display: inline-block;
+
+    background: #334257;
+
+    color: #9fb0c5;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    padding: 6px 10px;
+
+    border-radius: 7px;
+
+}
+
+/* ==========================================
+   EVENT META
+========================================== */
+
+.event-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 22px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.event-meta span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #d5deea;
+
+    font-size: 16px;
+
+}
+
+
+.event-meta i {
+
+    color: #ff7215;
+
+}
+
+
+
+/* ==========================================
+   EVENT DETAILS
+========================================== */
+
+.event-details {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    margin-bottom: 15px;
+}
+
+.event-details span {
+    color: #c5d0df;
+
+    font-size: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.event-details i {
+    color: #ff7518;
+}
+
+
+/* ==========================================
+   DESCRIPTION
+========================================== */
+
+.event-description {
+    color: #aebbd0;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    margin: 10px 0 15px;
+}
+
+
+/* ==========================================
+   REGISTRATION LINK
+========================================== */
+
+.registration-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #ff7215;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+
+.registration-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================
+   EVENT ACTIONS
+========================================== */
+
+.event-actions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-width: 130px;
+
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+.status-badge.active {
+
+    background: rgba(46, 204, 113, 0.18);
+
+    color: #42df88;
+
+}
+
+
+.status-badge.inactive {
+
+    background: rgba(231, 76, 60, 0.18);
+
+    color: #ff6b5b;
+
+}
+
+
+/* ==========================================
+   STATUS BUTTON
+========================================== */
+
+.status-btn {
+
+    border: none;
+
+    background: #334257;
+
+    color: #ffffff;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+
+.status-btn:hover {
+
+    background: #43546c;
+
+}
+
+
+/* ==========================================
+   ERROR / EMPTY
+========================================== */
+
+.error-message,
+.no-events {
+     background: #202c3d;
+
+    border-radius: 18px;
+
+    padding: 35px;
+
+    color: #aebed0;
+
+    font-size: 17px;
+
+    text-align: center;
+}
+
+.no-events {
+    color: #aebbd0;
+}
+
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    z-index: 1000;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: 520px;
+
+    max-width: 100%;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #182334;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    position: relative;
+}
+
+.modal-content h2 {
+    color: white;
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+}
+
+.close {
+    position: absolute;
+
+    right: 20px;
+
+    top: 15px;
+
+    color: #aaa;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+.close:hover {
+    color: white;
+}
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+#eventForm {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+#eventForm input,
+#eventForm select,
+#eventForm textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    background: #202b3b;
+
+    color: white;
+
+    border: 1px solid #344257;
+
+    border-radius: 9px;
+
+    padding: 13px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+#eventForm input:focus,
+#eventForm select:focus,
+#eventForm textarea:focus {
+    border-color: #ff7518;
+}
+
+#eventForm textarea {
+    resize: vertical;
+}
+
+#eventForm button[type="submit"] {
+    background: #ff7518;
+
+    color: white;
+
+    border: none;
+
+    padding: 14px;
+
+    border-radius: 9px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-top: 5px;
+}
+
+#eventForm button[type="submit"]:hover {
+    background: #ff8a35;
+}
+
+#eventForm button[type="submit"]:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* ==========================================
+   POSTER PREVIEW
+========================================== */
+
+#posterPreview {
+    display: none;
+
+    width: 100%;
+
+    max-height: 250px;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+
+    background: #101722;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .event-row {
+
+        flex-direction: column;
+
+        padding: 22px;
+
+    }
+
+
+    .event-actions {
+
+        width: 100%;
+
+        flex-direction: row;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+    }
+
+
+    .event-info h2 {
+
+        font-size: 23px;
+
+    }
+
+
+    .event-meta {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+    }
+
+}

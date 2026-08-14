@@ -1,0 +1,114 @@
+.rides{
+
+    padding:120px 8%;
+
+    background:#0f172a;
+
+}
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+.section-title h2{
+
+    color:#F97316;
+
+    letter-spacing:4px;
+
+    margin-bottom:15px;
+
+}
+
+.section-title h3{
+
+    color:white;
+
+    font-size:48px;
+
+}
+
+.rides-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.ride-card{
+
+    background:#1f2937;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    transition:.4s;
+
+}
+
+.ride-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+}
+
+.ride-card img{
+
+    width:100%;
+
+    height:260px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.4s ease;
+
+}
+
+.ride-card:hover img{
+    transform:scale(1.08);
+}
+
+.ride-info{
+
+    padding:25px;
+
+}
+
+.ride-info h4{
+
+    color:white;
+
+    font-size:26px;
+
+    margin-bottom:10px;
+
+}
+
+.ride-info p{
+
+    color:#d1d5db;
+
+    line-height:1.7;
+
+}
+.ride-card{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+}
+
+.ride-info{
+    flex:1;
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sherpas Admin Dashboard</title>
+
+<link rel="stylesheet" href="css/admin.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <img src="assets/logo.png" class="logo">
+
+        <h2>SHERPAS</h2>
+
+        <p>Ride • Explore • Conquer</p>
+
+        <nav>
+
+            <a class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+
+            <a href="members.html"><i class="fa-solid fa-users"></i> Members</a>
+
+            <a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events & Rides</a>
+
+            <a href="gallery.html"><i class="fa-solid fa-image"></i> Gallery</a>
+
+            <a href="messages.html"><i class="fa-solid fa-envelope"></i> Messages</a>
+
+            <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+            <a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+        </nav>
+
+    </aside>
+
+    <main class="content">
+
+        <header>
+
+            <h1>Welcome, Admin 👋</h1>
+
+        </header>
+
+        <section class="cards">
+
+            <div class="card">
+                <i class="fa-solid fa-users"></i>
+                <h2 id="totalMembers">0</h2>
+                <p>Total Members</p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-user-clock"></i>
+                <h2 id="pendingMembers">0</h2>
+                <p>Pending Approval</p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-circle-check"></i>
+                <h2 id="approvedMembers">0</h2>
+                <p>Approved Members</p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <h2 id="rejectedMembers">0</h2>
+                <p>Rejected Members</p>
+            </div>
+
+        </section>
+
+        <section class="recent">
+
+            <div class="panel">
+
+                            <h3>Recent Members</h3>
+
+                            <ul id="recentMembersList">
+
+                                <li>Loading...</li>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="panel">
+
+                <h3>Membership Statistics</h3>
+
+                <div class="stats-list">
+
+                    <div class="stat-row">
+                        <span>Today's Registrations</span>
+                        <strong id="todayRegistrations">0</strong>
+                    </div>
+
+                    <div class="stat-row">
+                        <span>This Month</span>
+                        <strong id="monthRegistrations">0</strong>
+                    </div>
+
+                    <div class="stat-row">
+                        <span>Approved</span>
+                        <strong id="statsApproved">0</strong>
+                    </div>
+
+                    <div class="stat-row">
+                        <span>Pending</span>
+                        <strong id="statsPending">0</strong>
+                    </div>
+
+                    <div class="stat-row">
+                        <span>Rejected</span>
+                        <strong id="statsRejected">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <h3>🎂 Upcoming Birthdays</h3>
+
+                <ul id="birthdayList">
+
+                    <li>Loading...</li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+<script src="js/form-utils.js"></script>
+<script src="js/admin-auth.js"></script>
+
+</body>
+
+</html>
