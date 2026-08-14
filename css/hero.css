@@ -444,17 +444,49 @@
     }
 
 
+    .hero-buttons {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 16px;
+
+        width: 100%;
+
+    }
+
     .hero-buttons .btn {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
 
         width: 100%;
 
         max-width: 280px;
 
+        min-height: 54px;
+
         padding: 15px 25px;
+
+        border-radius: 50px;
+
+        box-sizing: border-box;
 
         font-size: 17px;
 
-        box-sizing: border-box;
+        font-weight: 700;
+
+        text-decoration: none;
+
+        transition: .35s ease;
 
     }
 
@@ -464,6 +496,72 @@
         bottom: 20px;
 
         font-size: 28px;
+
+    }
+
+    /* ORANGE BUTTON */
+
+    .hero-buttons .btn-primary {
+
+        background: #F97316;
+
+        color: white;
+
+        border: 2px solid #F97316;
+
+    }
+
+    .hero-buttons .btn-secondary {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        max-width: 280px;
+
+        min-height: 54px;
+
+        padding: 15px 25px;
+
+        box-sizing: border-box;
+
+        background: transparent !important;
+
+        color: #ffffff !important;
+
+        border: 2px solid #ffffff !important;
+
+        border-radius: 50px;
+
+        text-decoration: none !important;
+
+        font-size: 17px;
+
+        font-weight: 700;
+
+        transition: .35s ease;
+
+    }
+    hero-buttons .btn-primary:hover {
+
+        background: #EA580C;
+
+        border-color: #EA580C;
+
+        transform: translateY(-4px);
+
+    }
+
+
+    .hero-buttons .btn-secondary:hover {
+
+        background: white;
+
+        color: #111827;
+
+        transform: translateY(-4px);
 
     }
 
