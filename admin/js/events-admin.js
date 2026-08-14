@@ -657,20 +657,33 @@ document.addEventListener(
             const form =
                 new URLSearchParams();
 
+            const token =
+                sessionStorage.getItem(
+                    "sherpas_admin_token"
+                );
+
+            if (!token) {
+
+                throw new Error(
+                    "Admin session expired. Please login again."
+                );
+
+            }
 
             form.append(
                 "action",
                 "TOGGLE_STATUS"
             );
 
+            form.append(
+                "token",
+                token
+            );
 
             form.append(
                 "data",
                 JSON.stringify({
-
-                    eventID:
-                        eventID
-
+                    eventID: eventID
                 })
             );
 
@@ -853,12 +866,37 @@ document
                 const form =
                     new URLSearchParams();
 
+                /*----------------------------------
+                        ADMIN SESSION TOKEN
+                ----------------------------------*/
+
+                const token =
+                    sessionStorage.getItem(
+                        "sherpas_admin_token"
+                    );
+
+                if (!token) {
+
+                    throw new Error(
+                        "Admin session expired. Please login again."
+                    );
+
+                }
+
+
+                /*----------------------------------
+                        ADD EVENT REQUEST
+                ----------------------------------*/
 
                 form.append(
                     "action",
                     "ADD_EVENT"
                 );
 
+                form.append(
+                    "token",
+                    token
+                );
 
                 form.append(
                     "data",
