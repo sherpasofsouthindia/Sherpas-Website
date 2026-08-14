@@ -112,3 +112,82 @@
 .ride-info{
     flex:1;
 }
+
+@media (max-width: 768px) {
+
+    .rides {
+
+        padding: 80px 20px;
+
+    }
+
+
+    .section-title {
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .section-title h2 {
+
+        font-size: 16px;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .section-title h3 {
+
+        font-size: 30px;
+
+        line-height: 1.2;
+
+    }
+
+
+    .rides-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+
+    }
+
+
+    .ride-card {
+
+        width: 100%;
+
+    }
+
+
+    .ride-card img {
+
+        height: 220px;
+
+    }
+
+
+    .ride-info {
+
+        padding: 20px;
+
+    }
+
+
+    .ride-info h4 {
+
+        font-size: 22px;
+
+    }
+
+
+    .ride-info p {
+
+        font-size: 14px;
+
+    }
+
+}

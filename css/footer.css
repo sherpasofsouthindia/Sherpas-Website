@@ -190,21 +190,42 @@
 
 @media(max-width:768px){
 
+    .footer {
+
+        padding: 60px 20px 30px;
+
+    }
+
+
+    .footer-logo {
+
+        width: 110px;
+
+    }
+
     .footer h2{
 
-        font-size:30px;
+        font-size: 25px;
+
+        line-height: 1.25;
 
     }
 
     .footer-tagline{
 
-        font-size:18px;
+        font-size: 16px;
+
+        line-height: 1.25;
 
     }
 
     .footer-motto{
 
-        font-size:16px;
+        font-size: 14px;
+
+        letter-spacing: 1px;
+
+        margin-bottom: 30px;
 
     }
 
@@ -218,10 +239,26 @@
 
     .footer-btn{
 
-        width:100%;
+        width: 100%;
 
-        max-width:320px;
+        max-width: 100%;
+
+        font-size: 15px;
+
+    }
+
+    .copyright {
+
+        font-size: 14px;
+
+    }
+
+
+    .footer-quote {
+
+        font-size: 14px;
 
     }
 
 }
+

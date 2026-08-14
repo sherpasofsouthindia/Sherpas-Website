@@ -127,3 +127,97 @@
 html{
     scroll-behavior:smooth;
 }
+
+/* ==================================================
+   MOBILE ABOUT
+================================================== */
+
+@media (max-width: 768px) {
+
+    .about {
+
+        padding: 80px 20px;
+
+    }
+
+
+    .about-container {
+
+        flex-direction: column;
+
+        gap: 35px;
+
+    }
+
+
+    .about-image {
+
+        width: 100%;
+
+    }
+
+
+    .about-image img {
+
+        width: 100%;
+
+        border-radius: 18px;
+
+    }
+
+
+    .about-text {
+
+        width: 100%;
+
+    }
+
+
+    .about-text h2 {
+
+        font-size: 15px;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .about-text h3 {
+
+        font-size: 30px;
+
+        line-height: 1.2;
+
+    }
+
+
+    .about-text p {
+
+        font-size: 15px;
+
+        line-height: 1.75;
+
+    }
+
+
+    .about-features {
+
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-top: 25px;
+
+    }
+
+
+    .about-features div {
+
+        padding: 16px;
+
+        font-size: 15px;
+
+    }
+
+}
+

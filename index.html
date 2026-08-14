@@ -34,30 +34,49 @@
 
     <nav class="navbar">
 
-        <div class="logo">
+        <a href="#" class="logo">
+            <img src="assets/logo.png" alt="Sherpas">
+        </a>
 
-            <img src="assets/logo.png" alt="Sherpas Logo">
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded="false">
 
-        </div>
+            <i class="fa-solid fa-bars"></i>
 
-        <ul class="nav-links">
+        </button>
 
-            <li><a href="#">Home</a></li>
-
-            <li><a href="#about">About</a></li>
-
-            <li><a href="#rides">Rides</a></li>
-
-            <li><a href="#gallery">Gallery</a></li>
-
-            <li><a href="#contact">Contact</a></li>
+        <ul class="nav-links" id="navLinks">
 
             <li>
+                <a href="#">Home</a>
+            </li>
 
-            <a class="join-btn" href="membership.html">
-                Become a Sherpa
-            </a>
+            <li>
+                <a href="#about">About</a>
+            </li>
 
+            <li>
+                <a href="#rides">Rides</a>
+            </li>
+
+            <li>
+                <a href="#gallery">Gallery</a>
+            </li>
+
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+
+            <li>
+                <a
+                    class="join-btn"
+                    href="membership.html">
+                    Become a Sherpa
+                </a>
             </li>
 
         </ul>

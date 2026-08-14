@@ -341,3 +341,80 @@
 }
 
 }
+
+@media (max-width: 768px) {
+
+    .contact {
+
+        padding: 80px 20px;
+
+    }
+
+
+    .contact-divider {
+
+        margin: 40px auto;
+
+    }
+
+
+    .admin-team {
+
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+        margin: 40px 0;
+
+    }
+
+
+    .admin-card {
+
+        padding: 22px 18px;
+
+    }
+
+
+    .admin-card img {
+
+        width: 90px;
+
+        height: 90px;
+
+    }
+
+
+    .designation {
+
+        font-size: 14px;
+
+    }
+
+
+    .admin-quote {
+
+        font-size: 13px;
+
+        min-height: auto;
+
+    }
+
+
+    .contact-form h3 {
+
+        font-size: 28px;
+
+    }
+
+
+    .contact-text {
+
+        font-size: 14px;
+
+        line-height: 1.7;
+
+    }
+
+}
+

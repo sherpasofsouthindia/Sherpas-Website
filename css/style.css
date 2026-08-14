@@ -72,3 +72,285 @@ body {
 section{
     scroll-margin-top:100px;
 }
+
+/* ==================================================
+   MOBILE RESPONSIVE DESIGN
+   ================================================== */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    /* ------------------------------
+       COMMON SECTION SPACING
+    ------------------------------ */
+
+    section {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    .section-title {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .section-title h2 {
+        font-size: 25px !important;
+        line-height: 1.2;
+    }
+
+    .section-title h3 {
+        font-size: 17px !important;
+        line-height: 1.4;
+    }
+
+    .section-subtitle {
+        font-size: 14px !important;
+        line-height: 1.6;
+    }
+
+
+    /* ------------------------------
+       HERO
+    ------------------------------ */
+
+    .hero {
+        min-height: 100svh;
+        width: 100%;
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(30px, 9vw, 48px) !important;
+        line-height: 1.1;
+        word-break: normal;
+    }
+
+    .hero-content h2,
+    .hero-content h3 {
+        font-size: 19px !important;
+        line-height: 1.4;
+    }
+
+    .hero-content p {
+        font-size: 14px !important;
+        line-height: 1.5;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .hero-buttons a {
+        width: min(90%, 300px);
+        text-align: center;
+    }
+
+
+    /* ------------------------------
+       ABOUT
+    ------------------------------ */
+
+    .about-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 25px;
+    }
+
+    .about-image,
+    .about-text {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .about-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .about-text h2 {
+        font-size: 26px;
+    }
+
+    .about-text h3 {
+        font-size: 18px;
+    }
+
+    .about-text p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .about-features {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+
+
+    /* ------------------------------
+       EVENTS
+    ------------------------------ */
+
+    .events-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        width: 100%;
+        gap: 18px;
+    }
+
+    .event-card {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .event-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+
+    /* ------------------------------
+       RIDES
+    ------------------------------ */
+
+    .rides-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .ride-card {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .ride-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+
+    /* ------------------------------
+       GALLERY
+    ------------------------------ */
+
+    .gallery-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .gallery-item {
+        width: 100% !important;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+
+    /* ------------------------------
+       CONTACT / ADMIN CARDS
+    ------------------------------ */
+
+    .admin-team {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    .admin-card {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .admin-card img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .contact-form {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+
+    /* ------------------------------
+       FOOTER
+    ------------------------------ */
+
+    .footer-content {
+        width: 100%;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .footer-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .footer-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+
+    /* ------------------------------
+       POSTER POPUP
+    ------------------------------ */
+
+    .poster-modal {
+        padding: 15px;
+    }
+
+    .poster-modal img {
+        max-width: 95vw !important;
+        max-height: 85vh !important;
+        width: auto;
+        height: auto;
+    }
+
+    .close-poster {
+        top: 10px;
+        right: 15px;
+        font-size: 35px;
+    }
+
+}
