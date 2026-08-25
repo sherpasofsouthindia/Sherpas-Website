@@ -1,121 +1,1130 @@
 /*==================================================
-        EVENTS ADMIN
+        SHERPAS EDIT MEMBER
 ==================================================*/
+
+window.IS_EDIT_MODE = true;
 
 
 /*==================================================
-        EVENTS API URL
+        CONFIG
 ==================================================*/
 
-const API =
-"https://script.google.com/macros/s/AKfycbyTrfXWeKUONXzdOppsE_a3oF8o98u7yjTC1ixc2hoE7zgmks0smIGIF7uaI4ZD2Vc0Bw/exec";
+const EDIT_API_URL =
+    "https://script.google.com/macros/s/AKfycbwkjav1SaN7h60-fYSGkATL9Y51Nw7HF3DW0ffeVAPM-Nf12Q0rg3VnxwguH7iVVDnu/exec";
 
 
 /*==================================================
-        DOM ELEMENTS
+        APPLICATION ID FROM URL
 ==================================================*/
 
-const modal =
-document.getElementById("eventModal");
-
-const addBtn =
-document.getElementById("addEventBtn");
-
-const closeBtn =
-document.querySelector(".close");
-
-const poster =
-document.getElementById("poster");
-
-const preview =
-document.getElementById("posterPreview");
-
-const search =
-document.getElementById("searchEvent");
-
-const eventForm =
-document.getElementById("eventForm");
-
-const eventsTable =
-document.getElementById("eventsTable");
+const EDIT_APPLICATION_ID =
+    new URLSearchParams(
+        window.location.search
+    ).get("applicationID");
 
 
 /*==================================================
-        OPEN MODAL
+        MEMBER DATA
 ==================================================*/
 
-addBtn.onclick = function () {
-
-    modal.classList.add("show");
-
-};
+let currentMember = null;
 
 
 /*==================================================
-        CLOSE MODAL
+        INITIALIZE
 ==================================================*/
 
-closeBtn.onclick = function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
 
-    modal.classList.remove("show");
+        console.log(
+            "Edit Member Page Loaded"
+        );
 
-};
-
-
-/*==================================================
-        CLOSE WHEN CLICK OUTSIDE
-==================================================*/
-
-window.onclick = function (e) {
-
-    if (e.target === modal) {
-
-        modal.classList.remove("show");
-
-    }
-
-};
+        console.log(
+            "Application ID:",
+            EDIT_APPLICATION_ID
+        );
 
 
-/*==================================================
-        POSTER PREVIEW
-==================================================*/
+        if (!EDIT_APPLICATION_ID) {
 
-poster.addEventListener(
-    "change",
-    function () {
+            Swal.fire({
 
-        const file =
-            this.files[0];
+                icon: "error",
 
-        if (!file) {
+                title: "Application ID Missing",
 
-            preview.src = "";
-            preview.style.display = "none";
+                text:
+                    "Unable to identify the member record."
+
+            }).then(function () {
+
+                window.location.href =
+                    "members.html";
+
+            });
 
             return;
 
         }
 
-        const reader =
-            new FileReader();
 
-        reader.onload =
-            function (e) {
+        /*------------------------------------------
+                INITIALIZE DROPDOWNS
+        ------------------------------------------*/
 
-                preview.src =
-                    e.target.result;
+        if (
+            typeof initializeFormData ===
+            "function"
+        ) {
 
-                preview.style.display =
-                    "block";
+            initializeFormData();
 
-            };
+        }
 
-        reader.readAsDataURL(file);
+
+        /*------------------------------------------
+                LOAD MEMBER
+        ------------------------------------------*/
+
+        await loadMemberForEdit();
+
+
+        /*------------------------------------------
+                SETUP REPLACEMENT PREVIEWS
+        ------------------------------------------*/
+
+        setupReplacementPreview(
+            "photo",
+            "photoPreview",
+            false
+        );
+
+        setupReplacementPreview(
+            "signatureFile",
+            "signaturePreview",
+            true
+        );
+
+        /*------------------------------------------
+                FORM SUBMIT
+        ------------------------------------------*/
+
+        const form =
+            document.getElementById(
+                "membershipForm"
+            );
+
+        if (form) {
+
+            form.addEventListener(
+                "submit",
+                updateMemberSubmit
+            );
+
+        }
 
     }
 );
 
+
+/*==================================================
+        LOAD MEMBER DATA
+==================================================*/
+
+async function loadMemberForEdit() {
+
+    Swal.fire({
+
+        title: "Loading Member",
+
+        text:
+            "Please wait...",
+
+        allowOutsideClick: false,
+
+        didOpen: function () {
+
+            Swal.showLoading();
+
+        }
+
+    });
+
+
+    try {
+
+        const response =
+            await fetch(
+                EDIT_API_URL
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load members."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message ||
+                "Failed to load members."
+            );
+
+        }
+
+
+        const members =
+            result.members || [];
+
+
+        currentMember =
+            members.find(function (member) {
+
+                return String(
+                    member["Application ID"] || ""
+                ).trim() ===
+                EDIT_APPLICATION_ID;
+
+            });
+
+
+        if (!currentMember) {
+
+            throw new Error(
+                "Member application not found."
+            );
+
+        }
+
+
+        console.log(
+            "Member loaded:",
+            currentMember
+        );
+
+
+        populateMemberForm(
+            currentMember
+        );
+
+
+        Swal.close();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "LOAD MEMBER ERROR:",
+            error
+        );
+
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Unable to Load Member",
+
+            text:
+                error.message
+
+        }).then(function () {
+
+            window.location.href =
+                "members.html";
+
+        });
+
+    }
+
+}
+
+
+/*==================================================
+        POPULATE FORM
+==================================================*/
+
+function populateMemberForm(member) {
+
+    /*------------------------------------------
+            SYSTEM FIELDS
+    ------------------------------------------*/
+
+    setValue(
+        "applicationID",
+        member["Application ID"]
+    );
+
+    setValue(
+        "memberID",
+        member["Membership ID"]
+    );
+
+    setValue(
+        "memberStatus",
+        member["Status"]
+    );
+
+
+    /*------------------------------------------
+            APPLICATION DATE DISPLAY
+    ------------------------------------------*/
+
+    const applicationDateView =
+        document.getElementById(
+            "applicationDateView"
+        );
+
+    if (applicationDateView) {
+
+        applicationDateView.value =
+            formatDateForInput(
+                member["Application Date"]
+            );
+
+    }
+
+
+    /*------------------------------------------
+            PERSONAL DETAILS
+    ------------------------------------------*/
+
+    setValue(
+        "fullname",
+        member["Full Name"]
+    );
+
+    setDateValue(
+        "dob",
+        member["Date of Birth"]
+    );
+
+    setValue(
+        "gender",
+        member["Gender"]
+    );
+
+    setValue(
+        "maritalstatus",
+        member["Marital Status"]
+    );
+
+    setValue(
+        "bloodgroup",
+        member["Blood Group"]
+    );
+
+    setValue(
+        "aadhaar",
+        member["Aadhaar Number"]
+    );
+
+
+    /*------------------------------------------
+            ADDRESS
+    ------------------------------------------*/
+
+    setValue(
+        "address",
+        member["Address"]
+    );
+
+    setValue(
+        "state",
+        member["State"]
+    );
+
+
+    /* IMPORTANT:
+       Populate district AFTER state
+    */
+
+    if (
+        typeof populateDistricts ===
+        "function"
+    ) {
+
+        populateDistricts(
+            member["State"]
+        );
+
+    }
+
+    setValue(
+        "district",
+        member["District"]
+    );
+
+    setValue(
+        "pincode",
+        member["PIN Code"]
+    );
+
+
+    /*------------------------------------------
+            HEALTH
+    ------------------------------------------*/
+
+    setValue(
+        "healthissues",
+        member["Health Issues"]
+    );
+
+    setValue(
+        "healthdetails",
+        member["Health Details"]
+    );
+
+
+    /*------------------------------------------
+            CONTACT
+    ------------------------------------------*/
+
+    setValue(
+        "phone",
+        member["Phone"]
+    );
+
+    setValue(
+        "email",
+        member["Email"]
+    );
+
+    setValue(
+        "emergency1",
+        member["Emergency Contact 1"]
+    );
+
+    setValue(
+        "emergency2",
+        member["Emergency Contact 2"]
+    );
+
+
+    /*------------------------------------------
+            VEHICLE
+    ------------------------------------------*/
+
+    setValue(
+        "motorcyclemodel",
+        member["Motorcycle Model"] ||
+        member["Vehicle Name"]
+    );
+
+
+    if (
+        typeof populateVariants ===
+        "function"
+    ) {
+
+        populateVariants(
+            member["Motorcycle Model"] ||
+            member["Vehicle Name"]
+        );
+
+    }
+
+    setValue(
+        "vehiclevariant",
+        member[
+            "Vehicle Colour / Variant"
+        ]
+    );
+
+    setValue(
+        "vehiclereg",
+        member[
+            "Vehicle Registration"
+        ]
+    );
+
+    setValue(
+        "license",
+        member[
+            "Driving License"
+        ]
+    );
+
+    setValue(
+        "enginenumber",
+        member[
+            "Engine Number"
+        ]
+    );
+
+    setValue(
+        "chassisnumber",
+        member[
+            "Chassis Number"
+        ]
+    );
+
+
+    /*------------------------------------------
+            OCCUPATION
+    ------------------------------------------*/
+
+    setValue(
+        "working",
+        member["Occupation"]
+    );
+
+
+    /*------------------------------------------
+            CLUB DETAILS
+    ------------------------------------------*/
+
+    setValue(
+        "otherclub",
+        member["Other Club"]
+    );
+
+    setValue(
+        "otherclubdetails",
+        member[
+            "Other Club Details"
+        ]
+    );
+
+    setValue(
+        "officialpost",
+        member["Official Post"]
+    );
+
+    setValue(
+        "officialpostdetails",
+        member[
+            "Official Post Details"
+        ]
+    );
+
+    setValue(
+        "social",
+        member["Social Media"]
+    );
+
+
+    /*------------------------------------------
+            FAMILY
+    ------------------------------------------*/
+
+    setValue(
+        "father",
+        member["Father Name"]
+    );
+
+    setValue(
+        "mother",
+        member["Mother Name"]
+    );
+
+
+    /*------------------------------------------
+            ACCIDENT
+    ------------------------------------------*/
+
+    setValue(
+        "accident",
+        member["Accident History"]
+    );
+
+    setValue(
+        "accidentdetails",
+        member[
+            "Accident Details"
+        ]
+    );
+
+
+    /*------------------------------------------
+            FILE URL PREVIEW
+    ------------------------------------------*/
+
+    showExistingImage(
+        "photoPreview",
+        member["Photo URL"]
+    );
+
+    showExistingImage(
+        "signaturePreview",
+        member["Signature URL"]
+    );
+
+
+    /*------------------------------------------
+            PAYMENT PROOF
+    ------------------------------------------*/
+
+    showExistingImage(
+        "paymentPreview",
+        member["Payment Proof URL"]
+    );
+
+
+    /*------------------------------------------
+            SHOW CONDITIONAL FIELDS
+    ------------------------------------------*/
+
+    triggerConditionalFields();
+
+}
+
+
+/*==================================================
+        SET VALUE
+==================================================*/
+
+function setValue(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element)
+        return;
+
+    element.value =
+        value === undefined ||
+        value === null
+            ? ""
+            : value;
+
+}
+
+
+/*==================================================
+        SET DATE VALUE
+==================================================*/
+
+function setDateValue(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element || !value)
+        return;
+
+    const date =
+        new Date(value);
+
+    if (!isNaN(date)) {
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(2, "0");
+
+        element.value =
+            `${year}-${month}-${day}`;
+
+    }
+
+}
+
+
+/*==================================================
+        FORMAT DATE
+==================================================*/
+
+function formatDateForInput(value) {
+
+    if (!value)
+        return "";
+
+    const date =
+        new Date(value);
+
+    if (isNaN(date))
+        return String(value);
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+
+            day: "2-digit",
+
+            month: "short",
+
+            year: "numeric"
+
+        }
+    );
+
+}
+
+
+function showExistingImage(previewID, url) {
+
+    console.log("Loading image:", previewID, url);
+
+    const preview =
+        document.getElementById(previewID);
+
+    if (!preview) {
+
+        console.warn(
+            "Preview element not found:",
+            previewID
+        );
+
+        return;
+    }
+
+    if (!url) {
+
+        console.warn(
+            "No image URL found:",
+            previewID
+        );
+
+        return;
+    }
+
+    let imageURL = String(url);
+
+    const match =
+        imageURL.match(/[-\w]{25,}/);
+
+    if (match) {
+
+        imageURL =
+            "https://drive.google.com/thumbnail?id=" +
+            match[0] +
+            "&sz=w800";
+
+    }
+
+    console.log(
+        "Final Image URL:",
+        imageURL
+    );
+
+
+    // If preview itself is an IMG
+    if (
+        preview.tagName === "IMG"
+    ) {
+
+        preview.onload = function () {
+
+            console.log(
+                "Image loaded successfully:",
+                previewID
+            );
+
+            preview.style.display =
+                "block";
+
+        };
+
+        preview.onerror = function () {
+
+            console.error(
+                "Image failed to load:",
+                imageURL
+            );
+
+        };
+
+        preview.src = imageURL;
+
+        preview.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    // If preview is a DIV / container
+    let img =
+        preview.querySelector("img");
+
+    if (!img) {
+
+        img =
+            document.createElement("img");
+
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "50%";
+
+        preview.innerHTML = "";
+
+        preview.appendChild(img);
+
+    }
+
+
+    img.onload = function () {
+
+        console.log(
+            "Image loaded successfully:",
+            previewID
+        );
+
+        preview.style.display =
+            "block";
+
+    };
+
+
+    img.onerror = function () {
+
+        console.error(
+            "Image failed to load:",
+            imageURL
+        );
+
+    };
+
+
+    img.src = imageURL;
+
+    preview.style.display =
+        "block";
+
+}
+
+
+/*==================================================
+        REPLACEMENT FILE PREVIEW
+==================================================*/
+
+function setupReplacementPreview(
+    inputID,
+    previewID,
+    isSignature = false
+) {
+
+    const input =
+        document.getElementById(inputID);
+
+    const preview =
+        document.getElementById(previewID);
+
+    if (!input || !preview) {
+
+        console.warn(
+            "Preview setup failed:",
+            inputID,
+            previewID
+        );
+
+        return;
+    }
+
+    input.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                this.files &&
+                this.files[0];
+
+            if (!file)
+                return;
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function (event) {
+
+                    const imageURL =
+                        event.target.result;
+
+                    // If preview itself is IMG
+                    if (
+                        preview.tagName === "IMG"
+                    ) {
+
+                        preview.src =
+                            imageURL;
+
+                        preview.style.display =
+                            "block";
+
+                        return;
+                    }
+
+
+                    // If preview is container DIV
+                    let img =
+                        preview.querySelector("img");
+
+
+                    if (!img) {
+
+                        img =
+                            document.createElement("img");
+
+                        preview.innerHTML =
+                            "";
+
+                        preview.appendChild(img);
+
+                    }
+
+
+                    img.src =
+                        imageURL;
+
+                    img.style.width =
+                        "100%";
+
+                    img.style.height =
+                        "100%";
+
+                    img.style.objectFit =
+                        isSignature
+                            ? "contain"
+                            : "cover";
+
+                    img.style.borderRadius =
+                        isSignature
+                            ? "0"
+                            : "50%";
+
+
+                    preview.style.display =
+                        "block";
+
+
+                    console.log(
+                        "New file preview loaded:",
+                        previewID
+                    );
+
+                };
+
+
+            reader.onerror =
+                function () {
+
+                    console.error(
+                        "Unable to preview selected file:",
+                        file.name
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/*==================================================
+        CONDITIONAL FIELDS
+==================================================*/
+
+function triggerConditionalFields() {
+
+    const ids = [
+
+        "healthissues",
+
+        "otherclub",
+
+        "officialpost",
+
+        "accident"
+
+    ];
+
+
+    ids.forEach(function (id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+
+            element.dispatchEvent(
+
+                new Event(
+                    "change",
+                    {
+                        bubbles: true
+                    }
+                )
+
+            );
+
+        }
+
+    });
+
+}
+
+
+const saveChangesBtn =
+    document.getElementById("saveChangesBtn");
+
+if (saveChangesBtn) {
+
+    saveChangesBtn.addEventListener(
+        "click",
+        async function () {
+
+            console.log(
+                "SAVE CHANGES BUTTON CLICKED"
+            );
+
+            await updateMemberSubmit();
+
+        }
+    );
+
+}
+
+/*==================================================
+        SUBMIT UPDATE
+==================================================*/
+
+async function updateMemberSubmit() {
+
+    console.log(
+        "UPDATE MEMBER SUBMIT STARTED"
+    );
+
+    try {
+
+        Swal.fire({
+            title: "Saving...",
+            text: "Updating member information...",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        const data =
+            await collectMemberData();
+
+        console.log(
+            "UPDATE DATA:",
+            data
+        );
+
+        console.log(
+            "APPLICATION ID:",
+            data["Application ID"]
+        );
+
+        if (!data["Application ID"]) {
+
+            throw new Error(
+                "Application ID is missing."
+            );
+
+        }
+
+        const formData =
+            new URLSearchParams();
+
+        formData.append(
+            "action",
+            "UPDATE_MEMBER"
+        );
+
+        formData.append(
+            "data",
+            JSON.stringify(data)
+        );
+
+        console.log(
+            "SENDING REQUEST TO API"
+        );
+
+        const response =
+            await fetch(
+                EDIT_API_URL,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+        const responseText =
+            await response.text();
+
+        console.log(
+            "RAW RESPONSE:",
+            responseText
+        );
+
+        const result =
+            JSON.parse(responseText);
+
+        console.log(
+            "UPDATE RESULT:",
+            result
+        );
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message ||
+                "Update failed."
+            );
+
+        }
+
+        await Swal.fire({
+            icon: "success",
+            title: "Updated Successfully",
+            text: result.message
+        });
+
+        window.location.href =
+            "members.html";
+
+    }
+    catch (error) {
+
+        console.error(
+            "UPDATE ERROR:",
+            error
+        );
+
+        Swal.fire({
+            icon: "error",
+            title: "Update Failed",
+            text: error.message
+        });
+
+    }
+
+}
 
 /*==================================================
         FILE TO BASE64
@@ -130,10 +1139,10 @@ function fileToBase64(file) {
                 new FileReader();
 
             reader.onload =
-                function (e) {
+                function () {
 
                     resolve(
-                        e.target.result
+                        reader.result
                     );
 
                 };
@@ -141,7 +1150,9 @@ function fileToBase64(file) {
             reader.onerror =
                 reject;
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(
+                file
+            );
 
         }
     );
@@ -150,850 +1161,404 @@ function fileToBase64(file) {
 
 
 /*==================================================
-        LOAD EVENTS
+        UPLOAD REPLACEMENT FILE
 ==================================================*/
 
-async function loadEvents() {
+async function uploadReplacementFile(
+    file,
+    type
+) {
+
+    if (!file) {
+        return "";
+    }
+
+    const base64 =
+        await fileToBase64(file);
+
+
+    const formData =
+        new URLSearchParams();
+
+
+    formData.append(
+        "action",
+        "UPLOAD_FILE"
+    );
+
+
+    formData.append(
+        "data",
+        JSON.stringify({
+
+            applicationID:
+                EDIT_APPLICATION_ID,
+
+            memberID:
+                currentMember["Membership ID"] || "",
+
+            type:
+                type,
+
+            fileName:
+                file.name,
+
+            mimeType:
+                file.type,
+
+            base64:
+                base64
+
+        })
+    );
+
+
+    const response =
+        await fetch(
+            EDIT_API_URL,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+    const result =
+        await response.json();
+
 
     console.log(
-        "Loading events..."
+        "UPLOAD FILE RESPONSE:",
+        result
     );
 
-    eventsTable.innerHTML = `
-        <div style="
-            padding:30px;
-            text-align:center;
-            color:#cbd5e1;
-        ">
-            <i class="fa-solid fa-spinner fa-spin"></i>
-            Loading events...
-        </div>
-    `;
 
+    if (!result.success) {
 
-    try {
-
-        /*
-         * Use POST exactly like
-         * the working Membership system.
-         */
-
-        const formData =
-            new URLSearchParams();
-
-        formData.append(
-            "action",
-            "GET_EVENTS"
+        throw new Error(
+            result.message ||
+            "Unable to upload file."
         );
-
-        const response =
-            await fetch(API, {
-
-                method: "POST",
-
-                body: formData
-
-            });
-
-
-        console.log(
-            "GET EVENTS STATUS:",
-            response.status
-        );
-
-
-        const text =
-            await response.text();
-
-
-        console.log(
-            "GET EVENTS RESPONSE:",
-            text
-        );
-
-
-        let result;
-
-        try {
-
-            result =
-                JSON.parse(text);
-
-        }
-        catch (parseError) {
-
-            console.error(
-                "Invalid JSON:",
-                text
-            );
-
-            throw new Error(
-                "Server returned invalid JSON."
-            );
-
-        }
-
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "Failed to load events."
-            );
-
-        }
-
-
-        const events =
-            result.data || [];
-
-
-        console.log(
-            "EVENTS:",
-            events
-        );
-
-
-        renderEvents(events);
-
-
-    }
-    catch (error) {
-
-        console.error(
-            "LOAD EVENTS ERROR:",
-            error
-        );
-
-
-        eventsTable.innerHTML = `
-
-            <div style="
-                padding:30px;
-                color:#f87171;
-            ">
-
-                <strong>
-                    Failed to load events.
-                </strong>
-
-                <br><br>
-
-                ${error.message}
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/*==================================================
-        RENDER EVENTS
-==================================================*/
-
-function renderEvents(events) {
-
-    eventsTable.innerHTML = "";
-
-
-    if (!events.length) {
-
-        eventsTable.innerHTML = `
-
-            <div style="
-                padding:30px;
-                text-align:center;
-                color:#94a3b8;
-            ">
-
-                No events found.
-
-            </div>
-
-        `;
-
-        return;
 
     }
 
 
-    events.forEach(
-        function (event) {
-
-            const imageURL =
-                event["Image URL"] ||
-                "../assets/event-placeholder.jpg";
-
-
-            const status =
-                String(
-                    event["Status"] || "Inactive"
-                );
-
-
-            const statusClass =
-                status === "Active"
-                    ? "active"
-                    : "inactive";
-
-
-            const statusIcon =
-                status === "Active"
-
-                    ? '<i class="fa-solid fa-eye-slash"></i>'
-
-                    : '<i class="fa-solid fa-eye"></i>';
-
-
-            let eventDate = "";
-
-            if (event["Date"]) {
-
-                const date =
-                    new Date(
-                        event["Date"]
-                    );
-
-                if (!isNaN(date)) {
-
-                    eventDate =
-                        date.toLocaleDateString(
-                            "en-GB",
-                            {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric"
-                            }
-                        );
-
-                }
-
-            }
-
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "event-row";
-
-
-            row.innerHTML = `
-
-                <div>
-
-                    <img
-                        src="${imageURL}"
-                        alt="Event Poster"
-                        onerror="
-                            this.src='../assets/event-placeholder.jpg';
-                        "
-                    >
-
-                </div>
-
-
-                <div class="event-title">
-
-                    ${escapeHTML(
-                        event["Event Name"] || ""
-                    )}
-
-                </div>
-
-
-                <div class="event-date">
-
-                    ${eventDate}
-
-                </div>
-
-
-                <div>
-
-                    <span class="
-                        status
-                        ${statusClass}
-                    ">
-
-                        ${status}
-
-                    </span>
-
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        type="button"
-                        class="edit-btn"
-                        data-id="${event["Event ID"] || ""}"
-                        title="Edit Event"
-                    >
-
-                        <i class="fa-solid fa-pen"></i>
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="status-btn"
-                        data-id="${event["Event ID"] || ""}"
-                        title="Change Status"
-                    >
-
-                        ${statusIcon}
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            eventsTable.appendChild(row);
-
-        }
+    return (
+        result.data?.url ||
+        result.url ||
+        ""
     );
 
 }
 
 
 /*==================================================
-        HTML ESCAPE
+        COLLECT MEMBER DATA
 ==================================================*/
 
-function escapeHTML(value) {
+async function collectMemberData() {
 
-    return String(value)
+    const get =
+        function (id) {
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+            const element =
+                document.getElementById(id);
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/*==================================================
-        SEARCH EVENTS
-==================================================*/
-
-search.addEventListener(
-    "keyup",
-    function () {
-
-        const value =
-            this.value
-                .toLowerCase()
-                .trim();
-
-
-        document
-            .querySelectorAll(
-                ".event-row"
-            )
-            .forEach(
-                function (row) {
-
-                    row.style.display =
-
-                        row.innerText
-                            .toLowerCase()
-                            .includes(value)
-
-                            ? ""
-
-                            : "none";
-
-                }
-            );
-
-    }
-);
-
-
-/*==================================================
-        TOGGLE STATUS
-==================================================*/
-
-document.addEventListener(
-    "click",
-    async function (e) {
-
-        const btn =
-            e.target.closest(
-                ".status-btn"
-            );
-
-        if (!btn) return;
-
-
-        const eventID =
-            btn.dataset.id;
-
-
-        if (!eventID) {
-
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Event ID not found."
-            });
-
-            return;
-
-        }
-
-
-        btn.disabled = true;
-
-
-        try {
-
-            const formData =
-                new URLSearchParams();
-
-
-            formData.append(
-                "action",
-                "TOGGLE_STATUS"
-            );
-
-
-            formData.append(
-                "data",
-                JSON.stringify({
-
-                    eventID: eventID
-
-                })
-            );
-
-
-            const response =
-                await fetch(API, {
-
-                    method: "POST",
-
-                    body: formData
-
-                });
-
-
-            const text =
-                await response.text();
-
-
-            console.log(
-                "TOGGLE RESPONSE:",
-                text
-            );
-
-
-            const result =
-                JSON.parse(text);
-
-
-            if (!result.success) {
-
-                throw new Error(
-                    result.message ||
-                    "Unable to change status."
-                );
-
-            }
-
-
-            await loadEvents();
-
-
-        }
-        catch (error) {
-
-            console.error(
-                "TOGGLE STATUS ERROR:",
-                error
-            );
-
-
-            Swal.fire({
-
-                icon: "error",
-
-                title: "Status Update Failed",
-
-                text: error.message
-
-            });
-
-        }
-        finally {
-
-            btn.disabled = false;
-
-        }
-
-    }
-);
-
-
-/*==================================================
-        ADD EVENT
-==================================================*/
-
-eventForm.addEventListener(
-    "submit",
-    async function (e) {
-
-        e.preventDefault();
-
-
-        const file =
-            poster.files[0];
-
-
-        let base64 = "";
-
-
-        /*------------------------------------------
-                POSTER OPTIONAL
-        ------------------------------------------*/
-
-        if (file) {
-
-            base64 =
-                await fileToBase64(file);
-
-        }
-
-
-        /*------------------------------------------
-                PREPARE DATA
-        ------------------------------------------*/
-
-        const data = {
-
-            name:
-                document
-                    .getElementById(
-                        "eventName"
-                    )
-                    .value
-                    .trim(),
-
-
-            category:
-                document
-                    .getElementById(
-                        "eventCategory"
-                    )
-                    .value,
-
-
-            date:
-                document
-                    .getElementById(
-                        "eventDate"
-                    )
-                    .value,
-
-
-            time:
-                document
-                    .getElementById(
-                        "eventTime"
-                    )
-                    .value,
-
-
-            location:
-                document
-                    .getElementById(
-                        "eventLocation"
-                    )
-                    .value
-                    .trim(),
-
-
-            description:
-                document
-                    .getElementById(
-                        "eventDescription"
-                    )
-                    .value
-                    .trim(),
-
-
-            image:
-                base64,
-
-
-            link:
-                document
-                    .getElementById(
-                        "registrationLink"
-                    )
-                    .value
-                    .trim()
+            return element
+                ? element.value.trim()
+                : "";
 
         };
 
 
-        console.log(
-            "EVENT DATA:",
-            data
-        );
+    /*------------------------------------------
+            KEEP EXISTING FILE URLS
+    ------------------------------------------*/
+
+    let photoURL =
+        currentMember["Photo URL"] || "";
+
+    let signatureURL =
+        currentMember["Signature URL"] || "";
+
+    let paymentURL =
+        currentMember["Payment Proof URL"] || "";
 
 
-        /*------------------------------------------
-                BASIC VALIDATION
-        ------------------------------------------*/
+    /*------------------------------------------
+            PHOTO REPLACEMENT
+    ------------------------------------------*/
 
-        if (!data.name) {
-
-            Swal.fire({
-                icon: "warning",
-                title: "Event Name Required"
-            });
-
-            return;
-
-        }
+    const photoInput =
+        document.getElementById("photo");
 
 
-        if (!data.date) {
-
-            Swal.fire({
-                icon: "warning",
-                title: "Event Date Required"
-            });
-
-            return;
-
-        }
-
-
-        if (!data.time) {
-
-            Swal.fire({
-                icon: "warning",
-                title: "Event Time Required"
-            });
-
-            return;
-
-        }
-
-
-        if (!data.location) {
-
-            Swal.fire({
-                icon: "warning",
-                title: "Location Required"
-            });
-
-            return;
-
-        }
-
-
-        /*------------------------------------------
-                SHOW LOADING
-        ------------------------------------------*/
+    if (
+        photoInput &&
+        photoInput.files &&
+        photoInput.files.length > 0
+    ) {
 
         Swal.fire({
 
-            title: "Saving Event",
+            title:
+                "Uploading New Photo...",
 
-            text: "Please wait...",
+            allowOutsideClick:
+                false,
 
-            allowOutsideClick: false,
+            didOpen:
+                function () {
 
-            allowEscapeKey: false,
+                    Swal.showLoading();
 
-            didOpen: function () {
-
-                Swal.showLoading();
-
-            }
+                }
 
         });
 
 
-        try {
-
-            const formData =
-                new URLSearchParams();
-
-
-            formData.append(
-                "action",
-                "ADD_EVENT"
+        photoURL =
+            await uploadReplacementFile(
+                photoInput.files[0],
+                "PHOTO"
             );
-
-
-            formData.append(
-                "data",
-                JSON.stringify(data)
-            );
-
-
-            console.log(
-                "Sending event to Apps Script..."
-            );
-
-
-            const response =
-                await fetch(API, {
-
-                    method: "POST",
-
-                    body: formData
-
-                });
-
-
-            console.log(
-                "ADD EVENT STATUS:",
-                response.status
-            );
-
-
-            const text =
-                await response.text();
-
-
-            console.log(
-                "ADD EVENT RESPONSE:",
-                text
-            );
-
-
-            let result;
-
-
-            try {
-
-                result =
-                    JSON.parse(text);
-
-            }
-            catch (parseError) {
-
-                throw new Error(
-                    "Server returned invalid JSON:\n\n" +
-                    text
-                );
-
-            }
-
-
-            if (!result.success) {
-
-                throw new Error(
-                    result.message ||
-                    result.error ||
-                    "Event could not be added."
-                );
-
-            }
-
-
-            Swal.fire({
-
-                icon: "success",
-
-                title: "Event Added Successfully",
-
-                text:
-                    result.message ||
-                    "Event has been added."
-
-            });
-
-
-            /*--------------------------------------
-                    CLOSE MODAL
-            --------------------------------------*/
-
-            modal.classList.remove(
-                "show"
-            );
-
-
-            /*--------------------------------------
-                    RESET FORM
-            --------------------------------------*/
-
-            eventForm.reset();
-
-
-            preview.src = "";
-
-            preview.style.display =
-                "none";
-
-
-            /*--------------------------------------
-                    RELOAD EVENTS
-            --------------------------------------*/
-
-            loadEvents();
-
-
-        }
-        catch (error) {
-
-            console.error(
-                "ADD EVENT ERROR:",
-                error
-            );
-
-
-            Swal.fire({
-
-                icon: "error",
-
-                title: "Event Upload Failed",
-
-                text: error.message
-
-            });
-
-        }
 
     }
-);
 
 
-/*==================================================
-        INITIAL LOAD
-==================================================*/
+    /*------------------------------------------
+            SIGNATURE REPLACEMENT
+    ------------------------------------------*/
 
-loadEvents();
+    const signatureInput =
+        document.getElementById(
+            "signatureFile"
+        );
+
+
+    if (
+        signatureInput &&
+        signatureInput.files &&
+        signatureInput.files.length > 0
+    ) {
+
+        Swal.fire({
+
+            title:
+                "Uploading New Signature...",
+
+            allowOutsideClick:
+                false,
+
+            didOpen:
+                function () {
+
+                    Swal.showLoading();
+
+                }
+
+        });
+
+
+        signatureURL =
+            await uploadReplacementFile(
+                signatureInput.files[0],
+                "SIGNATURE"
+            );
+
+    }
+
+
+    /*------------------------------------------
+            RETURN UPDATED DATA
+    ------------------------------------------*/
+
+    return {
+
+        /* SYSTEM */
+
+        "Application ID":
+            EDIT_APPLICATION_ID,
+
+        "Membership ID":
+            get("memberID"),
+
+        "Application Date":
+            currentMember["Application Date"] || "",
+
+        "Status":
+            get("memberStatus"),
+
+
+        /* PERSONAL */
+
+        "Full Name":
+            get("fullname"),
+
+        "Date of Birth":
+            get("dob"),
+
+        "Gender":
+            get("gender"),
+
+        "Marital Status":
+            get("maritalstatus"),
+
+        "Blood Group":
+            get("bloodgroup"),
+
+        "Aadhaar Number":
+            get("aadhaar"),
+
+
+        /* ADDRESS */
+
+        "Address":
+            get("address"),
+
+        "State":
+            get("state"),
+
+        "District":
+            get("district"),
+
+        "PIN Code":
+            get("pincode"),
+
+
+        /* HEALTH */
+
+        "Health Issues":
+            get("healthissues"),
+
+        "Health Details":
+            get("healthdetails"),
+
+
+        /* CONTACT */
+
+        "Phone":
+            get("phone"),
+
+        "Email":
+            get("email"),
+
+        "Emergency Contact 1":
+            get("emergency1"),
+
+        "Emergency Contact 2":
+            get("emergency2"),
+
+
+        /* VEHICLE */
+
+        "Vehicle Name":
+            get("motorcyclemodel"),
+
+        "Motorcycle Model":
+            get("motorcyclemodel"),
+
+        "Vehicle Registration":
+            get("vehiclereg"),
+
+        "Vehicle Colour / Variant":
+            get("vehiclevariant"),
+
+        "Driving License":
+            get("license"),
+
+        "Engine Number":
+            get("enginenumber"),
+
+        "Chassis Number":
+            get("chassisnumber"),
+
+
+        /* OCCUPATION */
+
+        "Occupation":
+            get("working"),
+
+
+        /* CLUB */
+
+        "Other Club":
+            get("otherclub"),
+
+        "Other Club Details":
+            get("otherclubdetails"),
+
+        "Official Post":
+            get("officialpost"),
+
+        "Official Post Details":
+            get("officialpostdetails"),
+
+        "Social Media":
+            get("social"),
+
+
+        /* FAMILY */
+
+        "Father Name":
+            get("father"),
+
+        "Mother Name":
+            get("mother"),
+
+
+        /* ACCIDENT */
+
+        "Accident History":
+            get("accident"),
+
+        "Accident Details":
+            get("accidentdetails"),
+
+
+        /* FILES */
+
+        "Photo URL":
+            photoURL,
+
+        "Signature URL":
+            signatureURL,
+
+        "Payment Proof URL":
+            paymentURL,
+
+
+        /* KEEP SYSTEM FILES */
+
+        "QR Code URL":
+            currentMember["QR Code URL"] || "",
+
+        "Membership Card URL":
+            currentMember[
+                "Membership Card URL"
+            ] || "",
+
+        "Application PDF URL":
+            currentMember[
+                "Application PDF URL"
+            ] || "",
+
+
+        /* APPROVAL */
+
+        "Approved By":
+            currentMember[
+                "Approved By"
+            ] || "",
+
+        "Approved Date":
+            currentMember[
+                "Approved Date"
+            ] || "",
+
+        "Last Updated":
+            new Date().toISOString()
+
+    };
+
+}

@@ -1,5 +1,5 @@
 const EVENTS_API =
-"https://script.google.com/macros/s/AKfycbxcoPESR32V3Xl4yG4Mk59uv-0Pr1ZQ4yAHOHlmX2ljvQsNY3-71Gcpj5pwEICtditg9g/exec";
+"https://script.google.com/macros/s/AKfycbyvsQZcqyzXEfLnBmDRgOGjj4Jr2TXbNgkn3t9y2lE6wJZMLXbFDV5GKURkn4LiGzjmtA/exec";
 
 
 const container =
@@ -88,16 +88,93 @@ async function loadEvents() {
         }
 
 
+        /*==================================================
+                SHOW ACTIVE + UPCOMING EVENTS ONLY
+        ==================================================*/
+
+        const today = new Date();
+
+        /*
+            Remove time from today's date
+            so today's events are still considered upcoming.
+        */
+
+        today.setHours(0, 0, 0, 0);
+
+
+        events = events.filter(function (event) {
+
+            /*------------------------------------------
+                    CHECK STATUS
+            ------------------------------------------*/
+
+            const status =
+                String(
+                    event["Status"] || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (status !== "active") {
+
+                return false;
+
+            }
+
+
+            /*------------------------------------------
+                    CHECK EVENT DATE
+            ------------------------------------------*/
+
+            const eventDate =
+                new Date(
+                    event["Date"]
+                );
+
+
+            if (
+                isNaN(
+                    eventDate.getTime()
+                )
+            ) {
+
+                return false;
+
+            }
+
+
+            eventDate.setHours(
+                0,
+                0,
+                0,
+                0
+            );
+
+
+            /*------------------------------------------
+                    FUTURE / TODAY ONLY
+            ------------------------------------------*/
+
+            return eventDate >= today;
+
+        });
+
+
+        /*==================================================
+                NO ACTIVE EVENTS
+        ==================================================*/
+
         if (events.length === 0) {
 
             container.innerHTML = `
-
                 <div class="loading-events">
+                    <i class="fa-solid fa-calendar-xmark"></i>
 
-                    No Upcoming Events
-
+                    <p>
+                        No Upcoming Events
+                    </p>
                 </div>
-
             `;
 
             return;

@@ -553,7 +553,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         paymentProof: payment64,
 
-        signature: signature
+        signature: signature,
+
+        // ========================================
+        // TERMS & CONDITIONS
+        // ========================================
+
+        termsAccepted:
+            document.getElementById("agreeTerms").checked
+                ? "Yes"
+                : "No",
+
+        termsVersion: "1.0"
 
     };
     
@@ -634,7 +645,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }).then(() => {
 
-                    window.location.href = "members.html";
+                    window.location.href = "./index.html";
 
                 });
 

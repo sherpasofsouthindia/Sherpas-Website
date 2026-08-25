@@ -82,6 +82,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
         <form id="memberForm" novalidate>
 
+            <input
+                type="hidden"
+                id="applicationID"
+                name="applicationID">
+
             <div class="member-info-card">
 
                 <div class="info-box">
@@ -1003,7 +1008,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     </button>
 
                     <button
-                        type="submit"
+                        type="button"
+                        id="saveChangesBtn"
                         class="btn-primary">
 
                         <i class="fa-solid fa-floppy-disk"></i>

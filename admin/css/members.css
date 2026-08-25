@@ -733,3 +733,108 @@ IMAGE VIEWER
     color:white;
 
 }
+/*==================================================
+        EXPORT EXCEL BUTTON
+==================================================*/
+
+.export-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #16a34a;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.export-btn i {
+
+    font-size: 15px;
+
+}
+
+
+.export-btn:hover {
+
+    background: #15803d;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 16px
+        rgba(22, 163, 74, 0.25);
+
+}
+
+
+.export-btn:active {
+
+    transform: translateY(0);
+
+}
+
+
+/*==================================================
+        MOBILE
+==================================================*/
+
+@media (max-width: 768px) {
+
+    .export-btn {
+
+        padding: 10px 14px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+/*==================================================
+        APPLICATION PDF BUTTON
+==================================================*/
+
+.icon-btn.pdf {
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+}
+
+.icon-btn.pdf:hover {
+
+    background: #b91c1c;
+
+    transform: translateY(-1px);
+
+}
+

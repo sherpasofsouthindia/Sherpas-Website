@@ -1,5 +1,5 @@
 const ADMIN_API =
-"https://script.google.com/macros/s/AKfycbxcoPESR32V3Xl4yG4Mk59uv-0Pr1ZQ4yAHOHlmX2ljvQsNY3-71Gcpj5pwEICtditg9g/exec";
+"https://script.google.com/macros/s/AKfycbyvsQZcqyzXEfLnBmDRgOGjj4Jr2TXbNgkn3t9y2lE6wJZMLXbFDV5GKURkn4LiGzjmtA/exec";
 
 
 async function verifyAdminSession() {

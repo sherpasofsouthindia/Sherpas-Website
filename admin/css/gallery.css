@@ -1,0 +1,565 @@
+/* ==================================================
+   SHERPAS GALLERY
+   Gallery-specific styles
+   Load AFTER admin.css
+================================================== */
+
+
+/* ==================================================
+   GALLERY PANEL
+================================================== */
+
+.recent {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.gallery-panel {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+
+/* ==================================================
+   GALLERY CARD
+================================================== */
+
+.gallery-admin-item {
+    width: 100% !important;
+    min-width: 0;
+    box-sizing: border-box;
+
+    background: #18243a;
+    border-radius: 12px;
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.gallery-admin-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+
+/* ==================================================
+   GALLERY IMAGE
+================================================== */
+
+.gallery-admin-item > img {
+    width: 100% !important;
+    height: 170px !important;
+
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+
+    transition: transform 0.3s ease;
+}
+
+.gallery-admin-item:hover > img {
+    transform: scale(1.03);
+}
+
+
+/* ==================================================
+   GALLERY INFORMATION
+================================================== */
+
+.gallery-image-info {
+    padding: 12px;
+}
+
+.gallery-image-title {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gallery-image-description {
+    color: rgba(255,255,255,0.68);
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 7px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gallery-image-date {
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+    margin-bottom: 7px;
+}
+
+.gallery-image-file {
+    color: rgba(255,255,255,0.32);
+    font-size: 10px;
+    margin-bottom: 10px;
+
+    word-break: break-all;
+}
+
+
+/* ==================================================
+   DELETE BUTTON
+================================================== */
+
+.delete-photo-btn {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 8px 10px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #dc3545;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.delete-photo-btn:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+
+/* ==================================================
+   LOADING / EMPTY STATE
+================================================== */
+
+.gallery-loading {
+    padding: 40px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.gallery-empty {
+    padding: 50px;
+    text-align: center;
+    opacity: 0.6;
+}
+
+.gallery-upload-status {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+/* ==================================================
+   ADD PHOTO BUTTON
+================================================== */
+
+.page-header #addPhotoBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    background: #ff7518;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 12px 20px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 14px rgba(0,0,0,0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.page-header #addPhotoBtn i {
+    font-size: 15px;
+}
+
+.page-header #addPhotoBtn:hover {
+    background: #ff8a3d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+.page-header #addPhotoBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+}
+
+
+/* ==================================================
+   GALLERY MODAL
+================================================== */
+
+.gallery-modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 999999;
+
+    background: rgba(0,0,0,0.75);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.gallery-modal.show {
+    display: flex;
+}
+
+.gallery-modal-content {
+    width: min(650px, 95vw);
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #18243a;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+
+    box-sizing: border-box;
+}
+
+.gallery-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.gallery-modal-header h2 {
+    margin: 0;
+}
+
+.gallery-close {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   GALLERY FORM
+================================================== */
+
+.gallery-form-group {
+    margin-bottom: 18px;
+}
+
+.gallery-form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.gallery-form-group input,
+.gallery-form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: #101a2d;
+    color: #ffffff;
+}
+
+.gallery-form-group input[type="file"] {
+    padding: 10px;
+}
+
+
+/* ==================================================
+   IMAGE PREVIEW
+================================================== */
+
+.gallery-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.gallery-preview-grid img {
+    width: 100%;
+    height: 100px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+
+/* ==================================================
+   MODAL ACTION BUTTONS
+================================================== */
+
+.gallery-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.gallery-secondary-btn,
+.gallery-primary-btn {
+    border: none;
+    border-radius: 8px;
+
+    padding: 11px 18px;
+
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.gallery-primary-btn {
+    background: #ff7518;
+    color: #ffffff;
+}
+
+.gallery-secondary-btn {
+    background: #495057;
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   GALLERY PAGE - FULL WIDTH PANEL
+   Override admin.css .recent two-column layout
+================================================== */
+
+.recent:has(.gallery-panel) {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+
+
+/* ==================================================
+   GALLERY CARDS - 5 COLUMNS
+================================================== */
+
+.gallery-admin-grid {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+}
+
+
+/*==================================================
+        GALLERY IMAGE VIEWER
+==================================================*/
+
+#galleryImageViewer {
+    display: none;
+}
+
+#galleryImageViewer.active {
+    display: block;
+}
+
+
+/* DARK OVERLAY */
+
+.gallery-viewer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+
+    background: rgba(0, 0, 0, 0.92);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 50px;
+
+    cursor: zoom-out;
+}
+
+
+/* LARGE IMAGE */
+
+#galleryViewerImage {
+    max-width: 90vw;
+    max-height: 88vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6);
+
+    cursor: default;
+}
+
+
+/* CLOSE BUTTON */
+
+.gallery-viewer-close {
+    position: fixed;
+
+    top: 25px;
+    right: 30px;
+
+    width: 48px;
+    height: 48px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    color: #fff;
+
+    font-size: 32px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 1000000;
+
+    transition: 0.2s;
+}
+
+.gallery-viewer-close:hover {
+    background: #F97316;
+    transform: scale(1.08);
+}
+
+
+/* IMAGE TITLE */
+
+.gallery-viewer-title {
+    position: fixed;
+
+    bottom: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: #fff;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    max-width: 80vw;
+
+    text-align: center;
+}
+
+
+/* PREVENT BACKGROUND SCROLL */
+
+body.gallery-viewer-open {
+    overflow: hidden;
+}
+
+
+/* IMAGE SHOULD LOOK CLICKABLE */
+
+.gallery-admin-item img {
+    cursor: zoom-in;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 1400px) {
+    .gallery-admin-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .gallery-admin-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .gallery-admin-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px;
+    }
+
+    .gallery-admin-item > img {
+        height: 140px !important;
+    }
+
+    .gallery-modal-content {
+        max-height: 95vh;
+    }
+}
+
+@media (max-width: 450px) {
+    .gallery-admin-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+

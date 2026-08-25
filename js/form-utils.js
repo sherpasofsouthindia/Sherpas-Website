@@ -3,7 +3,7 @@
 ==================================================*/
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbxM4wmmQIexH-qL0wCcFdgO8MZ-FsfAhpmYy9DMf9JwfY096McsVWo2Ae5UgLMnqp_0/exec";
+"https://script.google.com/macros/s/AKfycbwkjav1SaN7h60-fYSGkATL9Y51Nw7HF3DW0ffeVAPM-Nf12Q0rg3VnxwguH7iVVDnu/exec";
 
 async function checkDuplicateField(field, value) {
 

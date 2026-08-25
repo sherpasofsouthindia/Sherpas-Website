@@ -146,36 +146,60 @@ ${member.Status}
 
 </td>
 
-<td>
+    <td>
 
-<button
-class="icon-btn"
-onclick="viewMember(${allMembers.indexOf(member)})">
+        <!-- VIEW MEMBER -->
 
-<i class="fa-solid fa-eye"></i>
+        <button
+            class="icon-btn"
+            onclick="viewMember(${allMembers.indexOf(member)})"
+            title="View Member">
 
-</button>
+            <i class="fa-solid fa-eye"></i>
 
-${(member["Status"] || "").toLowerCase() === "pending" ? `
+        </button>
 
-<button
-class="icon-btn approve"
-onclick="approveMember(${allMembers.indexOf(member)})"
-title="Approve Member">
 
-<i class="fa-solid fa-circle-check"></i>
+        <!-- APPROVE -->
 
-</button>
+        ${(member["Status"] || "").toLowerCase() === "pending" ? `
 
-` : ""}
+        <button
+            class="icon-btn approve"
+            onclick="approveMember(${allMembers.indexOf(member)})"
+            title="Approve Member">
 
-<button
-class="icon-btn"
-onclick="editMember(${allMembers.indexOf(member)})">
+            <i class="fa-solid fa-circle-check"></i>
 
-<i class="fa-solid fa-pen"></i>
+        </button>
 
-</td>
+        ` : ""}
+
+
+        <!-- EDIT -->
+
+        <button
+            class="icon-btn"
+            onclick="editMember(${allMembers.indexOf(member)})"
+            title="Edit Member">
+
+            <i class="fa-solid fa-pen"></i>
+
+        </button>
+
+
+        <!-- APPLICATION PDF -->
+
+        <button
+            class="icon-btn pdf"
+            onclick="generateApplicationPDF(${allMembers.indexOf(member)})"
+            title="Application PDF">
+
+            <i class="fa-solid fa-file-pdf"></i>
+
+        </button>
+
+    </td>
 
 </tr>
 
@@ -638,13 +662,33 @@ function closeImage(){
 
 }
 
-function editMember(index){
+function editMember(index) {
 
     const member = allMembers[index];
 
+    const applicationID =
+        member["Application ID"];
+
+    if (!applicationID) {
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Application ID Missing",
+
+            text:
+                "Unable to open this member for editing."
+
+        });
+
+        return;
+
+    }
+
     window.location.href =
-        "edit-member.html?id=" +
-        member["Membership ID"];
+        "edit-member.html?applicationID=" +
+        encodeURIComponent(applicationID);
 
 }
 
@@ -892,8 +936,405 @@ async function rejectSelectedMember(){
     }
 
 }
+
+/*==================================================
+        EXPORT ALL MEMBERS TO EXCEL
+==================================================*/
+
+document
+    .getElementById("exportExcelBtn")
+    .addEventListener("click", function () {
+
+        if (!allMembers || allMembers.length === 0) {
+
+            Swal.fire({
+                icon: "info",
+                title: "No Members",
+                text: "There are no members available to export."
+            });
+
+            return;
+
+        }
+
+
+        /*------------------------------------------
+                COLUMNS TO EXCLUDE
+        ------------------------------------------*/
+
+        const excludedFields = [
+
+            "Photo URL",
+            "Signature URL",
+            "Payment Proof URL",
+            "Photo",
+            "Signature",
+            "Payment Proof"
+
+        ];
+
+
+        /*------------------------------------------
+                PREPARE DATA
+        ------------------------------------------*/
+
+        const exportData = allMembers.map(
+            function (member) {
+
+                const row = {};
+
+                Object.keys(member).forEach(
+                    function (key) {
+
+                        if (
+                            !excludedFields.includes(key)
+                        ) {
+
+                            row[key] =
+                                member[key] ?? "";
+
+                        }
+
+                    }
+                );
+
+                return row;
+
+            }
+        );
+
+
+        /*------------------------------------------
+                CREATE WORKBOOK
+        ------------------------------------------*/
+
+        const worksheet =
+            XLSX.utils.json_to_sheet(
+                exportData
+            );
+
+
+        const workbook =
+            XLSX.utils.book_new();
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "Members"
+        );
+
+
+        /*------------------------------------------
+                COLUMN WIDTH
+        ------------------------------------------*/
+
+        const columns =
+            Object.keys(exportData[0]);
+
+
+        worksheet["!cols"] =
+            columns.map(
+                function (column) {
+
+                    let maxLength =
+                        column.length;
+
+                    exportData.forEach(
+                        function (row) {
+
+                            const value =
+                                String(
+                                    row[column] || ""
+                                );
+
+                            if (
+                                value.length >
+                                maxLength
+                            ) {
+
+                                maxLength =
+                                    value.length;
+
+                            }
+
+                        }
+                    );
+
+                    return {
+                        wch:
+                            Math.min(
+                                Math.max(
+                                    maxLength + 2,
+                                    12
+                                ),
+                                35
+                            )
+                    };
+
+                }
+            );
+
+
+        /*------------------------------------------
+                DOWNLOAD
+        ------------------------------------------*/
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+
+        XLSX.writeFile(
+            workbook,
+            `SHERPAS_Members_${today}.xlsx`
+        );
+
+
+        Swal.fire({
+
+            icon: "success",
+
+            title: "Excel Exported",
+
+            text:
+                allMembers.length +
+                " members exported successfully.",
+
+            timer: 1800,
+
+            showConfirmButton: false
+
+        });
+
+    });
+
 function printMembershipCard(){
 
     alert("Coming Soon");
 
 }
+
+
+/*==================================================
+        GENERATE APPLICATION PDF
+==================================================*/
+
+async function generateApplicationPDF(index) {
+
+    const member =
+        allMembers[index];
+
+    if (!member) {
+
+        Swal.fire({
+            icon: "error",
+            title: "Member Not Found",
+            text: "Unable to find member details."
+        });
+
+        return;
+
+    }
+
+
+    const applicationID =
+        member["Application ID"];
+
+
+    if (!applicationID) {
+
+        Swal.fire({
+            icon: "error",
+            title: "Application ID Missing",
+            text: "This member does not have an Application ID."
+        });
+
+        return;
+
+    }
+
+
+        
+    /*==================================================
+            LOADING
+    ==================================================*/
+
+    Swal.fire({
+
+        title:
+            "Generating Application PDF",
+
+        html:
+            "Please wait...<br><br>" +
+            "Preparing member details and PDF.",
+
+        allowOutsideClick: false,
+
+        allowEscapeKey: false,
+
+        didOpen: () => {
+
+            Swal.showLoading();
+
+        }
+
+    });
+
+
+    try {
+
+        const formData =
+            new URLSearchParams();
+
+
+        formData.append(
+            "action",
+            "GENERATE_MEMBER_PDF"
+        );
+
+
+        formData.append(
+            "data",
+            JSON.stringify({
+
+                applicationID:
+                    applicationID
+
+            })
+        );
+
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "POST",
+
+                    body: formData
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "GENERATE_MEMBER_PDF response:",
+            result
+        );
+
+
+        if (!result.success) {
+
+            throw new Error(
+
+                result.message ||
+                "Unable to generate PDF."
+
+            );
+
+        }
+
+
+        const downloadURL =
+            result.data &&
+            result.data.downloadURL
+                ? result.data.downloadURL
+                : "";
+
+        if (!downloadURL) {
+
+            throw new Error(
+                "PDF was generated but no download URL was returned."
+            );
+
+        }
+
+
+        /*==================================================
+                SUCCESS
+        ==================================================*/
+
+        await Swal.fire({
+
+            icon: "success",
+
+            title:
+                "PDF Generated Successfully",
+
+            text:
+                "The membership application PDF is ready.",
+
+            confirmButtonText:
+                "Open PDF"
+
+        });
+
+
+        /*==================================================
+                OPEN PDF
+        ==================================================*/
+
+        if (
+            result.success &&
+            result.data &&
+            result.data.downloadURL
+        ) {
+
+            const link =
+                document.createElement("a");
+
+            link.href =
+                result.data.downloadURL;
+
+            link.download =
+                "SHERPAS_" +
+                result.data.applicationID +
+                "_Membership_Application.pdf";
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+
+        }
+
+
+        /*==================================================
+                REFRESH MEMBERS
+        ==================================================*/
+
+        await loadMembers();
+
+    }
+    catch (error) {
+
+        console.error(
+            "PDF GENERATION ERROR:",
+            error
+        );
+
+
+        Swal.fire({
+
+            icon: "error",
+
+            title:
+                "PDF Generation Failed",
+
+            text:
+                error.message ||
+                "Unable to generate the PDF."
+
+        });
+
+    }
+
+}
+

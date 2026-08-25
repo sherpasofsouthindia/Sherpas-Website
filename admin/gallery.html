@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gallery Management | Sherpas Admin</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/gallery.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <img src="assets/logo.png" class="logo">
+
+        <h2>SHERPAS</h2>
+
+        <p>Ride • Explore • Conquer</p>
+
+        <nav>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a href="members.html">
+                <i class="fa-solid fa-users"></i>
+                Members
+            </a>
+
+            <a href="events.html">
+                <i class="fa-solid fa-calendar-days"></i>
+                Events & Rides
+            </a>
+
+            <a href="gallery.html" class="active">
+                <i class="fa-solid fa-image"></i>
+                Gallery
+            </a>
+
+            <a href="messages.html">
+                <i class="fa-solid fa-envelope"></i>
+                Messages
+            </a>
+
+            <a href="settings.html">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+            <a href="login.html">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="content">
+
+        <header class="page-header">
+
+            <div>
+
+                <h1>
+                    Gallery
+                </h1>
+
+                <p>
+                    Manage Sherpas adventure photographs
+                </p>
+
+            </div>
+
+            <button
+                id="addPhotoBtn"
+                class="primary-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Photo
+
+            </button>
+
+        </header>
+
+
+        <!-- =========================
+             GALLERY STATISTICS
+        ========================== -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fa-solid fa-images"></i>
+
+                <h2 id="totalPhotos">
+                    0
+                </h2>
+
+                <p>
+                    Total Photos
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                <h2 id="uploadedPhotos">
+                    0
+                </h2>
+
+                <p>
+                    Cloudinary Photos
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             GALLERY PANEL
+        ========================== -->
+
+        <section class="recent">
+
+            <div class="panel gallery-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Adventure Gallery
+                        </h3>
+
+                        <p>
+                            Upload and manage photographs
+                        </p>
+
+                    </div>
+
+                    <div id="galleryStatus">
+
+                        Ready
+
+                    </div>
+
+                </div>
+
+
+                <!-- Gallery items will be inserted here -->
+
+                <div
+                    id="galleryGrid"
+                    class="gallery-admin-grid">
+
+                    <div class="gallery-loading">
+
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+
+                        Loading gallery...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     ADD PHOTO MODAL
+========================== -->
+
+<div id="photoModal" class="gallery-modal">
+
+    <div class="gallery-modal-content">
+
+        <div class="gallery-modal-header">
+
+            <h2>
+                <i class="fa-solid fa-images"></i>
+                Add Gallery Photos
+            </h2>
+
+            <button
+                type="button"
+                id="closePhotoModal"
+                class="gallery-close">
+                &times;
+            </button>
+
+        </div>
+
+
+        <form id="photoForm">
+
+            <div class="gallery-form-group">
+
+                <label for="photoTitle">
+                    Photo Title
+                </label>
+
+                <input
+                    type="text"
+                    id="photoTitle"
+                    placeholder="Example: Onam Ride 2026">
+
+            </div>
+
+
+            <div class="gallery-form-group">
+
+                <label for="photoDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="photoDescription"
+                    rows="3"
+                    placeholder="Example: Sherpas Onam adventure ride">
+                </textarea>
+
+            </div>
+
+
+            <div class="gallery-form-group">
+
+                <label for="photoFile">
+                    Select Photos
+                </label>
+
+                <input
+                    type="file"
+                    id="photoFile"
+                    accept="image/jpeg,image/png,image/webp"
+                    multiple
+                    required>
+
+                <small>
+                    You can select multiple JPG, PNG or WEBP images.
+                </small>
+
+            </div>
+
+
+            <div
+                id="photoPreview"
+                class="gallery-preview-grid">
+            </div>
+
+
+            <div
+                id="uploadStatus"
+                class="gallery-upload-status">
+            </div>
+
+
+            <div class="gallery-modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelPhotoBtn"
+                    class="gallery-secondary-btn">
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    id="uploadPhotoBtn"
+                    class="gallery-primary-btn">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    Upload Photos
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SCRIPTS
+========================== -->
+
+<script src="js/gallery.js"></script>
+<script src="js/form-utils.js"></script>
+<script src="js/admin-auth.js"></script>
+
+</body>
+
+</html>
+
