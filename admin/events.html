@@ -26,7 +26,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
         <img src="assets/logo.png" class="logo">
 
-        <h2>SHERPAS</h2>
+        <h2>SHERPAS OF SOUTH INDIA</h2>
 
         <p>Ride • Explore • Conquer</p>
 
@@ -68,16 +68,513 @@ Add Event
 
 </header>
 
-<div class="search-box">
+<!-- ==========================================
+     EVENTS & RIDES TABS
+========================================== -->
 
-<input
-type="text"
-id="searchEvent"
-placeholder="Search Events">
+<div class="events-tabs">
+
+    <button
+        type="button"
+        class="events-tab active"
+        data-tab="eventsPanel"
+    >
+        <i class="fa-solid fa-calendar-days"></i>
+        Events
+    </button>
+
+    <button
+            type="button"
+            class="events-tab"
+            data-tab="registrationsPanel"
+        >
+            <i class="fa-solid fa-motorcycle"></i>
+            Ride Registrations
+        </button>
+
+        <button
+        type="button"
+        class="events-tab"
+        data-tab="eventDayPanel"
+    >
+        <i class="fa-solid fa-flag-checkered"></i>
+        Event Day
+    </button>
 
 </div>
 
-<div id="eventsTable"></div>
+
+<!-- ==========================================
+     EVENTS PANEL
+========================================== -->
+
+<div
+    id="eventsPanel"
+    class="events-tab-panel active"
+>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchEvent"
+            placeholder="Search Events">
+
+    </div>
+
+
+    <div id="eventsTable"></div>
+
+</div>
+
+
+<!-- ==========================================
+     RIDE REGISTRATIONS PANEL
+========================================== -->
+
+<div
+    id="registrationsPanel"
+    class="events-tab-panel"
+>
+
+    <section
+        id="rideRegistrationsSection"
+        class="ride-registrations-section"
+    >
+
+        <div class="ride-registrations-header">
+
+            <div>
+
+                <h2>
+                    <i class="fa-solid fa-motorcycle"></i>
+                    Ride Registrations
+                </h2>
+
+                <p>
+                    View and manage member registrations
+                    for upcoming rides and events.
+                </p>
+
+            </div>
+
+
+            <div class="registration-header-actions">
+
+                <button
+                    type="button"
+                    id="exportRegistrationsExcelBtn"
+                    class="registration-export-btn"
+                >
+                    <i class="fa-solid fa-file-excel"></i>
+                    Export Event Excel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="refreshRideRegistrationsBtn"
+                    class="refresh-registrations-btn"
+                >
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="registration-filters">
+
+            <div class="registration-filter-group">
+
+                <label for="registrationEventFilter">
+                    Event
+                </label>
+
+                <select id="registrationEventFilter">
+
+                    <option value="">
+                        All Events
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="registration-filter-group">
+
+                <label for="registrationPaymentFilter">
+                    Payment
+                </label>
+
+                <select id="registrationPaymentFilter">
+
+                    <option value="">
+                        All
+                    </option>
+
+                    <option value="Pending Verification">
+                        Pending Verification
+                    </option>
+
+                    <option value="Verified">
+                        Verified
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="registration-filter-group">
+
+                <label for="registrationApprovalFilter">
+                    Approval
+                </label>
+
+                <select id="registrationApprovalFilter">
+
+                    <option value="">
+                        All
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Approved">
+                        Approved
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="registration-filter-group">
+
+                <label for="registrationStatusFilter">
+                    Registration
+                </label>
+
+                <select id="registrationStatusFilter">
+
+                    <option value="">
+                        All
+                    </option>
+
+                    <option value="Submitted">
+                        Submitted
+                    </option>
+
+                    <option value="Approved">
+                        Approved
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="registration-search-group">
+
+                <label for="registrationSearch">
+                    Search
+                </label>
+
+                <div class="registration-search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="registrationSearch"
+                        placeholder="Registration ID, member or phone"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="registrationSummary"
+            class="registration-summary"
+        >
+        </div>
+
+        <div
+            id="rideRegistrationsTable"
+            class="ride-registrations-table"
+        >
+
+            <div class="registrations-loading">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                Click Ride Registrations to load...
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ==========================================
+     EVENT DAY PANEL
+========================================== -->
+
+<div
+    id="eventDayPanel"
+    class="events-tab-panel"
+>
+
+    <section
+        id="eventDaySection"
+        class="event-day-section"
+    >
+
+        <div class="event-day-header">
+
+            <div>
+
+                <h2>
+                    <i class="fa-solid fa-flag-checkered"></i>
+                    Event Day Management
+                </h2>
+
+                <p>
+                    Manage rider check-in, start,
+                    return and attendance.
+                </p>
+
+            </div>
+
+            <div class="event-day-export-actions">
+
+                <button
+                    type="button"
+                    id="exportEventDayExcelBtn"
+                    class="event-day-export-excel-btn"
+                    title="Download event attendance Excel"
+                >
+                    <i class="fa-solid fa-file-excel"></i>
+                    Excel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="exportEventDayPdfBtn"
+                    class="event-day-export-pdf-btn"
+                    title="Download event attendance PDF"
+                >
+                    <i class="fa-solid fa-file-pdf"></i>
+                    PDF
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="event-day-controls">
+
+            <div class="event-day-filter">
+
+                <label for="eventDayEventSelect">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Select Event
+                </label>
+
+                <select id="eventDayEventSelect">
+
+                    <option value="">
+                        Select an event
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="refreshEventDayBtn"
+                class="event-day-refresh-btn"
+                title="Refresh Event Day"
+            >
+                <i class="fa-solid fa-rotate"></i>
+            </button>
+
+        </div>
+
+
+        <div
+            id="eventDayDashboard"
+            class="event-day-dashboard"
+            style="display:none;"
+        >
+
+            <div class="event-day-title">
+
+                <div>
+
+                    <h3 id="eventDaySelectedEvent">
+                        Event
+                    </h3>
+
+                    <p id="eventDayEventDetails">
+                        Event details
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="event-day-stats">
+
+                <div class="event-day-stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </span>
+
+                    <div>
+                        <small>Approved</small>
+                        <strong id="eventDayApprovedCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="event-day-stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                    </span>
+
+                    <div>
+                        <small>Checked In</small>
+                        <strong id="eventDayCheckedInCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="event-day-stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                    </span>
+
+                    <div>
+                        <small>Started</small>
+                        <strong id="eventDayStartedCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="event-day-stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </span>
+
+                    <div>
+                        <small>Returned</small>
+                        <strong id="eventDayReturnedCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="event-day-stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-user-slash"></i>
+                    </span>
+
+                    <div>
+                        <small>Absent</small>
+                        <strong id="eventDayNoShowCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="event-day-search">
+
+                <div class="event-day-search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="eventDayRiderSearch"
+                        placeholder="Search Registration ID, Membership ID, phone or rider"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="eventDayRiderList"
+                class="event-day-rider-list"
+            >
+
+                <div class="event-day-empty">
+
+                    <i class="fa-solid fa-motorcycle"></i>
+
+                    <p>
+                        Select an event to load approved riders.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>  
 
 </main>
 
@@ -138,6 +635,160 @@ placeholder="Event Description"></textarea>
 type="url"
 id="registrationLink"
 placeholder="Registration Link">
+
+<!-- ==========================================
+     REGISTRATION SETTINGS
+========================================== -->
+
+<div class="registration-settings">
+
+    <h3>
+        <i class="fa-solid fa-user-plus"></i>
+        Registration Settings
+    </h3>
+
+    <label class="checkbox-row">
+        <input
+            type="checkbox"
+            id="registrationEnabled"
+        >
+        Enable Registration
+    </label>
+
+
+    <div
+        id="registrationOptions"
+        style="display:none;"
+    >
+
+        <label>
+            Membership Required
+        </label>
+
+        <select id="membershipRequired">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Approved Members Only
+        </label>
+
+        <select id="approvedMembersOnly">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Allow Pillion
+        </label>
+
+        <select id="allowPillion">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Maximum Participants
+        </label>
+
+        <input
+            type="number"
+            id="maximumParticipants"
+            min="0"
+            placeholder="Leave 0 for unlimited"
+        >
+
+
+        <label>
+            Registration Fee
+        </label>
+
+        <input
+            type="number"
+            id="registrationFee"
+            min="0"
+            step="0.01"
+            placeholder="0"
+        >
+
+
+        <label>
+            Payment Required
+        </label>
+
+        <select id="paymentRequired">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Payment Proof Required
+        </label>
+
+        <select id="paymentProofRequired">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Admin Payment Verification
+        </label>
+
+        <select id="adminPaymentVerification">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Admin Approval Required
+        </label>
+
+        <select id="adminApprovalRequired">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <label>
+            Registration Open Date
+        </label>
+
+        <input
+            type="date"
+            id="registrationOpenDate"
+        >
+
+
+        <label>
+            Registration Close Date
+        </label>
+
+        <input
+            type="date"
+            id="registrationCloseDate"
+        >
+
+
+        <label>
+            Registration Status
+        </label>
+
+        <select id="registrationStatus">
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+        </select>
+
+    </div>
+
+</div>
+
 
 <input
 type="file"
@@ -206,6 +857,127 @@ Save Event
     >
 
 </div>
+
+<!-- ==========================================
+     RIDE REGISTRATION VIEW MODAL
+========================================== -->
+
+<div
+    id="registrationViewModal"
+    class="registration-view-modal"
+>
+
+    <div class="registration-view-modal-content">
+
+        <div class="registration-view-header">
+
+            <div>
+
+                <h2>
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    Registration Details
+                </h2>
+
+                <p id="registrationViewSubtitle">
+                    Ride registration
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                id="closeRegistrationView"
+                class="registration-view-close"
+                onclick="closeRegistrationView()"
+                aria-label="Close registration details"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <div
+            id="registrationViewBody"
+            class="registration-view-body"
+        >
+
+            <div class="registrations-loading">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                Loading registration...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     PAYMENT PROOF MODAL
+========================================== -->
+
+<div
+    id="paymentProofModal"
+    class="payment-proof-modal"
+>
+
+    <div class="payment-proof-modal-content">
+
+        <div class="payment-proof-header">
+
+            <div>
+
+                <h2>
+                    <i class="fa-solid fa-receipt"></i>
+                    Payment Proof
+                </h2>
+
+                <p id="paymentProofSubtitle">
+                    Registration Payment
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                id="closePaymentProofModal"
+                class="payment-proof-close"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <div
+            id="paymentProofBody"
+            class="payment-proof-body"
+        >
+
+            <div class="registrations-loading">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                Loading payment proof...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script src="js/events-admin.js"></script>
 

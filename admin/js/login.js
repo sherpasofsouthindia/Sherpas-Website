@@ -1,5 +1,5 @@
 const ADMIN_API =
-"https://script.google.com/macros/s/AKfycbyvsQZcqyzXEfLnBmDRgOGjj4Jr2TXbNgkn3t9y2lE6wJZMLXbFDV5GKURkn4LiGzjmtA/exec";
+"https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
 
 
 document

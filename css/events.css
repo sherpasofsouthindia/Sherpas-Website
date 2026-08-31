@@ -528,3 +528,25 @@ Allow enlarged poster to be viewed
 
 }
 
+.event-register-btn {
+    margin-top: 14px;
+    width: 100%;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #ff7a00;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.event-register-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+.event-register-btn i {
+    margin-right: 6px;
+}

@@ -882,3 +882,27 @@ accent-color:#ff7a00;
 cursor:pointer;
 
 }
+
+.payment-details span{
+
+    color:#cbd5e1;
+
+}
+
+.payment-right{
+
+    text-align:center;
+
+}
+
+.payment-qr{
+
+    width:220px;
+
+    background:#ffffff;
+
+    padding:10px;
+
+    border-radius:12px;
+
+}

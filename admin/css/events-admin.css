@@ -71,7 +71,8 @@
 
 #eventsTable {
     width: 100%;
-    margin-top: 30px;
+    margin-top: 10px;
+    height: 100%;
 }
 
 
@@ -95,9 +96,9 @@
 
     display: grid;
 
-    grid-template-columns: 360px minmax(0, 1fr) 180px;
+    grid-template-columns: 200px minmax(0, 1fr) 150px;
 
-    gap: 24px;
+    gap:20px;
 
     align-items: start;
 
@@ -114,7 +115,7 @@
 
     width: 100%;
 
-    height: 260px;
+    height: 50px;
 
     border-radius: 14px;
 
@@ -127,9 +128,9 @@
 
 .event-poster-image {
 
-    width: 100%;
+    width: 50%;
 
-    height: 100%;
+    height: 50%;
 
     display: block;
 
@@ -322,19 +323,23 @@
 
 
 .status-badge {
+    display: inline-flex;
 
-    display: block;
+    align-items: center;
+    justify-content: center;
 
-    text-align: center;
+    min-width: 78px;
 
-    padding: 9px 12px;
+    padding: 6px 10px;
 
-    border-radius: 20px;
+    border-radius: 999px;
 
-    font-size: 14px;
-
+    font-size: 11px;
     font-weight: 700;
 
+    line-height: 1.2;
+
+    white-space: nowrap;
 }
 
 
@@ -1480,3 +1485,4917 @@ body.poster-open {
     }
 
 }
+
+/*==================================================
+        RIDE REGISTRATIONS
+==================================================*/
+
+.ride-registrations-section {
+
+    margin-top: 40px;
+    padding: 28px;
+
+    background: #141e2f;
+
+    border-radius: 18px;
+
+}
+
+
+.ride-registrations-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+
+}
+
+
+.ride-registrations-header h2 {
+
+    margin: 0;
+
+    color: #ff7a00;
+
+}
+
+
+.ride-registrations-header p {
+
+    margin: 8px 0 0;
+
+    color: #aeb7c6;
+
+}
+
+
+.refresh-registrations-btn {
+
+    padding: 11px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: #24334b;
+
+    color: #fff;
+
+    font-weight: 600;
+
+}
+
+
+.refresh-registrations-btn:hover {
+
+    opacity: 0.9;
+
+}
+
+
+.registrations-loading {
+
+    padding: 40px;
+
+    text-align: center;
+
+    color: #aeb7c6;
+
+}
+
+
+.registrations-empty {
+
+    padding: 40px;
+
+    text-align: center;
+
+    color: #aeb7c6;
+
+}
+
+
+.registration-row {
+    display: grid;
+
+    grid-template-columns:
+        42px
+        minmax(110px, 0.9fr)
+        minmax(150px, 1.2fr)
+        minmax(155px, 1.15fr)
+        minmax(110px, 0.9fr)
+        minmax(110px, 0.9fr)
+        minmax(115px, 0.9fr)
+        minmax(210px, 1.7fr);
+
+    gap: 12px;
+
+    align-items: center;
+
+    padding: 0 16px;
+
+    box-sizing: border-box;
+}
+
+.registration-row > div {
+    min-width: 0;
+}
+
+.registration-row:not(.header) {
+    background: #0d1626;
+
+    min-height: 76px;
+
+    margin-bottom: 8px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.04);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.registration-row:not(.header):hover {
+    background: #111c30;
+
+    border-color:
+        rgba(255, 122, 0, 0.15);
+
+    transform: translateY(-1px);
+}
+
+
+
+.registration-row.header {
+    background: #22314a;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    min-height: 48px;
+
+    border-radius: 10px;
+
+    margin-bottom: 8px;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+
+.registration-cell {
+
+    min-width: 0;
+
+}
+
+
+.registration-id {
+
+    color: #ff7a00;
+
+    font-weight: 700;
+
+}
+
+
+.registration-event {
+
+    font-weight: 600;
+
+}
+
+
+.registration-member {
+
+    font-weight: 600;
+
+}
+
+
+.registration-subtext {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: #8f9caf;
+
+    font-size: 12px;
+
+}
+
+
+.status-badge {
+
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.status-pending {
+
+    background: rgba(255, 165, 0, 0.15);
+
+    color: #ffb347;
+
+}
+
+
+.status-verified {
+
+    background: rgba(0, 200, 120, 0.15);
+
+    color: #65e0a5;
+
+}
+
+
+.status-approved {
+
+    background: rgba(0, 200, 120, 0.15);
+
+    color: #65e0a5;
+
+}
+
+
+.status-rejected {
+
+    background: rgba(255, 70, 70, 0.15);
+
+    color: #ff7777;
+
+}
+
+
+.registration-actions {
+    display: flex;
+
+    flex-wrap: nowrap;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 7px;
+
+    width: 100%;
+}
+
+
+.registration-action-btn {
+    width: 36px;
+    height: 36px;
+
+    min-width: 36px;
+    min-height: 36px;
+
+    padding: 0;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+
+.registration-view-btn {
+    background: #34445d;
+    color: #fff;
+    border-color: #465875;
+}
+
+.registration-action-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.22);
+}
+
+
+.registration-action-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.registration-payment-btn {
+    background: #7050d8;
+    color: #fff;
+    border-color: #866be6;
+}
+
+
+.registration-verify-payment-btn {
+    background: #218c62;
+    color: #fff;
+    border-color: #31ab7c;
+}
+
+.registration-approve-btn {
+    background: #218c62;
+    color: #fff;
+    border-color: #31ab7c;
+}
+
+
+.registration-reject-btn {
+    background: #d83f4b;
+    color: #fff;
+    border-color: #ef5964;
+}
+
+.registration-pdf-btn {
+    background: #b91c1c;
+    color: #fff;
+    border-color: #d13a3a;
+}
+
+
+
+@media (max-width: 1100px) {
+
+    .registration-row {
+
+        grid-template-columns:1fr 1.4fr 1.5fr 1.1fr 1.1fr 1.1fr 2.2fr;;
+
+    }
+
+    .registration-row.header {
+
+        display: none;
+
+    }
+
+}
+
+/*==================================================
+        EVENTS & RIDES TABS
+==================================================*/
+
+.events-tabs {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin: 20px 0 24px;
+
+    padding: 6px;
+
+    background: #18243a;
+
+    border-radius: 12px;
+
+    width: fit-content;
+
+}
+
+
+.events-tab {
+
+    border: none;
+
+    background: transparent;
+
+    color: #aeb7c6;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+.events-tab i {
+
+    margin-right: 7px;
+
+}
+
+
+.events-tab:hover {
+
+    color: #ffffff;
+
+}
+
+
+.events-tab.active {
+
+    background: #ff7a00;
+
+    color: #ffffff;
+
+}
+
+
+.events-tab-panel {
+
+    display: none;
+
+}
+
+
+.events-tab-panel.active {
+
+    display: block;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .events-tabs {
+
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+    .events-tab {
+
+        width: 100%;
+
+        padding: 11px 8px;
+
+    }
+
+}
+
+/*==================================================
+        REGISTRATION VIEW MODAL
+==================================================*/
+
+.registration-view-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    background: rgba(0, 0, 0, 0.78);
+
+    padding: 30px;
+
+    overflow-y: auto;
+
+}
+
+
+.registration-view-modal.show {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+}
+
+
+.registration-view-modal-content {
+
+    width: min(1100px, 100%);
+
+    max-height: calc(100vh - 60px);
+
+    overflow-y: auto;
+
+    margin-top: 10px;
+
+    background: #162235;
+
+    border-radius: 18px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+
+}
+
+
+.registration-view-header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding: 24px 28px;
+
+    background: #1c2a40;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+.registration-id {
+    color: #ff7a00;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+
+.registration-event {
+    color: #f8fafc;
+    font-weight: 700;
+}
+
+
+.registration-member {
+    color: #f8fafc;
+    font-weight: 700;
+}
+
+
+.registration-subtext {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #8291a7;
+
+    font-size: 11px;
+
+    line-height: 1.35;
+}
+
+.registration-view-header h2 {
+
+    margin: 0;
+
+    color: #ff7a00;
+
+}
+
+
+.registration-view-header p {
+
+    margin: 6px 0 0;
+
+    color: #aeb7c6;
+
+}
+
+
+.registration-view-close {
+
+    width: 40px;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #303f56;
+
+    color: #fff;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+}
+
+
+.registration-view-close:hover {
+
+    background: #ff7a00;
+
+}
+
+
+.registration-view-body {
+
+    padding: 28px;
+
+}
+
+
+.registration-detail-section {
+
+    margin-bottom: 24px;
+
+    padding: 20px;
+
+    background: #0d1626;
+
+    border-radius: 12px;
+
+}
+
+
+.registration-detail-section h3 {
+
+    margin: 0 0 18px;
+
+    padding-bottom: 10px;
+
+    color: #ff7a00;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+.registration-detail-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+}
+
+
+.registration-detail-item {
+
+    padding: 12px 14px;
+
+    background: #162238;
+
+    border-radius: 8px;
+
+}
+
+
+.registration-detail-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8492a8;
+
+    font-size: 12px;
+
+}
+
+
+.registration-detail-value {
+
+    color: #fff;
+
+    font-weight: 600;
+
+    word-break: break-word;
+
+}
+
+
+.registration-detail-value a {
+
+    color: #69a8ff;
+
+    text-decoration: none;
+
+}
+
+
+.registration-detail-value a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+.registration-detail-full {
+
+    grid-column: 1 / -1;
+
+}
+
+
+.registration-status-line {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.registration-view-file {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 6px;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    background: #6d52d9;
+
+    color: #fff !important;
+
+    text-decoration: none !important;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .registration-view-modal {
+
+        padding: 10px;
+
+    }
+
+    .registration-view-modal-content {
+
+        max-height: calc(100vh - 20px);
+
+    }
+
+    .registration-view-header {
+
+        padding: 18px;
+
+    }
+
+    .registration-view-body {
+
+        padding: 16px;
+
+    }
+
+    .registration-detail-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .registration-detail-full {
+
+        grid-column: auto;
+
+    }
+
+}
+
+/*==================================================
+        PAYMENT PROOF MODAL
+==================================================*/
+
+.payment-proof-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    background: rgba(0, 0, 0, 0.82);
+
+    padding: 25px;
+
+    overflow-y: auto;
+
+}
+
+
+.payment-proof-modal.show {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+}
+
+
+.payment-proof-modal-content {
+
+    width: min(1000px, 100%);
+
+    height: calc(100vh - 50px);
+
+    margin-top: 0;
+
+    background: #162235;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.payment-proof-header {
+
+    height: 72px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 14px 22px;
+
+    background: #1c2a40;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+}
+
+
+.payment-proof-header h2 {
+
+    margin: 0;
+
+    color: #ff7a00;
+
+}
+
+
+.payment-proof-header p {
+
+    margin: 3px 0 0;
+
+    color: #9ca9bc;
+
+    font-size: 13px;
+
+}
+
+
+.payment-proof-close {
+
+    width: 40px;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #303f56;
+
+    color: #fff;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+}
+
+
+.payment-proof-close:hover {
+
+    background: #ff7a00;
+
+}
+
+
+.payment-proof-body {
+
+    height: calc(100% - 72px);
+
+    padding: 18px;
+
+    background: #0d1626;
+
+}
+
+
+.payment-proof-frame {
+
+    width: 100%;
+
+    height: 100%;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #fff;
+
+}
+
+
+.payment-proof-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 12px;
+
+}
+
+
+.payment-proof-open-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 9px 14px;
+
+    border-radius: 7px;
+
+    background: #34445d;
+
+    color: #fff;
+
+    text-decoration: none;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .payment-proof-modal {
+
+        padding: 8px;
+
+    }
+
+    .payment-proof-modal-content {
+
+        height: calc(100vh - 16px);
+
+    }
+
+}
+
+.registration-reject-payment-btn {
+    background: #d83f4b;
+    color: #fff;
+}
+
+
+/*==================================================
+        REGISTRATION MANAGEMENT
+==================================================*/
+
+.registration-header-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+}
+
+
+.registration-export-btn,
+.refresh-registrations-btn {
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 11px 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+}
+
+
+.registration-export-btn {
+
+    background: #1f7a4d;
+
+    color: #fff;
+
+}
+
+
+.registration-export-btn:hover {
+
+    background: #27965f;
+
+}
+
+
+.registration-filters {
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr
+        1fr
+        1fr
+        1fr
+        2fr;
+
+    gap: 12px;
+
+    margin: 20px 0 14px;
+
+    padding: 16px;
+
+    background: #0d1626;
+
+    border-radius: 12px;
+
+}
+
+
+.registration-filter-group,
+.registration-search-group {
+
+    min-width: 0;
+
+}
+
+
+.registration-filter-group label,
+.registration-search-group label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #8e9bb0;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.registration-filter-group select,
+.registration-search-box {
+
+    width: 100%;
+
+    min-height: 42px;
+
+    border: 1px solid #33445f;
+
+    border-radius: 8px;
+
+    background: #162238;
+
+    color: #fff;
+
+}
+
+
+.registration-filter-group select {
+
+    padding: 0 12px;
+
+}
+
+
+.registration-search-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 12px;
+
+}
+
+
+.registration-search-box i {
+
+    color: #748399;
+
+}
+
+
+.registration-search-box input {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #fff;
+
+}
+
+
+.registration-search-box input::placeholder {
+
+    color: #728095;
+
+}
+
+
+.registration-summary {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+
+}
+
+
+.registration-summary-item {
+
+    padding: 9px 13px;
+
+    border-radius: 8px;
+
+    background: #162238;
+
+    color: #dbe2ed;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+.registration-summary-item strong {
+
+    color: #ff7a00;
+
+    margin-right: 5px;
+
+}
+
+
+@media (max-width: 1100px) {
+
+    .registration-row {
+        grid-template-columns:
+            110px
+            150px
+            150px
+            110px
+            110px
+            115px
+            210px;
+    }
+
+    .registration-row.header {
+        display: grid;
+    }
+
+    .registration-actions {
+        width: max-content;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .registration-header-actions {
+
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .registration-export-btn,
+    .refresh-registrations-btn {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+    .registration-filters {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .ride-registrations-section {
+        padding: 18px;
+        overflow-x: auto;
+    }
+
+    .registration-row {
+        min-width: 980px;
+    }
+
+}
+
+
+/*==================================================
+        BULK REGISTRATION SELECTION
+==================================================*/
+
+.registration-select-cell {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.registration-select,
+.registration-select-all {
+    width: 18px;
+    height: 18px;
+
+    margin: 0;
+
+    accent-color: #ff7a00;
+
+    cursor: pointer;
+}
+
+
+.registration-select-placeholder {
+    display: block;
+
+    width: 18px;
+    height: 18px;
+}
+
+
+/*==================================================
+        BULK ACTION TOOLBAR
+==================================================*/
+
+.bulk-registration-toolbar {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 12px;
+
+    padding: 12px 16px;
+
+    background: #18243a;
+
+    border: 1px solid
+        rgba(255,255,255,.06);
+
+    border-radius: 10px;
+}
+
+
+.bulk-selection-info {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+}
+
+
+.bulk-selection-info i {
+    color: #ff7a00;
+}
+
+
+.bulk-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.bulk-action-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 34px;
+
+    padding: 7px 12px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        opacity .15s ease;
+}
+
+
+.bulk-action-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+
+.bulk-action-btn:disabled {
+    opacity: .45;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.bulk-verify-btn {
+    background: #218c62;
+}
+
+
+.bulk-approve-btn {
+    background: #218c62;
+}
+
+
+.bulk-clear-btn {
+    background: #34445d;
+}
+
+
+@media (max-width: 800px) {
+
+    .bulk-registration-toolbar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .bulk-actions {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .registration-row {
+
+        min-width: 1020px;
+
+    }
+
+}
+
+/* =========================================================
+   EVENT DAY
+   CLEAN / CONSOLIDATED VERSION
+   Replace ALL old Event Day CSS with this section
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   MAIN SECTION
+   --------------------------------------------------------- */
+
+.event-day-section {
+    margin-top: 40px;
+    padding: 28px;
+
+    background: #141e2f;
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+}
+
+
+.event-day-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+
+.event-day-header h2 {
+    margin: 0;
+
+    color: #ff7a00;
+}
+
+
+.event-day-header p {
+    margin: 8px 0 0;
+
+    color: #aeb7c6;
+}
+
+
+/* ---------------------------------------------------------
+   EXPORT BUTTONS
+   --------------------------------------------------------- */
+
+.event-day-export-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.event-day-export-excel-btn,
+.event-day-export-pdf-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 36px;
+
+    padding: 8px 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: #fff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        transform .15s ease,
+        filter .15s ease;
+}
+
+
+.event-day-export-excel-btn {
+    background: #218c62;
+}
+
+
+.event-day-export-pdf-btn {
+    background: #c62828;
+}
+
+
+.event-day-export-excel-btn:hover,
+.event-day-export-pdf-btn:hover {
+    filter: brightness(1.08);
+
+    transform: translateY(-1px);
+}
+
+
+.event-day-export-excel-btn:active,
+.event-day-export-pdf-btn:active {
+    transform: translateY(0);
+}
+
+
+.event-day-export-actions i {
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   PLACEHOLDER
+   --------------------------------------------------------- */
+
+.event-day-placeholder {
+    min-height: 280px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background: #0d1626;
+
+    border: 1px dashed rgba(255,255,255,.1);
+
+    border-radius: 14px;
+
+    color: #94a3b8;
+}
+
+
+.event-day-placeholder i {
+    margin-bottom: 14px;
+
+    font-size: 42px;
+
+    color: #ff7a00;
+}
+
+
+.event-day-placeholder h3 {
+    margin: 0 0 8px;
+
+    color: #fff;
+}
+
+
+.event-day-placeholder p {
+    margin: 0;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   EVENT CONTROLS
+   --------------------------------------------------------- */
+
+.event-day-controls {
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+
+.event-day-filter {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.event-day-filter label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #aeb7c6;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.event-day-filter label i {
+    margin-right: 5px;
+
+    color: #ff7a00;
+}
+
+
+.event-day-filter select {
+    width: 100%;
+
+    height: 44px;
+
+    padding: 0 14px;
+
+    color: #fff;
+
+    background: #18243a;
+
+    border: 1px solid #354762;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+
+.event-day-refresh-btn {
+    width: 44px;
+
+    height: 44px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #34445d;
+
+    color: #fff;
+
+    cursor: pointer;
+}
+
+
+.event-day-refresh-btn:hover {
+    background: #435675;
+}
+
+
+/* ---------------------------------------------------------
+   EVENT TITLE
+   --------------------------------------------------------- */
+
+.event-day-title {
+    margin-bottom: 20px;
+}
+
+
+.event-day-title h3 {
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 22px;
+}
+
+
+.event-day-title p {
+    margin: 5px 0 0;
+
+    color: #8997aa;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   STAT CARDS
+   --------------------------------------------------------- */
+
+.event-day-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+.event-day-stat-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    background: #0d1626;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    box-sizing: border-box;
+}
+
+
+.stat-icon {
+    width: 38px;
+
+    min-width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(255,122,0,.12);
+
+    border-radius: 9px;
+
+    color: #ff7a00;
+}
+
+
+.event-day-stat-card small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #8d9aae;
+
+    font-size: 11px;
+}
+
+
+.event-day-stat-card strong {
+    color: #fff;
+
+    font-size: 22px;
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH
+   --------------------------------------------------------- */
+
+.event-day-search {
+    margin-bottom: 16px;
+}
+
+
+.event-day-search-box {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.event-day-search-box i {
+    position: absolute;
+
+    left: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #7f8da2;
+}
+
+
+.event-day-search-box input {
+    width: 100%;
+
+    height: 44px;
+
+    padding:
+        0
+        14px
+        0
+        42px;
+
+    box-sizing: border-box;
+
+    background: #18243a;
+
+    color: #fff;
+
+    border: 1px solid #354762;
+
+    border-radius: 8px;
+
+    outline: none;
+}
+
+
+.event-day-search-box input:focus {
+    border-color: #ff7a00;
+}
+
+
+/* ---------------------------------------------------------
+   RIDER LIST
+   --------------------------------------------------------- */
+
+.event-day-rider-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.event-day-empty {
+    min-height: 180px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background: #0d1626;
+
+    border-radius: 12px;
+
+    color: #8d9aae;
+}
+
+
+.event-day-empty i {
+    margin-bottom: 10px;
+
+    font-size: 32px;
+
+    color: #ff7a00;
+}
+
+
+/* =========================================================
+   BULK TOOLBAR
+   ========================================================= */
+
+.event-day-bulk-toolbar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+
+    padding: 11px 14px;
+
+    background: #18243a;
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+}
+
+
+.event-day-bulk-toolbar .event-day-bulk-actions,
+.event-day-bulk-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+}
+
+
+.event-day-select-all {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #fff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.event-day-select-all input,
+.event-day-rider-select {
+    width: 19px;
+
+    height: 19px;
+
+    margin: 0;
+
+    accent-color: #ff7a00;
+
+    cursor: pointer;
+}
+
+
+.event-day-selected-count {
+    color: #9aa7ba;
+
+    font-size: 12px;
+}
+
+
+.event-day-selected-count strong {
+    color: #ff7a00;
+}
+
+
+/* Bulk button base */
+
+.event-day-bulk-toolbar button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 34px;
+
+    padding: 7px 11px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    color: #fff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        transform .15s ease,
+        filter .15s ease,
+        opacity .15s ease;
+}
+
+
+.event-day-bulk-toolbar button:hover:not(:disabled) {
+    filter: brightness(1.08);
+
+    transform: translateY(-1px);
+}
+
+
+.event-day-bulk-toolbar button:disabled {
+    opacity: .42;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.event-day-bulk-checkin-btn {
+    background: #218c62;
+}
+
+
+.event-day-bulk-start-btn {
+    background: #b86a1b;
+}
+
+
+.event-day-bulk-absent-btn {
+    background: #b52d2d;
+}
+
+
+.event-day-bulk-return-btn {
+    background: #286da8;
+}
+
+
+.event-day-bulk-clear-btn {
+    background: #34445d;
+}
+
+
+/* =========================================================
+   DESKTOP RIDER CARD
+   ========================================================= */
+
+.event-day-rider-card {
+    display: grid;
+
+    grid-template-columns:
+        34px
+        minmax(150px, 1fr)
+        minmax(120px, .8fr)
+        minmax(145px, .9fr)
+        minmax(220px, 1.6fr)
+        minmax(118px, 1fr)
+        minmax(118px, 1fr)
+        minmax(118px, 1fr)
+        max-content;
+
+    align-items: center;
+
+    column-gap: 9px;
+
+    width: 100%;
+
+    min-height: 76px;
+
+    padding: 10px 12px;
+
+    background: #0d1626;
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    border-radius: 12px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+.event-day-rider-card > div {
+    min-width: 0;
+}
+
+
+/* Checkbox */
+
+.event-day-select-cell {
+    grid-column: 1;
+
+    grid-row: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* Rider */
+
+.event-day-rider-card > div:nth-child(2) {
+    grid-column: 2;
+
+    grid-row: 1;
+
+    min-width: 0;
+}
+
+
+/* Member */
+
+.event-day-rider-card > div:nth-child(3) {
+    grid-column: 3;
+
+    grid-row: 1;
+
+    min-width: 0;
+}
+
+
+/* Vehicle */
+
+.event-day-rider-card > div:nth-child(4) {
+    grid-column: 4;
+
+    grid-row: 1;
+
+    min-width: 0;
+}
+
+
+.event-day-rider-card strong {
+    display: block;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    line-height: 1.15;
+}
+
+
+.event-day-rider-card span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #ff7a00;
+
+    font-weight: 700;
+
+    font-size: 12px;
+}
+
+
+.event-day-rider-card small {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #8d9aae;
+
+    font-size: 10px;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   ADMIN REMARK
+   ========================================================= */
+
+.event-day-admin-remark {
+    grid-column: 5;
+
+    grid-row: 1;
+
+    width: 100%;
+
+    min-width: 0;
+
+    margin: 0;
+
+    padding: 6px 10px;
+
+    border-left: 2px solid #ff7a00;
+
+    border-radius: 5px;
+
+    background: rgba(255,122,0,.07);
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+.event-day-admin-remark-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-bottom: 2px;
+
+    color: #ff7a00;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+}
+
+
+.event-day-admin-remark-text {
+    color: #d8deea;
+
+    font-size: 9px;
+
+    line-height: 1.25;
+
+    white-space: normal;
+
+    overflow: hidden;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+}
+
+
+/* =========================================================
+   ATTENDANCE
+   ========================================================= */
+
+/*
+   The attendance wrapper is flattened only on desktop
+   so Check-In / Start / Return can stay on the same row.
+*/
+
+.event-day-rider-card > div:last-child {
+    grid-column: 6 / -1;
+
+    grid-row: 1;
+
+    min-width: 0;
+
+    width: 100%;
+
+    margin: 0;
+}
+
+
+/* Flatten attendance wrapper */
+
+.event-day-rider-card > div:last-child {
+    display: contents;
+}
+
+
+.event-day-attendance-timeline {
+    display: contents;
+}
+
+
+/* Check-In / Start / Return */
+
+.event-day-timeline-item {
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 46px;
+
+    padding: 6px 7px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    border-radius: 8px;
+
+    background: rgba(255,255,255,.035);
+
+    overflow: hidden;
+}
+
+
+.event-day-timeline-item.completed {
+    border-color: rgba(33,140,98,.28);
+}
+
+
+.event-day-timeline-icon {
+    width: 26px;
+
+    min-width: 26px;
+
+    height: 26px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 6px;
+
+    background: rgba(255,122,0,.12);
+
+    color: #ff7a00;
+}
+
+
+.event-day-timeline-content {
+    min-width: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+
+    overflow: hidden;
+}
+
+
+.event-day-timeline-content strong {
+    display: block;
+
+    color: #fff;
+
+    font-size: 10px;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.event-day-timeline-time,
+.event-day-timeline-pending {
+    display: block;
+
+    max-width: 100%;
+
+    color: #ff7a00;
+
+    font-size: 8px;
+
+    line-height: 1.15;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.event-day-timeline-pending {
+    color: #9aa7ba;
+}
+
+
+/* =========================================================
+   ATTENDANCE ACTIONS
+   ========================================================= */
+
+.event-day-attendance-actions {
+    grid-column: 9;
+
+    grid-row: 1;
+
+    width: max-content;
+
+    display: flex !important;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    flex-wrap: nowrap !important;
+
+    gap: 5px;
+
+    margin: 0 !important;
+}
+
+
+.event-day-attendance-actions > .event-day-attendance-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin: 0;
+
+    width: auto;
+}
+
+
+/* Base individual buttons */
+
+.event-day-checkin-btn,
+.event-day-start-btn,
+.event-day-return-btn,
+.event-day-absent-btn,
+.event-day-undo-checkin-btn {
+    display: inline-flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 30px;
+
+    padding: 6px 9px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    color: #fff;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.event-day-checkin-btn {
+    background: #218c62;
+}
+
+
+.event-day-checkin-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+.event-day-start-btn {
+    background: #b86a1b;
+}
+
+
+.event-day-start-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+.event-day-return-btn {
+    background: #286da8;
+}
+
+
+.event-day-return-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+.event-day-absent-btn {
+    background: #b52d2d;
+}
+
+
+.event-day-absent-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+.event-day-undo-checkin-btn {
+    background: #34445d;
+}
+
+
+.event-day-undo-checkin-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.event-day-status-badge {
+    display: inline-flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 28px;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    color: #fff;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+.event-day-status-badge.started {
+    background: rgba(184,106,27,.18);
+
+    color: #ffb020;
+}
+
+
+.event-day-status-badge.returned {
+    background: rgba(255,166,0,.12);
+
+    color: #ffb020;
+}
+
+
+.event-day-status-badge.absent {
+    background: #8f2020;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .event-day-rider-card {
+        grid-template-columns:
+            34px
+            1.15fr
+            1fr
+            1fr;
+
+        grid-template-rows:
+            auto
+            auto
+            auto;
+            
+        column-gap: 10px;
+
+        row-gap: 7px;
+
+        padding: 11px 12px;
+    }
+
+
+    .event-day-rider-card > div:nth-child(2) {
+        grid-column: 2;
+
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:nth-child(3) {
+        grid-column: 3;
+
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:nth-child(4) {
+        grid-column: 4;
+
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:last-child {
+        display: block !important;
+
+        grid-column: 1 / -1;
+
+        grid-row: 3;
+    }
+
+
+    .event-day-attendance-timeline {
+        display: grid !important;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 7px;
+    }
+
+
+    .event-day-attendance-actions {
+        width: 100%;
+
+        justify-content: flex-end;
+
+        margin-top: 6px !important;
+
+        flex-wrap: wrap !important;
+    }
+
+
+    .event-day-admin-remark {
+        grid-column: 1 / -1;
+
+        grid-row: 2;
+
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .event-day-section {
+        margin-top: 24px;
+
+        padding: 16px;
+    }
+
+
+    .event-day-header {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 10px;
+    }
+
+
+    .event-day-export-actions {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .event-day-export-excel-btn,
+    .event-day-export-pdf-btn {
+        width: 100%;
+
+        min-height: 34px;
+
+        padding: 7px 8px;
+
+        font-size: 10px;
+    }
+
+
+    .event-day-controls {
+        align-items: stretch;
+    }
+
+
+    .event-day-stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .event-day-bulk-toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .event-day-bulk-toolbar .event-day-bulk-actions,
+    .event-day-bulk-actions {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 6px;
+    }
+
+
+    .event-day-bulk-toolbar button {
+        width: 100%;
+
+        min-height: 34px;
+
+        font-size: 10px;
+    }
+
+
+    .event-day-rider-card {
+        grid-template-columns:
+            30px
+            1fr;
+
+        grid-template-rows:
+            auto
+            auto
+            auto
+            auto
+            auto;
+
+        gap: 7px;
+
+        padding: 10px;
+    }
+
+
+    .event-day-select-cell {
+        grid-column: 1;
+
+        grid-row: 1;
+
+        align-items: flex-start;
+    }
+
+
+    .event-day-rider-card > div:nth-child(2) {
+        grid-column: 2;
+
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:nth-child(3) {
+        grid-column: 2;
+
+        grid-row: 2;
+    }
+
+
+    .event-day-rider-card > div:nth-child(4) {
+        grid-column: 2;
+
+        grid-row: 3;
+    }
+
+
+    .event-day-admin-remark {
+        grid-column: 1 / -1;
+
+        grid-row: 4;
+    }
+
+
+    .event-day-rider-card > div:last-child {
+        grid-column: 1 / -1;
+
+        grid-row: 5;
+
+        display: block !important;
+    }
+
+
+    .event-day-attendance-timeline {
+        display: grid !important;
+
+        grid-template-columns: 1fr;
+
+        gap: 6px;
+    }
+
+
+    .event-day-timeline-item {
+        min-height: 42px;
+
+        padding: 7px 8px;
+    }
+
+
+    .event-day-timeline-icon {
+        width: 27px;
+
+        min-width: 27px;
+
+        height: 27px;
+    }
+
+
+    .event-day-timeline-content strong {
+        font-size: 10px;
+    }
+
+
+    .event-day-timeline-time,
+    .event-day-timeline-pending {
+        font-size: 9px;
+
+        white-space: normal;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .event-day-attendance-actions {
+        justify-content: flex-start;
+
+        width: 100%;
+
+        margin-top: 6px !important;
+
+        gap: 6px;
+    }
+
+
+    .event-day-checkin-btn,
+    .event-day-start-btn,
+    .event-day-return-btn,
+    .event-day-absent-btn,
+    .event-day-undo-checkin-btn {
+        min-height: 31px;
+
+        padding: 6px 8px;
+
+        font-size: 9px;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .event-day-stats {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .event-day-stat-card {
+        padding: 11px;
+
+        gap: 8px;
+    }
+
+
+    .stat-icon {
+        width: 32px;
+
+        min-width: 32px;
+
+        height: 32px;
+    }
+
+
+    .event-day-stat-card strong {
+        font-size: 18px;
+    }
+
+
+    .event-day-stat-card small {
+        font-size: 10px;
+    }
+
+
+    .event-day-bulk-toolbar .event-day-bulk-actions,
+    .event-day-bulk-actions {
+        grid-template-columns: 1fr;
+    }
+
+
+    .event-day-rider-card strong {
+        font-size: 13px;
+    }
+
+
+    .event-day-rider-card span {
+        font-size: 11px;
+    }
+
+
+    .event-day-rider-card small {
+        font-size: 9px;
+    }
+
+
+    .event-day-admin-remark-title {
+        font-size: 9px;
+    }
+
+
+    .event-day-admin-remark-text {
+        font-size: 9px;
+    }
+
+}
+/* =========================================================
+   EVENT DAY - FIXED COLUMN ALIGNMENT
+   IMPORTANT:
+   Keep this block at the VERY END of the CSS file.
+   ========================================================= */
+
+@media (min-width: 1201px) {
+
+    /* -----------------------------------------------------
+       RIDER ROW
+       ----------------------------------------------------- */
+
+    .event-day-rider-card {
+        display: grid !important;
+
+        grid-template-columns:
+            34px
+            minmax(145px, 1.05fr)
+            minmax(115px, 0.85fr)
+            minmax(135px, 0.9fr)
+            minmax(220px, 1.6fr)
+            minmax(125px, 1fr)
+            minmax(125px, 1fr)
+            minmax(125px, 1fr)
+            minmax(90px, auto) !important;
+
+        align-items: center;
+
+        column-gap: 9px;
+
+        width: 100%;
+
+        min-height: 72px;
+
+        padding: 9px 12px !important;
+
+        box-sizing: border-box;
+    }
+
+
+    /* -----------------------------------------------------
+       BASIC COLUMNS
+       ----------------------------------------------------- */
+
+    .event-day-select-cell {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:nth-child(3) {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+
+    .event-day-rider-card > div:nth-child(4) {
+        grid-column: 4;
+        grid-row: 1;
+    }
+
+
+    /* -----------------------------------------------------
+       ADMIN REMARK = ALWAYS COLUMN 5
+       ----------------------------------------------------- */
+
+    .event-day-admin-remark {
+        grid-column: 5 !important;
+        grid-row: 1 !important;
+
+        width: 100%;
+
+        min-width: 0;
+
+        margin: 0 !important;
+
+        padding: 6px 9px !important;
+
+        box-sizing: border-box;
+
+        border-left: 2px solid #ff7a00;
+
+        border-radius: 6px;
+
+        background: rgba(255, 122, 0, 0.07);
+
+        overflow: hidden;
+    }
+
+
+    .event-day-admin-remark-title {
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        margin-bottom: 2px;
+
+        color: #ff7a00;
+
+        font-size: 9px !important;
+
+        font-weight: 700;
+
+        line-height: 1.1;
+    }
+
+
+    .event-day-admin-remark-text {
+        color: #d8deea;
+
+        font-size: 9px !important;
+
+        line-height: 1.2;
+
+        white-space: normal;
+
+        overflow: hidden;
+
+        display: -webkit-box;
+
+        webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+    }
+
+
+
+    .event-day-rider-card > div:last-child {
+        display: contents !important;
+    }
+
+
+    .event-day-attendance-timeline {
+        display: contents !important;
+    }
+
+    .event-day-attendance-timeline
+    > .event-day-timeline-item:nth-child(1) {
+        grid-column: 6 !important;
+        grid-row: 1 !important;
+    }
+
+
+    .event-day-attendance-timeline
+    > .event-day-timeline-item:nth-child(2) {
+        grid-column: 7 !important;
+        grid-row: 1 !important;
+    }
+
+
+    .event-day-attendance-timeline
+    > .event-day-timeline-item:nth-child(3) {
+        grid-column: 8 !important;
+        grid-row: 1 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       STATUS BOX
+       ----------------------------------------------------- */
+
+    .event-day-timeline-item {
+        width: 100% !important;
+
+        min-width: 0 !important;
+
+        min-height: 44px !important;
+
+        padding: 6px 7px !important;
+
+        display: flex !important;
+
+        flex-direction: row !important;
+
+        align-items: center !important;
+
+        gap: 6px !important;
+
+        box-sizing: border-box;
+
+        border-radius: 8px;
+    }
+
+
+    .event-day-timeline-icon {
+        width: 25px !important;
+
+        min-width: 25px !important;
+
+        height: 25px !important;
+
+        flex-shrink: 0;
+    }
+
+
+    .event-day-timeline-content {
+        min-width: 0 !important;
+
+        width: 100%;
+
+        overflow: hidden;
+    }
+
+
+    .event-day-timeline-content strong {
+        display: block;
+
+        font-size: 10px !important;
+
+        line-height: 1.1;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    .event-day-timeline-time,
+    .event-day-timeline-pending {
+        display: block;
+
+        font-size: 8px !important;
+
+        line-height: 1.15;
+
+        white-space: nowrap !important;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    /* -----------------------------------------------------
+       ACTIONS = COLUMN 9
+       ----------------------------------------------------- */
+
+    .event-day-attendance-actions {
+        grid-column: 9 !important;
+        grid-row: 1 !important;
+
+        display: flex !important;
+
+        align-items: center;
+
+        justify-content: flex-end;
+
+        gap: 5px;
+
+        width: max-content !important;
+
+        min-width: 0;
+
+        margin: 0 !important;
+
+        flex-wrap: nowrap !important;
+    }
+
+
+    .event-day-attendance-actions button,
+    .event-day-attendance-actions .event-day-status-badge {
+        min-height: 29px !important;
+
+        padding: 5px 8px !important;
+
+        font-size: 9px !important;
+
+        white-space: nowrap;
+
+        border-radius: 6px !important;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE / TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .event-day-rider-card {
+        display: grid !important;
+    }
+
+
+    .event-day-rider-card > div:last-child {
+        display: block !important;
+    }
+
+
+    .event-day-attendance-timeline {
+        display: grid !important;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr)) !important;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .event-day-rider-card {
+        grid-template-columns:
+            30px 1fr !important;
+
+        grid-template-rows:
+            auto auto auto auto auto;
+
+        gap: 7px;
+
+        min-height: auto;
+
+        padding: 10px !important;
+    }
+
+
+    .event-day-select-cell {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+
+
+    .event-day-rider-card > div:nth-child(2) {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+    }
+
+
+    .event-day-rider-card > div:nth-child(3) {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+    }
+
+
+    .event-day-rider-card > div:nth-child(4) {
+        grid-column: 2 !important;
+        grid-row: 3 !important;
+    }
+
+
+    .event-day-admin-remark {
+        grid-column: 1 / -1 !important;
+        grid-row: 4 !important;
+    }
+
+
+    .event-day-rider-card > div:last-child {
+        grid-column: 1 / -1 !important;
+        grid-row: 5 !important;
+
+        display: block !important;
+    }
+
+
+    .event-day-attendance-timeline {
+        display: grid !important;
+
+        grid-template-columns: 1fr !important;
+
+        gap: 6px;
+    }
+
+
+    .event-day-timeline-item {
+        min-height: 42px !important;
+
+        padding: 7px 8px !important;
+    }
+
+
+    .event-day-attendance-actions {
+        grid-column: auto !important;
+        grid-row: auto !important;
+
+        width: 100% !important;
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap !important;
+
+        margin-top: 6px !important;
+    }
+
+}
+
+
+/* =========================================================
+   EVENT DAY - RIDER NAME / REGISTRATION SIZE
+   ========================================================= */
+
+.event-day-rider-card > div:nth-child(2) strong {
+    font-size: 13px !important;   /* Registration ID */
+    line-height: 1.1;
+}
+
+
+.event-day-rider-card > div:nth-child(2) span {
+    font-size: 15px !important;   /* Rider Name */
+    line-height: 1.15;
+    margin-top: 3px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .event-day-rider-card > div:nth-child(2) strong {
+        font-size: 12px !important;
+    }
+
+    .event-day-rider-card > div:nth-child(2) span {
+        font-size: 14px !important;
+    }
+
+}
+
+/* =========================================================
+   EVENT DAY - SHOW FULL STATUS TIME
+   ========================================================= */
+
+@media (min-width: 1201px) {
+
+    /* Give the 3 status columns a little more width */
+    .event-day-rider-card {
+        grid-template-columns:
+            34px
+            minmax(145px, 1fr)
+            minmax(110px, 0.8fr)
+            minmax(130px, 0.9fr)
+            minmax(210px, 1.45fr)
+            minmax(145px, 1fr)
+            minmax(145px, 1fr)
+            minmax(145px, 1fr)
+            minmax(85px, auto) !important;
+    }
+
+
+    /* Status boxes */
+    .event-day-timeline-item {
+        min-width: 0 !important;
+
+        padding: 6px 8px !important;
+
+        overflow: visible !important;
+    }
+
+
+    /* Status content */
+    .event-day-timeline-content {
+        min-width: 0 !important;
+
+        overflow: visible !important;
+    }
+
+
+    /* Status title */
+    .event-day-timeline-content strong {
+        white-space: nowrap !important;
+
+        overflow: visible !important;
+
+        text-overflow: clip !important;
+
+        font-size: 10px !important;
+    }
+
+
+    /* FULL TIME - allow wrapping */
+    .event-day-timeline-time,
+    .event-day-timeline-pending {
+        white-space: normal !important;
+
+        overflow: visible !important;
+
+        text-overflow: clip !important;
+
+        overflow-wrap: anywhere !important;
+
+        word-break: break-all !important;
+
+        line-height: 1.15 !important;
+
+        font-size: 8px !important;
+    }
+
+}
+
+/* =========================================================
+   REGISTRATION VIEW / EDIT MODAL
+   ========================================================= */
+
+.registration-view-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.78);
+    padding: 24px;
+}
+
+.registration-view-modal.show {
+    display: flex;
+}
+
+.registration-view-modal-content {
+    width: min(1120px, 96vw);
+    max-height: 92vh;
+    overflow: hidden;
+    background: #111b2f;
+    border: 1px solid #263957;
+    border-radius: 18px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+}
+
+.registration-view-header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 26px;
+    background: #152238;
+    border-bottom: 1px solid #2a3c59;
+}
+
+.registration-view-header h2 {
+    margin: 0;
+    color: #ff7a00;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.registration-view-header p {
+    margin: 5px 0 0;
+    color: #91a5c3;
+    font-size: 14px;
+}
+
+.registration-view-close {
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: #243650;
+    color: #ffffff;
+    font-size: 25px;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.registration-view-close:hover {
+    background: #314764;
+}
+
+/* EDIT BUTTON */
+
+.registration-edit-btn {
+    margin-left: auto;
+    margin-right: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 16px;
+    border: 1px solid #ff7a00;
+    border-radius: 9px;
+    background: #ff7a00;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.registration-edit-btn:hover {
+    background: #ff8b26;
+}
+
+/* BODY */
+
+.registration-view-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 22px;
+}
+
+/* SECTIONS */
+
+.registration-detail-section {
+    margin-bottom: 18px;
+    padding: 18px;
+    background: #0d1729;
+    border: 1px solid #20314b;
+    border-radius: 14px;
+}
+
+.registration-detail-section:last-child {
+    margin-bottom: 0;
+}
+
+.registration-detail-section h3 {
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #253753;
+    color: #ff7a00;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* VIEW GRID */
+
+.registration-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.registration-detail-item {
+    min-width: 0;
+    padding: 11px 13px;
+    background: #152238;
+    border: 1px solid #223652;
+    border-radius: 9px;
+}
+
+.registration-detail-full {
+    grid-column: 1 / -1;
+}
+
+.registration-detail-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #7f95b7;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.registration-detail-value {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+/* STATUS */
+
+.registration-status-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   EDIT MODE
+   ========================================================= */
+
+.registration-edit-wrapper {
+    width: 100%;
+}
+
+.registration-edit-notice {
+    margin-bottom: 18px;
+    padding: 12px 15px;
+    border-left: 3px solid #ff7a00;
+    border-radius: 8px;
+    background: rgba(255, 122, 0, 0.08);
+    color: #aebed6;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.registration-edit-notice i {
+    margin-right: 6px;
+    color: #ff7a00;
+}
+
+.registration-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.registration-edit-field {
+    min-width: 0;
+}
+
+.registration-edit-field.registration-detail-full {
+    grid-column: 1 / -1;
+}
+
+.registration-edit-field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #aebed6;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.registration-edit-control {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #355071;
+    border-radius: 8px;
+    background: #101d31;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s ease,
+                box-shadow 0.15s ease,
+                background 0.15s ease;
+}
+
+.registration-edit-control:focus {
+    border-color: #ff7a00;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.12);
+    background: #122238;
+}
+
+textarea.registration-edit-control {
+    min-height: 90px;
+    resize: vertical;
+}
+
+select.registration-edit-control {
+    cursor: pointer;
+}
+
+/* ADMIN REMARKS */
+
+.registration-edit-field[data-admin-remarks] .registration-edit-control,
+.registration-edit-control[data-registration-field="Admin Remarks"] {
+    min-height: 100px;
+}
+
+/* ACTIONS */
+
+.registration-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #253753;
+}
+
+.registration-edit-cancel-btn,
+.registration-edit-save-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 10px 17px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.registration-edit-cancel-btn {
+    border: 1px solid #3b4f6d;
+    background: #1b2a41;
+    color: #d5dfed;
+}
+
+.registration-edit-cancel-btn:hover {
+    background: #253752;
+}
+
+.registration-edit-save-btn {
+    border: 1px solid #ff7a00;
+    background: #ff7a00;
+    color: #ffffff;
+}
+
+.registration-edit-save-btn:hover {
+    background: #ff8b26;
+}
+
+.registration-edit-save-btn:disabled,
+.registration-edit-cancel-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* SCROLLBAR */
+
+.registration-view-body::-webkit-scrollbar {
+    width: 9px;
+}
+
+.registration-view-body::-webkit-scrollbar-track {
+    background: #0b1424;
+}
+
+.registration-view-body::-webkit-scrollbar-thumb {
+    background: #314763;
+    border-radius: 10px;
+}
+
+.registration-view-body::-webkit-scrollbar-thumb:hover {
+    background: #425b7b;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .registration-view-modal {
+        padding: 10px;
+    }
+
+    .registration-view-modal-content {
+        width: 100%;
+        max-height: 96vh;
+        border-radius: 12px;
+    }
+
+    .registration-view-header {
+        padding: 17px;
+    }
+
+    .registration-view-header h2 {
+        font-size: 20px;
+    }
+
+    .registration-view-body {
+        padding: 14px;
+    }
+
+    .registration-detail-grid,
+    .registration-edit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .registration-detail-full,
+    .registration-edit-field.registration-detail-full {
+        grid-column: auto;
+    }
+
+    .registration-edit-actions {
+        flex-direction: column;
+    }
+
+    .registration-edit-cancel-btn,
+    .registration-edit-save-btn {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   APPROVE REGISTRATION MODAL
+   ========================================================= */
+
+.approve-registration-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 10050;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0, 0, 0, 0.78);
+
+    box-sizing: border-box;
+}
+
+
+.approve-registration-dialog {
+    width: min(
+        560px,
+        96vw
+    );
+
+    max-height: 92vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: #111b2d;
+
+    border: 1px solid #2a3e5d;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.55);
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+   --------------------------------------------------------- */
+
+.approve-registration-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 18px 20px;
+
+    background: #17253c;
+
+    border-bottom:
+        1px solid #2a3e5d;
+}
+
+
+.approve-registration-header h3 {
+    margin: 0;
+
+    color: #ff7a00;
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+.approve-registration-header h3 i {
+    margin-right: 7px;
+}
+
+
+.approve-registration-header p {
+    margin: 4px 0 0;
+
+    color: #899ab3;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.approve-registration-close {
+    width: 36px;
+
+    min-width: 36px;
+
+    height: 36px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #263a57;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+
+.approve-registration-close:hover {
+    background: #344b6b;
+}
+
+
+/* ---------------------------------------------------------
+   BODY
+   --------------------------------------------------------- */
+
+.approve-registration-body {
+    padding: 20px;
+
+    overflow-y: auto;
+}
+
+
+/* ---------------------------------------------------------
+   SUMMARY
+   --------------------------------------------------------- */
+
+.approve-registration-summary {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+}
+
+
+.approve-registration-summary > div {
+    padding: 11px 13px;
+
+    background: #17253c;
+
+    border: 1px solid #253957;
+
+    border-radius: 9px;
+
+    min-width: 0;
+}
+
+
+.approve-registration-summary span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #8093ae;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+.approve-registration-summary strong {
+    display: block;
+
+    color: #fff;
+
+    font-size: 13px;
+
+    line-height: 1.3;
+
+    word-break: break-word;
+}
+
+
+/* ---------------------------------------------------------
+   PAYMENT NOTE
+   --------------------------------------------------------- */
+
+.approve-registration-payment-note {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+    padding: 10px 12px;
+
+    background:
+        rgba(33, 140, 98, 0.10);
+
+    border-left:
+        3px solid #218c62;
+
+    border-radius: 7px;
+
+    color: #b7dcca;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.approve-registration-payment-note i {
+    color: #40c98c;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   REMARK FIELD
+   --------------------------------------------------------- */
+
+.approve-registration-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #d1dbea;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.approve-registration-field label i {
+    margin-right: 5px;
+
+    color: #ff7a00;
+}
+
+
+#approveRegistrationRemarks {
+    display: block;
+
+    width: 100%;
+
+    min-height: 105px;
+
+    padding: 11px 12px;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+    border:
+        1px solid #38516f;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #0e192b;
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+}
+
+
+#approveRegistrationRemarks::placeholder {
+    color: #61738d;
+}
+
+
+#approveRegistrationRemarks:focus {
+    border-color: #ff7a00;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,122,0,.12);
+}
+
+
+.approve-registration-help {
+    margin-top: 6px;
+
+    color: #71839e;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+.approve-registration-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    padding: 14px 20px;
+
+    background: #151f32;
+
+    border-top:
+        1px solid #263953;
+}
+
+
+.approve-registration-cancel-btn,
+.approve-registration-confirm-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 38px;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.approve-registration-cancel-btn {
+    border:
+        1px solid #3a506f;
+
+    background: #22324b;
+
+    color: #d4ddea;
+}
+
+
+.approve-registration-cancel-btn:hover {
+    background: #2b405e;
+}
+
+
+.approve-registration-confirm-btn {
+    border:
+        1px solid #218c62;
+
+    background: #218c62;
+
+    color: #fff;
+}
+
+
+.approve-registration-confirm-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+.approve-registration-confirm-btn:disabled {
+    opacity: .65;
+
+    cursor: wait;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .approve-registration-modal {
+        align-items: flex-end;
+
+        padding: 0;
+    }
+
+
+    .approve-registration-dialog {
+        width: 100%;
+
+        max-width: none;
+
+        max-height: 94vh;
+
+        border-radius:
+            16px
+            16px
+            0
+            0;
+    }
+
+
+    .approve-registration-header {
+        padding: 15px 16px;
+    }
+
+
+    .approve-registration-header h3 {
+        font-size: 16px;
+    }
+
+
+    .approve-registration-body {
+        padding: 16px;
+    }
+
+
+    .approve-registration-summary {
+        grid-template-columns: 1fr;
+    }
+
+
+    .approve-registration-footer {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1.4fr;
+
+        padding: 12px 16px;
+    }
+
+
+    .approve-registration-cancel-btn,
+    .approve-registration-confirm-btn {
+        width: 100%;
+
+        min-height: 40px;
+
+        font-size: 11px;
+    }
+
+}
+
+/* =========================================================
+   EVENT EDIT / ADD MODAL - CLEAN FINAL STYLING
+   Put this at the VERY END of events-admin.css
+   ========================================================= */
+
+#eventModal {
+    position: fixed !important;
+    inset: 0 !important;
+
+    z-index: 9999 !important;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background: rgba(0, 0, 0, 0.78);
+}
+
+#eventModal.show {
+    display: flex !important;
+}
+
+
+/* ---------------------------------------------------------
+   MODAL BOX
+   --------------------------------------------------------- */
+
+#eventModal .modal-content {
+    position: relative;
+
+    width: min(720px, 96vw) !important;
+
+    max-width: 720px !important;
+
+    max-height: 92vh !important;
+
+    overflow-y: auto;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: #141f32 !important;
+
+    border: 1px solid #2a3e5d;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.6);
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   MODAL TITLE / HEADER
+   --------------------------------------------------------- */
+
+#eventModal .modal-content h2 {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 5;
+
+    margin: 0 !important;
+
+    padding: 20px 54px 18px 22px !important;
+
+    background: #19263a;
+
+    border-bottom: 1px solid #2b3d58;
+
+    color: #ff7a00 !important;
+
+    font-size: 22px !important;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+}
+
+
+/* Close */
+
+#eventModal .close {
+    position: absolute;
+
+    top: 13px;
+
+    right: 15px;
+
+    z-index: 10;
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #fff;
+
+    background: #293b57;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+#eventModal .close:hover {
+    background: #3a506f;
+}
+
+
+/* ---------------------------------------------------------
+   FORM
+   --------------------------------------------------------- */
+
+#eventModal #eventForm {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 20px 22px 22px;
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   LABELS
+   --------------------------------------------------------- */
+
+#eventModal #eventForm label {
+    display: block;
+
+    margin: 0 0 6px;
+
+    color: #cbd5e1;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS
+   --------------------------------------------------------- */
+
+#eventModal #eventForm input[type="text"],
+#eventModal #eventForm input[type="url"],
+#eventModal #eventForm input[type="date"],
+#eventModal #eventForm input[type="time"],
+#eventModal #eventForm input[type="number"],
+#eventModal #eventForm select,
+#eventModal #eventForm textarea {
+    display: block;
+
+    width: 100% !important;
+
+    min-height: 42px;
+
+    padding: 10px 12px !important;
+
+    box-sizing: border-box;
+
+    background: #202d42 !important;
+
+    color: #ffffff !important;
+
+    border: 1px solid #3a4f6d !important;
+
+    border-radius: 8px !important;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 14px !important;
+}
+
+
+#eventModal #eventForm input:focus,
+#eventModal #eventForm select:focus,
+#eventModal #eventForm textarea:focus {
+    border-color: #ff7a00 !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 122, 0, 0.12);
+}
+
+
+#eventModal #eventForm textarea {
+    min-height: 110px;
+
+    resize: vertical;
+
+    line-height: 1.45;
+}
+
+
+/* ---------------------------------------------------------
+   CHECKBOX / REGISTRATION SETTINGS
+   --------------------------------------------------------- */
+
+#eventModal #eventForm input[type="checkbox"] {
+    width: 18px !important;
+
+    height: 18px !important;
+
+    min-height: 18px !important;
+
+    margin: 0;
+
+    accent-color: #ff7a00;
+
+    cursor: pointer;
+
+    flex: 0 0 auto;
+}
+
+
+#eventModal #eventForm .checkbox-row,
+#eventModal #eventForm .form-checkbox,
+#eventModal #eventForm .checkbox-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-height: 28px;
+
+    margin: 0;
+}
+
+
+#eventModal #eventForm .checkbox-row label,
+#eventModal #eventForm .form-checkbox label,
+#eventModal #eventForm .checkbox-label {
+    margin: 0;
+
+    color: #d7dfeb;
+
+    font-size: 13px;
+}
+
+
+/* Fallback for a label that directly contains checkbox */
+
+#eventModal #eventForm label:has(input[type="checkbox"]) {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin: 0;
+}
+
+
+/* ---------------------------------------------------------
+   REGISTRATION SETTINGS SECTION
+   --------------------------------------------------------- */
+
+#eventModal #registrationOptions {
+    margin-top: 4px;
+
+    padding: 16px;
+
+    background: #101b2d;
+
+    border: 1px solid #263953;
+
+    border-radius: 12px;
+
+    box-sizing: border-box;
+}
+
+
+#eventModal #registrationOptions > * {
+    margin-bottom: 12px;
+}
+
+
+#eventModal #registrationOptions > *:last-child {
+    margin-bottom: 0;
+}
+
+
+#eventModal #registrationOptions h3,
+#eventModal #registrationOptions h4 {
+    margin: 0 0 12px;
+
+    color: #ff7a00;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+/* ---------------------------------------------------------
+   REGISTRATION SETTINGS GRID
+   --------------------------------------------------------- */
+
+#eventModal #registrationOptions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+#eventModal #registrationOptions h3,
+#eventModal #registrationOptions h4,
+#eventModal #registrationOptions .full-width,
+#eventModal #registrationOptions .checkbox-row:first-child {
+    grid-column: 1 / -1;
+}
+
+
+/* ---------------------------------------------------------
+   FILE UPLOAD
+   --------------------------------------------------------- */
+
+#eventModal #poster {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 7px 9px;
+
+    box-sizing: border-box;
+
+    background: #202d42;
+
+    color: #cbd5e1;
+
+    border: 1px solid #3a4f6d;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+#eventModal #poster::file-selector-button {
+    margin-right: 10px;
+
+    padding: 8px 12px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #ff7518;
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+#eventModal #poster::file-selector-button:hover {
+    background: #ff8a35;
+}
+
+
+/* ---------------------------------------------------------
+   POSTER PREVIEW
+   --------------------------------------------------------- */
+
+#eventModal #posterPreview {
+    display: none;
+
+    width: 100%;
+
+    max-height: 260px;
+
+    object-fit: contain;
+
+    margin-top: 8px;
+
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    background: #0b1424;
+
+    border: 1px solid #263953;
+
+    border-radius: 10px;
+}
+
+
+/* ---------------------------------------------------------
+   SAVE BUTTON
+   --------------------------------------------------------- */
+
+#eventModal #eventForm button[type="submit"] {
+    width: 100%;
+
+    min-height: 44px;
+
+    margin-top: 6px;
+
+    padding: 11px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #ff7518;
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background .15s ease,
+        transform .15s ease;
+}
+
+
+#eventModal #eventForm button[type="submit"]:hover {
+    background: #ff8a35;
+
+    transform: translateY(-1px);
+}
+
+
+#eventModal #eventForm button[type="submit"]:disabled {
+    opacity: .6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ---------------------------------------------------------
+   EDIT MODE VISUAL
+   --------------------------------------------------------- */
+
+#eventModal.edit-mode .modal-content h2 {
+    color: #ffb020 !important;
+}
+
+
+/* ---------------------------------------------------------
+   SCROLLBAR
+   --------------------------------------------------------- */
+
+#eventModal .modal-content::-webkit-scrollbar {
+    width: 9px;
+}
+
+
+#eventModal .modal-content::-webkit-scrollbar-track {
+    background: #0b1424;
+}
+
+
+#eventModal .modal-content::-webkit-scrollbar-thumb {
+    background: #344a68;
+
+    border-radius: 10px;
+}
+
+
+#eventModal .modal-content::-webkit-scrollbar-thumb:hover {
+    background: #456080;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #eventModal {
+        align-items: flex-start;
+
+        padding: 8px;
+    }
+
+
+    #eventModal .modal-content {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        max-height: 96vh !important;
+
+        border-radius: 13px;
+    }
+
+
+    #eventModal .modal-content h2 {
+        padding:
+            17px
+            50px
+            15px
+            17px !important;
+
+        font-size: 19px !important;
+    }
+
+
+    #eventModal #eventForm {
+        padding: 16px;
+
+        gap: 12px;
+    }
+
+
+    #eventModal #registrationOptions {
+        grid-template-columns: 1fr;
+
+        padding: 12px;
+    }
+
+
+    #eventModal #registrationOptions h3,
+    #eventModal #registrationOptions h4,
+    #eventModal #registrationOptions .full-width,
+    #eventModal #registrationOptions .checkbox-row:first-child {
+        grid-column: auto;
+    }
+
+
+    #eventModal #posterPreview {
+        max-height: 220px;
+    }
+
+
+    #eventModal #eventForm button[type="submit"] {
+        min-height: 46px;
+
+        font-size: 14px;
+    }
+
+}
+

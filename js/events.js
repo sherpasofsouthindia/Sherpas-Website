@@ -1,9 +1,53 @@
 const EVENTS_API =
-"https://script.google.com/macros/s/AKfycbyvsQZcqyzXEfLnBmDRgOGjj4Jr2TXbNgkn3t9y2lE6wJZMLXbFDV5GKURkn4LiGzjmtA/exec";
+"https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
 
 
 const container =
     document.getElementById("eventsContainer");
+
+
+/*==================================================
+        GET REGISTRATION SETTINGS
+==================================================*/
+
+async function getRegistrationSettings(eventID) {
+
+    try {
+
+        const response =
+            await fetch(
+                EVENTS_API +
+                "?action=GET_REGISTRATION_SETTINGS" +
+                "&eventID=" +
+                encodeURIComponent(eventID)
+            );
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const result =
+            await response.json();
+
+        if (!result.success) {
+            return null;
+        }
+
+        return result.data || null;
+
+    }
+    catch (error) {
+
+        console.error(
+            "Registration settings error:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
 
 
 /*==================================================
@@ -195,6 +239,16 @@ async function loadEvents() {
             const event of events
         ) {
 
+            const eventID =
+                String(
+                    event["Event ID"] || ""
+                ).trim();
+
+            const registrationSettings =
+                await getRegistrationSettings(
+                    eventID
+                );
+
             const date =
                 new Date(
                     event["Date"]
@@ -253,6 +307,34 @@ async function loadEvents() {
                 };
 
 
+            const registrationEnabled =
+                registrationSettings &&
+                String(
+                    registrationSettings["Registration Enabled"] || ""
+                ).toLowerCase() === "yes";
+
+            const registrationOpen =
+                registrationSettings &&
+                String(
+                    registrationSettings["Registration Status"] || ""
+                ).toLowerCase() === "open";
+
+
+            const registrationButton =
+                registrationEnabled && registrationOpen
+                    ? `
+                        <button
+                            type="button"
+                            class="event-register-btn"
+                            data-event-id="${escapeHTML(eventID)}"
+                        >
+                            <i class="fa-solid fa-user-plus"></i>
+                            Register Now
+                        </button>
+                    `
+                    : "";
+
+
             card.innerHTML = `
 
                 <div class="event-image">
@@ -296,9 +378,40 @@ async function loadEvents() {
 
                     </div>
 
+
+                    ${registrationButton}
+
                 </div>
 
             `;
+
+            const registerButton =
+                card.querySelector(
+                    ".event-register-btn"
+                );
+
+
+            if (registerButton) {
+
+                registerButton.addEventListener(
+                    "click",
+                    function (e) {
+
+                        e.stopPropagation();
+
+                        const selectedEventID =
+                            this.dataset.eventId;
+
+                        window.location.href =
+                            "registration.html?eventID=" +
+                            encodeURIComponent(
+                                selectedEventID
+                            );
+
+                    }
+                );
+
+            }
 
 
             container.appendChild(

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SHERPAS OF SOUTH INDIA Ride/Event Registration</title>
+
+    <link
+        rel="stylesheet"
+        href="css/registration.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+<body>
+
+<div class="registration-page">
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="registration-header">
+
+        <img src="assets/logo.png" class="logo">
+
+        <div>
+
+            <h1>SHERPAS OF SOUTH INDIA</h1>
+
+            <p>
+                Ride • Explore • Conquer
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         EVENT INFORMATION
+    ========================================== -->
+
+    <section
+        id="eventCard"
+        class="event-card"
+    >
+
+        <div class="loading-state">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            Loading event...
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         REGISTRATION STATUS
+    ========================================== -->
+
+    <section
+        id="registrationStatus"
+        class="message-box hidden"
+    ></section>
+
+
+    <!-- =========================================
+         MEMBER SEARCH
+    ========================================== -->
+
+    <section
+        id="memberSearchSection"
+        class="registration-card"
+    >
+
+        <div class="section-heading">
+
+            <span>01</span>
+
+            <h2>
+                Identify Member
+            </h2>
+
+        </div>
+
+
+        <p class="section-note">
+
+            Enter your Membership ID or registered
+            mobile number to continue.
+
+        </p>
+
+
+        <div class="search-group">
+
+            <label for="memberIdentifier">
+
+                Membership ID / Phone Number
+
+            </label>
+
+            <div class="search-row">
+
+                <input
+                    type="text"
+                    id="memberIdentifier"
+                    placeholder="Example: SSI004 or 9895886667"
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="findMemberBtn"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    Find Member
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="memberSearchMessage"
+            class="form-message"
+        ></div>
+
+    </section>
+
+
+    <!-- =========================================
+         MEMBER DETAILS
+    ========================================== -->
+
+    <section
+        id="memberDetailsSection"
+        class="registration-card hidden"
+    >
+
+        <div class="section-heading">
+
+            <span>02</span>
+
+            <h2>
+                Member Details
+            </h2>
+
+        </div>
+
+
+        <div
+            id="memberDetails"
+            class="member-details"
+        ></div>
+
+
+        <div class="confirmation-box">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <div>
+
+                <strong>
+                    Please verify your details
+                </strong>
+
+                <p>
+                    Membership information is maintained
+                    by the SHERPAS administrator.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="continueRegistrationBtn"
+            class="primary-btn"
+        >
+
+            Continue Registration
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+    </section>
+
+
+    <!-- =========================================
+         REGISTRATION FORM
+    ========================================== -->
+
+    <section
+        id="registrationFormSection"
+        class="registration-card hidden"
+    >
+
+        <div class="section-heading">
+
+            <span>03</span>
+
+            <h2>
+                Ride / Event Registration
+            </h2>
+
+        </div>
+
+
+        <div
+            id="previousRegistrationMessage"
+            class="info-box hidden"
+        ></div>
+
+
+        <form
+            id="registrationForm"
+        >
+
+            <!-- Ride-specific fields will be added here -->
+
+            <div id="rideFields"></div>
+
+
+           
+            <button
+                type="submit"
+                id="submitRegistrationBtn"
+                class="submit-btn"
+            >
+
+                <i class="fa-solid fa-check"></i>
+
+                Submit Registration
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- =========================================
+         SUCCESS
+    ========================================== -->
+
+    <section
+        id="successSection"
+        class="success-card hidden"
+    >
+
+        <div class="success-icon">
+
+            <i class="fa-solid fa-check"></i>
+
+        </div>
+
+
+        <h2>
+            Registration Submitted
+        </h2>
+
+
+        <p>
+            Your registration has been submitted successfully.
+        </p>
+
+
+        <div
+            id="registrationNumber"
+            class="registration-number"
+        ></div>
+
+
+        <a
+            href="index.html"
+            class="back-btn"
+        >
+
+            <i class="fa-solid fa-house"></i>
+
+            Back to Website
+
+        </a>
+
+    </section>
+
+</div>
+
+
+<script src="js/registration.js"></script>
+
+</body>
+
+</html>
