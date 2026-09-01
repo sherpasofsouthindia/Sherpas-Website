@@ -23,6 +23,8 @@
 <link rel="stylesheet" href="css/contact.css">
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/events.css">
+<link rel="stylesheet" href="css/announcements.css"
+>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -123,6 +125,65 @@ Where Every Ride Becomes A Story
 </div>
 
 </section>
+
+
+<!-- =========================================
+     PUBLIC ANNOUNCEMENTS
+========================================== -->
+
+<section
+    id="publicAnnouncements"
+    class="public-announcements"
+>
+
+    <div class="announcement-label">
+
+        <i class="fa-solid fa-bullhorn"></i>
+
+        <span>Announcements</span>
+
+    </div>
+
+
+    <div class="announcement-window">
+
+        <div
+            id="announcementTicker"
+            class="announcement-ticker"
+        >
+
+            <span class="announcement-loading">
+                Loading announcements...
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="announcement-controls">
+
+        <button
+            type="button"
+            id="announcementPrev"
+            aria-label="Previous announcement"
+        >
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+
+        <button
+            type="button"
+            id="announcementNext"
+            aria-label="Next announcement"
+        >
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+    </div>
+
+</section>
+
 
 <section id="about" class="about">
 
@@ -572,6 +633,8 @@ emailjs.init({
 <script src="js/slider.js"></script>
 <script src="js/events.js"></script>
 <script src="js/gallery-public.js"></script>
+<script src="js/announcements.js"></script>
+
 
 
 </body>
