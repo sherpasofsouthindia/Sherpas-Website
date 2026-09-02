@@ -10,15 +10,11 @@ const totalSteps = steps.length;
 const nextButtons = document.querySelectorAll(".next-btn");
 const prevButtons = document.querySelectorAll(".prev-btn");
 
-console.log("Wizard Loaded");
-
 // ========================================
 // SHOW STEP
 // ========================================
 
 function showStep(step) {
-
-    console.log("Current Step =", step);
 
     steps.forEach((section, index) => {
 

@@ -914,7 +914,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     <h2>
                         <span class="section-number">09</span>
                         <i class="fa-solid fa-camera"></i>
-                        Member Photo
+                        Member Photo *
                     </h2>
 
                     
@@ -924,33 +924,56 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
                     <div class="photo-upload-container">
 
+                        <!-- Photo Preview -->
                         <div id="photoPreview" class="photo-placeholder">
-
                             <i class="fa-solid fa-user"></i>
+                        </div>
+
+                        <!-- Main Photo Input -->
+                        <input
+                            type="file"
+                            id="photo"
+                            accept="image/*"
+                            hidden
+                            required>
+
+                        <!-- Camera Input -->
+                        <input
+                            type="file"
+                            id="photoCamera"
+                            accept="image/*"
+                            capture="environment"
+                            hidden>
+
+                        <!-- Photo Action Buttons -->
+                        <div class="photo-actions">
+
+                            <button
+                                type="button"
+                                id="takePhotoBtn"
+                                class="photo-action-btn">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Take Photo</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                id="choosePhotoBtn"
+                                class="photo-action-btn">
+                                <i class="fa-solid fa-image"></i>
+                                <span>Choose from Gallery</span>
+                            </button>
 
                         </div>
 
-                        <label class="upload-btn">
-
-                            <i class="fa-solid fa-upload"></i>
-
-                            Choose Photo
-
-                            <input
-                                type="file"
-                                id="photo"
-                                accept="image/*"
-                                hidden>
-
-                        </label>
 
                         <p class="photo-note">
-
-                            Upload Passport Size Photo (JPG / PNG)
-
+                            Passport Size Photo • JPG / PNG
                         </p>
 
-                        <p id="photoFileName" class="photo-file-name">No file selected</p>
+                        <p id="photoFileName" class="photo-file-name">
+                            No file selected
+                        </p>
 
                     </div>
 
@@ -1116,7 +1139,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                         <input
                             type="file"
                             id="paymentProof"
-                            accept="image/*">
+                            accept="image/*"
+                            required>
 
                         <img
                             id="paymentPreview"

@@ -510,12 +510,6 @@ async function loadEvents() {
             await response.json();
 
 
-        console.log(
-            "Events API response:",
-            result
-        );
-
-
         if (!result.success) {
 
             throw new Error(
@@ -704,11 +698,6 @@ async function saveRegistrationSettings(eventID) {
     );
 
 
-    console.log(
-        "REGISTRATION SETTINGS DATA:",
-        settings
-    );
-
 
     /*------------------------------------------
             SEND REQUEST
@@ -726,12 +715,6 @@ async function saveRegistrationSettings(eventID) {
 
     const text =
         await response.text();
-
-
-    console.log(
-        "SAVE_REGISTRATION_SETTINGS response:",
-        text
-    );
 
 
     /*------------------------------------------
@@ -1271,11 +1254,6 @@ document.addEventListener(
                 await response.text();
 
 
-            console.log(
-                "TOGGLE response:",
-                text
-            );
-
 
             const result =
                 JSON.parse(text);
@@ -1489,12 +1467,6 @@ document
                 }
 
 
-                console.log(
-                    "Event data:",
-                    eventData
-                );
-
-
                 const form =
                     new URLSearchParams();
 
@@ -1555,12 +1527,6 @@ document
 
                 const text =
                     await response.text();
-
-
-                console.log(
-                    "ADD_EVENT response:",
-                    text
-                );
 
 
                 const result =
@@ -2050,12 +2016,6 @@ document.addEventListener(
 
             const text =
                 await response.text();
-
-
-            console.log(
-                "DELETE_EVENT response:",
-                text
-            );
 
 
             const result =
@@ -2637,11 +2597,6 @@ function initializeEventDayBulkSelection() {
                         await response.json();
 
 
-                    console.log(
-                        "INDIVIDUAL CHECK-IN RESULT:",
-                        result
-                    );
-
 
                     if (!result.success) {
 
@@ -3016,11 +2971,6 @@ function initializeEventDayBulkSelection() {
                         await response.json();
 
 
-                    console.log(
-                        "UNDO CHECK-IN RESULT:",
-                        result
-                    );
-
 
                     if (!result.success) {
 
@@ -3180,10 +3130,6 @@ function initializeEventDayBulkSelection() {
                     const result =
                         await response.json();
 
-                    console.log(
-                        "START RIDE RESULT:",
-                        result
-                    );
 
                     if (!result.success) {
 
@@ -3361,11 +3307,6 @@ function initializeEventDayBulkSelection() {
                     const result =
                         await response.json();
 
-
-                    console.log(
-                        "RETURN RIDE RESULT:",
-                        result
-                    );
 
 
                     if (!result.success) {
@@ -3932,11 +3873,6 @@ async function bulkCheckInSelectedRiders() {
         const result =
             await response.json();
 
-
-        console.log(
-            "BULK CHECK-IN RESULT:",
-            result
-        );
 
 
         if (!result.success) {
@@ -5184,12 +5120,6 @@ async function loadRideRegistrationsDataOnly() {
         await response.json();
 
 
-    console.log(
-        "EVENT DAY - RIDE REGISTRATIONS API:",
-        result
-    );
-
-
     if (!result.success) {
 
         throw new Error(
@@ -5259,11 +5189,6 @@ async function loadEventDayAttendance(
     const result =
         await response.json();
 
-
-    console.log(
-        "EVENT DAY ATTENDANCE API:",
-        result
-    );
 
 
     if (!result.success) {
@@ -6307,12 +6232,6 @@ async function loadRideRegistrations() {
             await response.json();
 
 
-        console.log(
-            "RIDE REGISTRATIONS API:",
-            result
-        );
-
-
         if (!result.success) {
 
             throw new Error(
@@ -7093,12 +7012,6 @@ async function bulkRegistrationPaymentAction(
         await response.json();
 
 
-    console.log(
-        "BULK PAYMENT RESULT:",
-        result
-    );
-
-
     if (!result.success) {
 
         throw new Error(
@@ -7175,11 +7088,6 @@ async function bulkRegistrationApprovalAction(
     const result =
         await response.json();
 
-
-    console.log(
-        "BULK APPROVAL RESULT:",
-        result
-    );
 
 
     if (!result.success) {
@@ -8403,11 +8311,6 @@ function exportRegistrationsToExcel() {
     );
 
 
-    console.log(
-        "EVENT EXCEL EXPORTED:",
-        filename,
-        eventRegistrations.length
-    );
 
 }
 
@@ -9677,12 +9580,6 @@ async function updateRegistrationApproval(
         await response.json();
 
 
-    console.log(
-        "RIDE APPROVAL RESULT:",
-        result
-    );
-
-
     if (!result.success) {
 
         throw new Error(
@@ -9764,11 +9661,6 @@ async function saveRideRegistrationChanges(
     const result =
         await response.json();
 
-
-    console.log(
-        "UPDATE REGISTRATION RESULT:",
-        result
-    );
 
 
     if (!result.success) {
@@ -11970,11 +11862,6 @@ async function openPaymentProof(registration) {
             await response.json();
 
 
-        console.log(
-            "SECURE PAYMENT PROOF:",
-            result
-        );
-
 
         if (!result.success) {
 
@@ -12277,12 +12164,6 @@ async function verifyRegistrationPayment(
         await response.json();
 
 
-    console.log(
-        "VERIFY PAYMENT RESULT:",
-        result
-    );
-
-
     if (!result.success) {
 
         throw new Error(
@@ -12484,11 +12365,6 @@ async function rejectRegistrationPayment(
     const result =
         await response.json();
 
-
-    console.log(
-        "REJECT PAYMENT RESULT:",
-        result
-    );
 
 
     if (!result.success) {
@@ -12891,11 +12767,6 @@ async function generateRegistrationPDF(
     const result =
         await response.json();
 
-
-    console.log(
-        "RIDE REGISTRATION PDF:",
-        result
-    );
 
 
     if (!result.success) {

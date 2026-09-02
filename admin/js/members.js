@@ -59,7 +59,7 @@ async function loadMembers() {
         const response = await fetch(API_URL);
 
         const result = await response.json();
-        console.log(result);
+
 
 
         if (!result.success) {
@@ -71,12 +71,9 @@ async function loadMembers() {
 
         }
 
-        console.log(result);
-        console.log(result.members);
 
         allMembers = result.members;
 
-        console.log(allMembers);
 
         renderMembers(allMembers);
 
@@ -1222,11 +1219,6 @@ async function generateApplicationPDF(index) {
         const result =
             await response.json();
 
-
-        console.log(
-            "GENERATE_MEMBER_PDF response:",
-            result
-        );
 
 
         if (!result.success) {

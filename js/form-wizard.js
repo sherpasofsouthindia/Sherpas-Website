@@ -4,21 +4,21 @@
 
 let currentStep = 1;
 
+// Prevent multiple Next clicks while validation is running
+let isNextProcessing = false;
+
 const steps = document.querySelectorAll(".section");
 const totalSteps = steps.length;
 
 const nextButtons = document.querySelectorAll(".next-btn");
 const prevButtons = document.querySelectorAll(".prev-btn");
 
-console.log("Wizard Loaded");
 
 // ========================================
 // SHOW STEP
 // ========================================
 
 function showStep(step) {
-
-    console.log("Current Step =", step);
 
     steps.forEach((section, index) => {
 
@@ -37,96 +37,139 @@ function showStep(step) {
     });
 
     updateProgress();
-
 }
 
+
 // ========================================
-// PROGRESS BAR
+// UPDATE PROGRESS
 // ========================================
 
 function updateProgress() {
 
-    const percent = Math.round((currentStep / totalSteps) * 100);
+    const percent =
+        Math.round((currentStep / totalSteps) * 100);
 
-    const fill = document.getElementById("progressFill");
-    const text = document.getElementById("progressText");
+    const fill =
+        document.getElementById("progressFill");
 
-    if (fill)
+    const text =
+        document.getElementById("progressText");
+
+    if (fill) {
         fill.style.width = percent + "%";
+    }
 
-    if (text)
+    if (text) {
         text.innerHTML =
             `Step ${currentStep} of ${totalSteps} (${percent}%)`;
-
+    }
 }
 
+
 // ========================================
-// REQUIRED FIELD VALIDATION
+// VALIDATE CURRENT STEP
 // ========================================
 
 function validateStep(step) {
 
     const currentSection = steps[step - 1];
 
+    if (!currentSection) {
+        return false;
+    }
+
     const requiredFields =
         currentSection.querySelectorAll("[required]");
 
     for (const field of requiredFields) {
 
+        // Checkbox
         if (field.type === "checkbox") {
 
             if (!field.checked) {
 
                 Swal.fire({
-
                     icon: "warning",
-
                     title: "Declaration Required",
-
                     text: "Please accept the declaration."
-
                 });
 
                 field.focus();
 
                 return false;
-
-            }
-
-        } else {
-
-            let value = field.value;
-
-            if (typeof value === "string")
-                value = value.trim();
-
-            if (!value) {
-
-                Swal.fire({
-
-                    icon: "warning",
-
-                    title: "Required Field",
-
-                    text:
-                        field.previousElementSibling?.innerText ||
-                        "Please fill all required fields."
-
-                });
-
-                field.focus();
-
-                return false;
-
             }
 
         }
 
+        // Other fields
+        else {
+
+            let value = field.value;
+
+            if (typeof value === "string") {
+                value = value.trim();
+            }
+
+            if (!value) {
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "Required Field",
+                    text:
+                        field.previousElementSibling?.innerText ||
+                        "Please fill all required fields."
+                });
+
+                field.focus();
+
+                return false;
+            }
+        }
     }
 
     return true;
-
 }
+
+
+// ========================================
+// NEXT BUTTON UI
+// ========================================
+
+function setNextButtonsProcessing(processing) {
+
+    nextButtons.forEach(button => {
+
+        if (processing) {
+
+            // Store original button text only once
+            if (!button.dataset.originalText) {
+
+                button.dataset.originalText =
+                    button.innerHTML;
+            }
+
+            button.disabled = true;
+
+            button.classList.add("checking");
+
+            button.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+
+        } else {
+
+            button.disabled = false;
+
+            button.classList.remove("checking");
+
+            if (button.dataset.originalText) {
+
+                button.innerHTML =
+                    button.dataset.originalText;
+            }
+        }
+    });
+}
+
 
 // ========================================
 // NEXT BUTTON
@@ -136,54 +179,165 @@ nextButtons.forEach(button => {
 
     button.addEventListener("click", async function () {
 
-        if (!validateStep(currentStep))
+        // --------------------------------
+        // IMPORTANT:
+        // Ignore repeated clicks while
+        // validation is running.
+        // --------------------------------
+
+        if (isNextProcessing) {
+
             return;
+        }
 
-        let ok = true;
 
-        switch (currentStep) {
+        // --------------------------------
+        // Normal required-field validation
+        // --------------------------------
 
-            case 2:
-                ok = await validateAge();
-                if (!ok) return;
+        if (!validateStep(currentStep)) {
+            return;
+        }
 
-                ok = await validateAadhaar();
-                break;
 
-            case 4:
-                ok = await validatePhone();
-                if (!ok) return;
+        // --------------------------------
+        // LOCK IMMEDIATELY
+        //
+        // This happens BEFORE any await.
+        // --------------------------------
 
-                ok = await validateEmail();
-                break;
+        isNextProcessing = true;
 
-            case 5:
-                ok = await validateVehicleRegistration();
-                if (!ok) return;
+        setNextButtonsProcessing(true);
 
-                ok = await validateDrivingLicence();
-                break;
+
+        try {
+
+            let ok = true;
+
+
+            // ========================================
+            // STEP 2
+            // Age + Aadhaar
+            // ========================================
+
+            switch (currentStep) {
+
+                case 2:
+
+                    ok = await validateAge();
+
+                    if (!ok) {
+                        return;
+                    }
+
+                    ok = await validateAadhaar();
+
+                    break;
+
+
+                // ========================================
+                // STEP 4
+                // Phone + Email
+                // ========================================
+
+                case 4:
+
+                    ok = await validatePhone();
+
+                    if (!ok) {
+                        return;
+                    }
+
+                    ok = await validateEmail();
+
+                    break;
+
+
+                // ========================================
+                // STEP 5
+                // Vehicle + Driving Licence
+                // ========================================
+
+                case 5:
+
+                    ok = await validateVehicleRegistration();
+
+                    if (!ok) {
+                        return;
+                    }
+
+                    ok = await validateDrivingLicence();
+
+                    break;
+            }
+
+
+            // --------------------------------
+            // Validation failed
+            // --------------------------------
+
+            if (!ok) {
+                return;
+            }
+
+
+            // --------------------------------
+            // Move to next step
+            // --------------------------------
+
+            if (currentStep < totalSteps) {
+
+                currentStep++;
+
+                showStep(currentStep);
+            }
+
+
+            // --------------------------------
+            // Scroll to top
+            // --------------------------------
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
         }
 
-        if (!ok)
-            return;
 
-       if (currentStep < totalSteps) {
+        // ========================================
+        // ERROR HANDLING
+        // ========================================
 
-            currentStep++;
+        catch (error) {
 
-            showStep(currentStep);
+            console.error(
+                "NEXT validation error:",
+                error
+            );
+
+            Swal.fire({
+                icon: "error",
+                title: "Validation Error",
+                text:
+                    error?.message ||
+                    "Unable to validate your details. Please try again."
+            });
 
         }
 
-        window.scrollTo({
 
-            top: 0,
+        // ========================================
+        // ALWAYS UNLOCK
+        // ========================================
 
-            behavior: "smooth"
+        finally {
 
-        });
+            isNextProcessing = false;
+
+            setNextButtonsProcessing(false);
+        }
 
     });
 
@@ -198,27 +352,38 @@ prevButtons.forEach(button => {
 
     button.addEventListener("click", function () {
 
-        if (currentStep <= 1)
+        // Do not allow Previous while
+        // asynchronous validation is running.
+
+        if (isNextProcessing) {
+
             return;
+        }
+
+
+        if (currentStep <= 1) {
+            return;
+        }
+
 
         currentStep--;
 
         showStep(currentStep);
 
+
         window.scrollTo({
-
             top: 0,
-
             behavior: "smooth"
-
         });
 
     });
 
 });
 
+
 // ========================================
 // INITIAL LOAD
 // ========================================
 
 showStep(currentStep);
+

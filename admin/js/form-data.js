@@ -164,8 +164,6 @@ function populateStates() {
 
     state.addEventListener("change", function () {
 
-        console.log("State Changed:", this.value);
-
         populateDistricts(this.value);
 
     });
@@ -177,11 +175,8 @@ function populateStates() {
 ==================================================*/
 
 function populateDistricts(stateName) {
-    console.log("populateDistricts called:", stateName);
 
     const district = document.getElementById("district");
-
-    console.log(district);
 
     if (!district) return;
 
@@ -300,4 +295,3 @@ function populateVariants(model) {
 
 }
 
-console.log("form-data.js loaded");

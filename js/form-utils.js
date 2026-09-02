@@ -5,54 +5,6 @@
 const API_URL =
 "https://script.google.com/macros/s/AKfycbx2W4fMoGyjPggDI6FD-K-6dUZl2NQBXC5kBs36DC4gyE7TFHYmSLfsgTodPk-zkGQr/exec";
 
-async function checkDuplicateField(field, value) {
-
-    value = String(value).trim();
-
-    if (!value) {
-
-        return {
-            duplicate: false
-        };
-
-    }
-
-    const memberID =
-        document.getElementById("memberID")?.value || "";
-
-    const formData = new URLSearchParams();
-
-    formData.append(
-        "action",
-        "CHECK_DUPLICATE"
-    );
-
-    formData.append(
-        "data",
-        JSON.stringify({
-
-            field: field,
-
-            value: value,
-
-            memberID: memberID
-
-        })
-    );
-
-    const response = await fetch(API_URL, {
-
-        method: "POST",
-
-        body: formData
-
-    });
-
-    const result = await response.json();
-
-    return result.data;
-
-}
 
 /*==================================================
         FILE TO BASE64

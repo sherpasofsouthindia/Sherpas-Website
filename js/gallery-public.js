@@ -16,7 +16,6 @@ let currentImageIndex = 0;
 
 async function loadPublicGallery() {
 
-    console.log("SHERPAS Public Gallery loading...");
 
     const galleryGrid = document.querySelector(".gallery-grid");
 
@@ -33,7 +32,6 @@ async function loadPublicGallery() {
 
         const data = await response.json();
 
-        console.log("Gallery API response:", data);
 
         if (!data.success || !Array.isArray(data.data)) {
             throw new Error("Invalid gallery API response.");

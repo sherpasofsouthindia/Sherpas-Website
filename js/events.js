@@ -79,12 +79,6 @@ async function loadEvents() {
             await response.json();
 
 
-        console.log(
-            "Events API response:",
-            result
-        );
-
-
         /*
         ------------------------------------------
         HANDLE BOTH RESPONSE FORMATS

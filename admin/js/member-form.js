@@ -557,9 +557,6 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("action", "ADD_MEMBER");
             formData.append("data", JSON.stringify(data));
 
-            console.log("DATA TO SEND");
-                console.log(data);      
-
 
             const response = await fetch(API_URL, {
 
@@ -570,9 +567,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const text = await response.text();
-
-            console.log("SERVER RESPONSE:");
-            console.log(text);
 
             let result;
 

@@ -492,11 +492,6 @@ async function findMember() {
             await response.json();
 
 
-        console.log(
-            "REGISTRATION CONTEXT:",
-            result
-        );
-
 
         if (!result.success) {
 
@@ -571,21 +566,6 @@ async function findMember() {
 
         const history =
             registrationContext.history || {};
-
-        console.log(
-            "Ride history count:",
-            history.count
-        );
-
-        console.log(
-            "First ride:",
-            history.isFirstRide
-        );
-
-        console.log(
-            "Already registered:",
-            registrationContext.alreadyRegistered
-        );
 
 
         /*========================================
@@ -2670,11 +2650,6 @@ registrationForm.addEventListener(
             };
 
 
-            console.log(
-                "SUBMIT REGISTRATION DATA:",
-                registrationData
-            );
-
 
             /*====================================
                     SEND TO MEMBERS API
@@ -2712,12 +2687,6 @@ registrationForm.addEventListener(
                 await response.text();
 
 
-            console.log(
-                "SUBMIT REGISTRATION RAW RESPONSE:",
-                text
-            );
-
-
             let result;
 
 
@@ -2735,11 +2704,6 @@ registrationForm.addEventListener(
 
             }
 
-
-            console.log(
-                "SUBMIT REGISTRATION RESULT:",
-                result
-            );
 
 
             if (

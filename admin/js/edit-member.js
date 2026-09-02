@@ -38,15 +38,6 @@ document.addEventListener(
     "DOMContentLoaded",
     async function () {
 
-        console.log(
-            "Edit Member Page Loaded"
-        );
-
-        console.log(
-            "Application ID:",
-            EDIT_APPLICATION_ID
-        );
-
 
         if (!EDIT_APPLICATION_ID) {
 
@@ -208,11 +199,6 @@ async function loadMemberForEdit() {
 
         }
 
-
-        console.log(
-            "Member loaded:",
-            currentMember
-        );
 
 
         populateMemberForm(
@@ -678,7 +664,6 @@ function formatDateForInput(value) {
 
 function showExistingImage(previewID, url) {
 
-    console.log("Loading image:", previewID, url);
 
     const preview =
         document.getElementById(previewID);
@@ -717,11 +702,6 @@ function showExistingImage(previewID, url) {
 
     }
 
-    console.log(
-        "Final Image URL:",
-        imageURL
-    );
-
 
     // If preview itself is an IMG
     if (
@@ -729,11 +709,6 @@ function showExistingImage(previewID, url) {
     ) {
 
         preview.onload = function () {
-
-            console.log(
-                "Image loaded successfully:",
-                previewID
-            );
 
             preview.style.display =
                 "block";
@@ -782,10 +757,6 @@ function showExistingImage(previewID, url) {
 
     img.onload = function () {
 
-        console.log(
-            "Image loaded successfully:",
-            previewID
-        );
 
         preview.style.display =
             "block";
@@ -915,10 +886,6 @@ function setupReplacementPreview(
                         "block";
 
 
-                    console.log(
-                        "New file preview loaded:",
-                        previewID
-                    );
 
                 };
 
@@ -995,10 +962,6 @@ if (saveChangesBtn) {
         "click",
         async function () {
 
-            console.log(
-                "SAVE CHANGES BUTTON CLICKED"
-            );
-
             await updateMemberSubmit();
 
         }
@@ -1011,10 +974,6 @@ if (saveChangesBtn) {
 ==================================================*/
 
 async function updateMemberSubmit() {
-
-    console.log(
-        "UPDATE MEMBER SUBMIT STARTED"
-    );
 
     try {
 
@@ -1030,15 +989,7 @@ async function updateMemberSubmit() {
         const data =
             await collectMemberData();
 
-        console.log(
-            "UPDATE DATA:",
-            data
-        );
 
-        console.log(
-            "APPLICATION ID:",
-            data["Application ID"]
-        );
 
         if (!data["Application ID"]) {
 
@@ -1061,10 +1012,6 @@ async function updateMemberSubmit() {
             JSON.stringify(data)
         );
 
-        console.log(
-            "SENDING REQUEST TO API"
-        );
-
         const response =
             await fetch(
                 EDIT_API_URL,
@@ -1077,18 +1024,10 @@ async function updateMemberSubmit() {
         const responseText =
             await response.text();
 
-        console.log(
-            "RAW RESPONSE:",
-            responseText
-        );
 
         const result =
             JSON.parse(responseText);
 
-        console.log(
-            "UPDATE RESULT:",
-            result
-        );
 
         if (!result.success) {
 
@@ -1225,12 +1164,6 @@ async function uploadReplacementFile(
 
     const result =
         await response.json();
-
-
-    console.log(
-        "UPLOAD FILE RESPONSE:",
-        result
-    );
 
 
     if (!result.success) {

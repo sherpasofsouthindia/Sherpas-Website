@@ -86,10 +86,7 @@ document
             await response.json();
 
 
-        console.log(
-            "Login response:",
-            result
-        );
+
 
 
         /*========================================
@@ -123,11 +120,6 @@ document
         sessionStorage.setItem(
             "sherpas_admin_email",
             email
-        );
-
-
-        console.log(
-            "Admin token saved successfully."
         );
 
 

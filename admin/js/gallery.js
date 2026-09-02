@@ -32,10 +32,6 @@ document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        console.log(
-            "Gallery Admin loaded successfully."
-        );
-
         initializeGallery();
 
     }
@@ -722,11 +718,6 @@ async function loadGallery() {
         const result =
             await response.json();
 
-
-        console.log(
-            "Gallery API response:",
-            result
-        );
 
 
         if (

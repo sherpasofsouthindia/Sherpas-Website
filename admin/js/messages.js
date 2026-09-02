@@ -122,12 +122,6 @@ async function loadAnnouncements() {
             await response.json();
 
 
-        console.log(
-            "GET ANNOUNCEMENTS:",
-            result
-        );
-
-
         if (
             !result.success
         ) {
@@ -987,11 +981,6 @@ async function saveAnnouncement(
         const result =
             await response.json();
 
-
-        console.log(
-            action,
-            result
-        );
 
 
         if (
@@ -1859,11 +1848,6 @@ async function loadSocialLinks() {
             await response.json();
 
 
-        console.log(
-            "GET SOCIAL LINKS:",
-            result
-        );
-
 
         if (!result.success) {
 
@@ -2720,11 +2704,6 @@ async function saveSocialLink(
         const result =
             await response.json();
 
-
-        console.log(
-            action,
-            result
-        );
 
 
         if (!result.success) {

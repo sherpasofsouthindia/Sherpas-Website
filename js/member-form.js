@@ -132,39 +132,108 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // -----------------------------
-    // PHOTO PREVIEW
+    // MEMBER PHOTO
+    // CAMERA + GALLERY
     // -----------------------------
 
     const photo = document.getElementById("photo");
+    const photoCamera = document.getElementById("photoCamera");
+
+    const takePhotoBtn = document.getElementById("takePhotoBtn");
+    const choosePhotoBtn = document.getElementById("choosePhotoBtn");
+
     const preview = document.getElementById("photoPreview");
-    
+    const photoFileName = document.getElementById("photoFileName");
 
-    photo.addEventListener("change", function () {
 
-        const file = this.files[0];
+    // Take Photo button
+    if (takePhotoBtn && photoCamera) {
+
+        takePhotoBtn.addEventListener("click", function () {
+
+            photoCamera.click();
+
+        });
+
+    }
+
+
+    // Choose from Gallery button
+    if (choosePhotoBtn && photo) {
+
+        choosePhotoBtn.addEventListener("click", function () {
+
+            photo.click();
+
+        });
+
+    }
+
+
+    // Process selected photo
+    function handleMemberPhoto(file) {
 
         if (!file) return;
 
-        preview.innerHTML = `
-            <img src="${URL.createObjectURL(file)}" alt="Member Photo">
-        `;
+        // Put the selected file into the main photo input
+        const dataTransfer = new DataTransfer();
 
-        preview.style.borderStyle = "solid";
+        dataTransfer.items.add(file);
 
-        let name = file.name;
+        photo.files = dataTransfer.files;
 
-        if (name.length > 30) {
-            name = name.substring(0, 27) + "...";
+
+        // Show preview
+        if (preview) {
+
+            preview.innerHTML = `
+                <img src="${URL.createObjectURL(file)}"
+                    alt="Member Photo">
+            `;
+
+            preview.style.borderStyle = "solid";
+
         }
 
-        const photoFileName = document.getElementById("photoFileName");
 
+        // Show filename
         if (photoFileName) {
+
+            let name = file.name;
+
+            if (name.length > 30) {
+                name = name.substring(0, 27) + "...";
+            }
+
             photoFileName.textContent = name;
+
         }
 
-    });
+    }
 
+
+    // Gallery selection
+    if (photo) {
+
+        photo.addEventListener("change", function () {
+
+            handleMemberPhoto(this.files[0]);
+
+        });
+
+    }
+
+
+    // Camera capture
+    if (photoCamera) {
+
+        photoCamera.addEventListener("change", function () {
+
+            handleMemberPhoto(this.files[0]);
+
+        });
+
+    }
     /*=====================================
     DIGITAL SIGNATURE
     ======================================*/
@@ -600,9 +669,6 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("action", "ADD_MEMBER");
             formData.append("data", JSON.stringify(data));
 
-            console.log("DATA TO SEND");
-                console.log(data);      
-
 
             const response = await fetch(API_URL, {
 
@@ -613,9 +679,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const text = await response.text();
-
-            console.log("SERVER RESPONSE:");
-            console.log(text);
 
             let result;
 
@@ -746,9 +809,155 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("imageViewer").style.display = "none";
     }
 
-    formChanged = false;
+        // ========================================
+        // RESET MEMBERSHIP FORM
+        // ========================================
 
-});
+        const resetButton = document.querySelector(
+            '.btn-secondary[type="reset"]'
+        );
+
+        if (resetButton) {
+
+            resetButton.addEventListener("click", function (e) {
+
+                e.preventDefault();
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "Reset Form?",
+                    text: "All entered information will be cleared.",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, Reset",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+
+                    if (!result.isConfirmed) {
+                        return;
+                    }
+
+                    const form = document.getElementById("memberForm");
+
+                    // Reset all form fields
+                    form.reset();
+
+                    // Reset wizard to Step 1
+                    currentStep = 1;
+                    showStep(currentStep);
+
+                    // Reset Member Photo
+                    const photoInput = document.getElementById("photo");
+                    const photoPreview = document.getElementById("photoPreview");
+                    const photoFileName = document.getElementById("photoFileName");
+
+                    if (photoInput) {
+                        photoInput.value = "";
+                    }
+
+                    if (photoPreview) {
+                        photoPreview.innerHTML =
+                            '<i class="fa-solid fa-user"></i>';
+                        photoPreview.style.borderStyle = "";
+                    }
+
+                    if (photoFileName) {
+                        photoFileName.textContent = "No file selected";
+                    }
+
+                    // Reset Payment Screenshot
+                    const paymentInput =
+                        document.getElementById("paymentProof");
+
+                    const paymentPreview =
+                        document.getElementById("paymentPreview");
+
+                    if (paymentInput) {
+                        paymentInput.value = "";
+                    }
+
+                    if (paymentPreview) {
+                        paymentPreview.src = "";
+                        paymentPreview.style.display = "none";
+                    }
+
+                    // Clear Signature
+                    const canvas =
+                        document.getElementById("signature-pad");
+
+                    if (canvas) {
+                        const ctx = canvas.getContext("2d");
+                        ctx.clearRect(
+                            0,
+                            0,
+                            canvas.width,
+                            canvas.height
+                        );
+                    }
+
+                    // Hide conditional sections
+                    const healthDetails =
+                        document.getElementById("healthDetailsBox");
+
+                    if (healthDetails) {
+                        healthDetails.style.display = "none";
+                    }
+
+                    const accidentDetails =
+                        document.getElementById("accidentDetailsBox");
+
+                    if (accidentDetails) {
+                        accidentDetails.style.display = "none";
+                    }
+
+                    const otherClubDetails =
+                        document.getElementById("otherClubBox");
+
+                    if (otherClubDetails) {
+                        otherClubDetails.style.display = "none";
+                    }
+
+                    const officialPostDetails =
+                        document.getElementById("officialPostBox");
+
+                    if (officialPostDetails) {
+                        officialPostDetails.style.display = "none";
+                    }
+
+                    // Reset declaration
+                    const agreeTerms =
+                        document.getElementById("agreeTerms");
+
+                    if (agreeTerms) {
+                        agreeTerms.checked = false;
+                    }
+
+                    // Reset unsaved-change flag
+                    formChanged = false;
+
+                    // Go to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Form Reset",
+                        text: "All application details have been cleared.",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                });
+
+            });
+
+        }
+
+        formChanged = false;
+
+    });
+
 
 const logo = document.getElementById("homeLogo");
 
