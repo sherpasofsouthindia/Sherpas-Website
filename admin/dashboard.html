@@ -2,22 +2,25 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSI Admin Dashboard</title>
 
-<title>SSI Admin Dashboard</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 
-<link rel="stylesheet" href="css/admin.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
 
 <div class="container">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
     <aside class="sidebar">
 
@@ -29,118 +32,497 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
         <nav>
 
-            <a class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a class="active">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </a>
 
-            <a href="members.html"><i class="fa-solid fa-users"></i> Members</a>
+            <a href="members.html">
+                <i class="fa-solid fa-users"></i>
+                Members
+            </a>
 
-            <a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events & Rides</a>
+            <a href="events.html">
+                <i class="fa-solid fa-calendar-days"></i>
+                Events & Rides
+            </a>
 
-            <a href="gallery.html"><i class="fa-solid fa-image"></i> Gallery</a>
+            <a href="gallery.html">
+                <i class="fa-solid fa-image"></i>
+                Gallery
+            </a>
 
-            <a href="messages.html"><i class="fa-solid fa-envelope"></i> Messages</a>
+            <a href="messages.html">
+                <i class="fa-solid fa-envelope"></i>
+                Messages
+            </a>
 
-            <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="settings.html">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
 
-            <a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            <a href="login.html">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
 
         </nav>
 
     </aside>
 
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
     <main class="content">
 
-        <header>
+        <!-- PAGE HEADER -->
 
-            <h1>Welcome, Admin 👋</h1>
+        <header class="dashboard-header">
+
+            <div>
+                <h1>Welcome, Admin 👋</h1>
+
+                <p>
+                    Here's what's happening with Sherpas of South India today.
+                </p>
+            </div>
+
+            <div class="dashboard-header-right">
+
+                <div class="dashboard-date">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span id="dashboardDate">Loading...</span>
+                </div>
+
+                <button
+                    class="refresh-dashboard-btn"
+                    onclick="loadDashboard()">
+
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+
+                </button>
+
+            </div>
 
         </header>
 
-        <section class="cards">
 
-            <div class="card">
-                <i class="fa-solid fa-users"></i>
-                <h2 id="totalMembers">0</h2>
-                <p>Total Members</p>
+        <!-- =========================
+             SUMMARY CARDS
+        ========================== -->
+
+        <section class="cards dashboard-summary-cards">
+
+            <div class="card summary-card total-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <div>
+                    <h2 id="totalMembers">0</h2>
+                    <p>Total Members</p>
+                    <small>All registered members</small>
+                </div>
+
             </div>
 
-            <div class="card">
-                <i class="fa-solid fa-user-clock"></i>
-                <h2 id="pendingMembers">0</h2>
-                <p>Pending Approval</p>
+
+            <div class="card summary-card approved-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div>
+                    <h2 id="approvedMembers">0</h2>
+                    <p>Approved Members</p>
+                    <small>Active members</small>
+                </div>
+
             </div>
 
-            <div class="card">
-                <i class="fa-solid fa-circle-check"></i>
-                <h2 id="approvedMembers">0</h2>
-                <p>Approved Members</p>
+
+            <div class="card summary-card pending-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div>
+                    <h2 id="pendingMembers">0</h2>
+                    <p>Pending Applications</p>
+                    <small>Awaiting approval</small>
+                </div>
+
             </div>
 
-            <div class="card">
-                <i class="fa-solid fa-circle-xmark"></i>
-                <h2 id="rejectedMembers">0</h2>
-                <p>Rejected Members</p>
+
+            <div class="card summary-card rejected-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+
+                <div>
+                    <h2 id="rejectedMembers">0</h2>
+                    <p>Rejected Applications</p>
+                    <small>Not approved</small>
+                </div>
+
             </div>
 
         </section>
 
-        <section class="recent">
 
-            <div class="panel">
+        <!-- =========================
+             TOP DASHBOARD PANELS
+        ========================== -->
 
-                            <h3>Recent Members</h3>
+        <section class="dashboard-top-grid">
 
-                            <ul id="recentMembersList">
 
-                                <li>Loading...</li>
+            <!-- UPCOMING BIRTHDAYS -->
 
-                            </ul>
+            <div class="panel dashboard-panel birthday-panel">
 
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-cake-candles"></i>
+                            Upcoming Birthdays
+                        </h3>
+
+                        <p>Members celebrating within 30 days</p>
+                    </div>
+
+                        <button class="panel-view-btn"
+                            onclick="window.location.href='members.html?filter=birthdays'">
+                            View All
+                        </button>
+
+                </div>                          
+
+                <div class="birthday-list-wrapper">
+
+                    <ul id="birthdayList">
+
+                        <li>Loading...</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMBERSHIP VALIDITY -->
+
+            <div class="panel dashboard-panel validity-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-shield-halved"></i>
+                            Membership Validity Overview
+                        </h3>
+
+                        <p>Monitor active and expiring memberships</p>
+                    </div>
+
+                    <button class="panel-view-btn"
+                        onclick="window.location.href='members.html?filter=expiring'">
+                        View All
+                    </button>
+
+                </div>
+
+
+                <div class="validity-summary-grid">
+
+                    <div class="validity-summary valid-summary">
+
+                        <div class="validity-summary-icon">
+                            <i class="fa-solid fa-check"></i>
                         </div>
 
-                        <div class="panel">
+                        <div>
+                            <strong id="validMembershipCount">0</strong>
+                            <span>Valid Memberships</span>
+                            <small>Active and up to date</small>
+                        </div>
 
-                <h3>Membership Statistics</h3>
-
-                <div class="stats-list">
-
-                    <div class="stat-row">
-                        <span>Today's Registrations</span>
-                        <strong id="todayRegistrations">0</strong>
                     </div>
 
-                    <div class="stat-row">
-                        <span>This Month</span>
-                        <strong id="monthRegistrations">0</strong>
+
+                    <div class="validity-summary expiring-summary">
+
+                        <div class="validity-summary-icon">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+
+                        <div>
+                            <strong id="expiringMembershipCount">0</strong>
+                            <span>Expiring Soon</span>
+                            <small>Within 30 days</small>
+                        </div>
+
                     </div>
 
-                    <div class="stat-row">
-                        <span>Approved</span>
-                        <strong id="statsApproved">0</strong>
+
+                    <div class="validity-summary expired-summary">
+
+                        <div class="validity-summary-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div>
+                            <strong id="expiredMembershipCount">0</strong>
+                            <span>Expired Memberships</span>
+                            <small>Renewal required</small>
+                        </div>
+
                     </div>
 
-                    <div class="stat-row">
-                        <span>Pending</span>
-                        <strong id="statsPending">0</strong>
+                </div>
+
+
+                <div class="attention-heading">
+
+                    <h4>
+                        Members Requiring Attention
+                    </h4>
+
+                    <span id="attentionMemberCount">0 members</span>
+
+                </div>
+
+
+                <div class="attention-list-wrapper">
+
+                    <ul id="expiringMembersList">
+
+                        <li>Loading...</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMBERSHIP STATUS GRAPHIC -->
+
+            <div class="panel dashboard-panel status-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            Membership Status
+                        </h3>
+
+                        <p>Current application status</p>
                     </div>
 
-                    <div class="stat-row">
-                        <span>Rejected</span>
-                        <strong id="statsRejected">0</strong>
+                </div>
+
+
+                <div class="status-chart">
+
+                    <div class="status-donut">
+
+                        <div class="status-donut-center">
+                            <strong id="statusChartTotal">0</strong>
+                            <span>Members</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status-legend">
+
+                    <div class="status-legend-row">
+                        <span>
+                            <i class="status-dot approved-dot"></i>
+                            Approved
+                        </span>
+
+                        <strong id="chartApproved">0</strong>
+                    </div>
+
+
+                    <div class="status-legend-row">
+                        <span>
+                            <i class="status-dot pending-dot"></i>
+                            Pending
+                        </span>
+
+                        <strong id="chartPending">0</strong>
+                    </div>
+
+
+                    <div class="status-legend-row">
+                        <span>
+                            <i class="status-dot rejected-dot"></i>
+                            Rejected
+                        </span>
+
+                        <strong id="chartRejected">0</strong>
                     </div>
 
                 </div>
 
             </div>
 
-            <div class="panel">
+                        <!-- EVENT REGISTRATION OVERVIEW -->
 
-                <h3>🎂 Upcoming Birthdays</h3>
+            <div class="panel dashboard-panel event-registration-panel">
 
-                <ul id="birthdayList">
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-chart-column"></i>
+                            Event Registration Overview
+                        </h3>
+
+                        <p>Number of registrations for each event</p>
+                    </div>
+
+                </div>
+
+
+                <div class="event-chart-wrapper">
+
+                    <canvas id="eventRegistrationChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LOWER DASHBOARD PANELS
+        ========================== -->
+
+        <section class="dashboard-bottom-grid">
+
+
+            <!-- RECENT MEMBERS -->
+
+            <div class="panel dashboard-panel recent-members-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-users"></i>
+                            Recent Members
+                        </h3>
+
+                        <p>Latest membership applications</p>
+                    </div>
+
+                    <button class="panel-view-btn"
+                        onclick="window.location.href='members.html'">
+
+                        View All
+
+                    </button>
+
+                </div>
+
+                <ul id="recentMembersList">
 
                     <li>Loading...</li>
 
                 </ul>
+
+            </div>
+
+
+            <!-- MEMBERSHIP STATISTICS -->
+
+            <div class="panel dashboard-panel statistics-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-chart-column"></i>
+                            Membership Statistics
+                        </h3>
+
+                        <p>Registration and approval summary</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stats-list">
+
+                    <div class="stat-row">
+                        <span>
+                            <i class="fa-solid fa-users"></i>
+                            Today's Registrations
+                        </span>
+
+                        <strong id="todayRegistrations">0</strong>
+                    </div>
+
+
+                    <div class="stat-row">
+                        <span>
+                            <i class="fa-solid fa-calendar-days"></i>
+                            This Month
+                        </span>
+
+                        <strong id="monthRegistrations">0</strong>
+                    </div>
+
+
+                    <div class="stat-row">
+                        <span>
+                            <i class="fa-solid fa-circle-check"></i>
+                            Approved
+                        </span>
+
+                        <strong id="statsApproved">0</strong>
+                    </div>
+
+
+                    <div class="stat-row">
+                        <span>
+                            <i class="fa-solid fa-clock"></i>
+                            Pending
+                        </span>
+
+                        <strong id="statsPending">0</strong>
+                    </div>
+
+
+                    <div class="stat-row">
+                        <span>
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            Rejected
+                        </span>
+
+                        <strong id="statsRejected">0</strong>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -150,10 +532,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/form-utils.js"></script>
 <script src="js/admin-auth.js"></script>
 
 </body>
-
 </html>

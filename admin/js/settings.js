@@ -18,6 +18,7 @@ const settingFields = {
   "Starting Membership Number": "startingMembershipNumber",
   "Membership Fee": "membershipFee",
   "Renewal Fee": "renewalFee",
+  "Membership Validity": "membershipValidity",
 
   "Application Prefix": "applicationPrefix",
   "Registration Enabled": "registrationEnabled",

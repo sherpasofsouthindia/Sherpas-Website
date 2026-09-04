@@ -10,7 +10,7 @@ window.IS_EDIT_MODE = true;
 ==================================================*/
 
 const EDIT_API_URL =
-    "https://script.google.com/macros/s/AKfycbzQN8dVs044LgU80P9fE5FVq4lHpjZawzPyoM28rxlByC8KINOvyQwdMDjW7r4Q5flm/exec";
+    "https://script.google.com/macros/s/AKfycbzZwnRIuTBjdy9OmYxXaiOXI10aITdffJaVEQ-4W6tf1uz_lyInrcNOdWjm-O7ACQ2L/exec";
 
 
 /*==================================================

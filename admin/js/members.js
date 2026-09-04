@@ -8,27 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document
         .getElementById("refreshBtn")
-        .addEventListener("click", loadMembers);
+        .addEventListener("click", function () {
+            window.location.href = "members.html";
+        });
 
     document.getElementById("searchMember")
     .addEventListener("input", function () {
-
-        const keyword = this.value.toLowerCase();
-
-        const filtered = allMembers.filter(member =>
-
-            (member["Application ID"] || "").toLowerCase().includes(keyword) ||
-
-            (member["Full Name"] || "").toLowerCase().includes(keyword) ||
-
-            (member["Phone"] || "").toString().includes(keyword) ||
-
-            (member["Vehicle Registration"] || "").toLowerCase().includes(keyword)
-
-        );
-
-        renderMembers(filtered);
-
+        applyPageFilter();
     });
 
     document
@@ -75,8 +61,7 @@ async function loadMembers() {
         allMembers = result.members;
 
 
-        renderMembers(allMembers);
-
+        applyPageFilter();
         updateCounts();
 
     }
@@ -88,6 +73,149 @@ async function loadMembers() {
     }
 
 }
+
+/*==================================================
+        DASHBOARD PAGE FILTER
+==================================================*/
+
+function applyPageFilter() {
+
+    const params = new URLSearchParams(window.location.search);
+    const filter = params.get("filter");
+
+    let filtered = [...allMembers];
+
+    if (filter === "birthdays") {
+
+        filtered = allMembers.filter(member => {
+            if (!member["Date of Birth"]) return false;
+
+            const dob = new Date(member["Date of Birth"]);
+            if (isNaN(dob.getTime())) return false;
+
+            const today = new Date();
+
+            const birthdayThisYear = new Date(
+                today.getFullYear(),
+                dob.getMonth(),
+                dob.getDate()
+            );
+
+            // If birthday already passed, check next year's birthday
+            if (birthdayThisYear < today) {
+                birthdayThisYear.setFullYear(
+                    today.getFullYear() + 1
+                );
+            }
+
+            const difference =
+                birthdayThisYear.getTime() - today.getTime();
+
+            const daysUntilBirthday =
+                Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+            return daysUntilBirthday >= 0 &&
+                   daysUntilBirthday <= 30;
+        });
+
+    }
+
+    else if (filter === "expiring") {
+
+        filtered = allMembers.filter(member => {
+
+            if (
+                String(member["Status"] || "").toLowerCase()
+                !== "approved"
+            ) {
+                return false;
+            }
+
+            if (!member["Membership Valid Until"]) {
+                return false;
+            }
+
+            const validUntil = new Date(
+                member["Membership Valid Until"]
+            );
+
+            if (isNaN(validUntil.getTime())) {
+                return false;
+            }
+
+            const today = new Date();
+
+            const difference =
+                validUntil.getTime() - today.getTime();
+
+            const daysRemaining =
+                Math.ceil(
+                    difference / (1000 * 60 * 60 * 24)
+                );
+
+            return daysRemaining <= 30;
+        });
+
+    }
+
+    const searchBox =
+        document.getElementById("searchMember");
+
+    const keyword =
+        searchBox
+            ? searchBox.value.toLowerCase().trim()
+            : "";
+
+    if (keyword) {
+
+        filtered = filtered.filter(member =>
+            (member["Application ID"] || "")
+                .toLowerCase()
+                .includes(keyword) ||
+
+            (member["Membership ID"] || "")
+                .toLowerCase()
+                .includes(keyword) ||
+
+            (member["Full Name"] || "")
+                .toLowerCase()
+                .includes(keyword) ||
+
+            (member["Phone"] || "")
+                .toString()
+                .includes(keyword) ||
+
+            (member["Vehicle Registration"] || "")
+                .toLowerCase()
+                .includes(keyword)
+        );
+
+    }
+
+    renderMembers(filtered);
+
+    // Show which filter is active
+    const pageTitle = document.querySelector(".page-header h1");
+
+    if (pageTitle) {
+
+        if (filter === "birthdays") {
+            pageTitle.textContent = "Upcoming Birthdays";
+        }
+
+        else if (filter === "expiring") {
+            pageTitle.textContent = "Expiring Memberships";
+        }
+
+        else {
+            pageTitle.textContent = "Members Management";
+        }
+
+    }
+
+}
+
+
 
 function renderMembers(members) {
 
@@ -338,6 +466,32 @@ function viewMember(index){
             <p>${member["Address"] || "-"}</p>
 
             <p><strong>District :</strong> ${member["District"] || "-"}</p>
+
+        </div>
+
+        <div class="detail-card">
+
+            <h3>Membership Information</h3>
+
+            <p>
+                <strong>Membership ID :</strong>
+                ${member["Membership ID"] || "-"}
+            </p>
+
+            <p>
+                <strong>Status :</strong>
+                ${member["Status"] || "-"}
+            </p>
+
+            <p>
+                <strong>Approved Date :</strong>
+                ${formatDate(member["Approved Date"] || "-")}
+            </p>
+
+            <p>
+                <strong>Valid Until :</strong>
+                ${formatDate(member["Membership Valid Until"] || "-")}
+            </p>
 
         </div>
 
