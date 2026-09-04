@@ -9,7 +9,7 @@ const API =
 "https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
 
 const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbx2W4fMoGyjPggDI6FD-K-6dUZl2NQBXC5kBs36DC4gyE7TFHYmSLfsgTodPk-zkGQr/exec";
+    "https://script.google.com/macros/s/AKfycbzQN8dVs044LgU80P9fE5FVq4lHpjZawzPyoM28rxlByC8KINOvyQwdMDjW7r4Q5flm/exec";
 
 
 /*==========================================

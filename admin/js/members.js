@@ -91,8 +91,28 @@ async function loadMembers() {
 
 function renderMembers(members) {
 
+    // Sort members by Membership ID
+    // Members without Membership ID will appear last
+    members = [...members].sort((a, b) => {
+
+        const idA = String(a["Membership ID"] || "").trim();
+        const idB = String(b["Membership ID"] || "").trim();
+
+        // Empty Membership IDs go to the bottom
+        if (!idA && !idB) return 0;
+        if (!idA) return 1;
+        if (!idB) return -1;
+
+        // Natural sorting: SSI-2 comes before SSI-10
+        return idA.localeCompare(idB, undefined, {
+            numeric: true,
+            sensitivity: "base"
+        });
+    });
+
     const tbody =
         document.getElementById("membersTableBody");
+
 
     tbody.innerHTML = "";
 
@@ -411,72 +431,35 @@ function viewMember(index){
         break;
 
         case "Approved":
-
             buttons=`
-
             <div class="profile-actions">
 
                 <button class="btn-warning"
                     onclick="changeMemberStatus('Inactive')">
-
                     <i class="fa-solid fa-user-slash"></i>
-
                     Deactivate
-
                 </button>
 
                 <button class="btn-primary"
                     onclick="editSelectedMember()">
-
                     <i class="fa-solid fa-pen"></i>
-
                     Edit
-
                 </button>
 
                 <button class="btn-info"
                     onclick="printMembershipCard()">
-
                     <i class="fa-solid fa-id-card"></i>
-
                     Print Card
-
                 </button>
-
-            </div>
-
-            `;
-
-        break;
-
-        case "Inactive":
-
-            buttons=`
-
-            <div class="profile-actions">
 
                 <button class="btn-success"
-                    onclick="changeMemberStatus('Approved')">
-
-                    <i class="fa-solid fa-user-check"></i>
-
-                    Activate
-
-                </button>
-
-                <button class="btn-primary"
-                    onclick="editSelectedMember()">
-
-                    <i class="fa-solid fa-pen"></i>
-
-                    Edit
-
+                    onclick="openRenewalForm()">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Renew Membership
                 </button>
 
             </div>
-
             `;
-
         break;
 
         case "Rejected":
@@ -934,178 +917,421 @@ async function rejectSelectedMember(){
 
 }
 
-/*==================================================
-        EXPORT ALL MEMBERS TO EXCEL
-==================================================*/
+    /*==================================================
+            EXPORT MEMBERS TO EXCEL
+            SELECT REQUIRED FIELDS
+    ==================================================*/
 
-document
-    .getElementById("exportExcelBtn")
-    .addEventListener("click", function () {
+    document
+        .getElementById("exportExcelBtn")
+        .addEventListener("click", async function () {
 
-        if (!allMembers || allMembers.length === 0) {
+            if (!allMembers || allMembers.length === 0) {
 
-            Swal.fire({
-                icon: "info",
-                title: "No Members",
-                text: "There are no members available to export."
+                Swal.fire({
+                    icon: "info",
+                    title: "No Members",
+                    text: "There are no members available to export."
+                });
+
+                return;
+            }
+
+
+            /*------------------------------------------
+                    FIELDS TO EXCLUDE
+            ------------------------------------------*/
+
+            const excludedFields = [
+                "Photo URL",
+                "Signature URL",
+                "Payment Proof URL",
+                "Photo",
+                "Signature",
+                "Payment Proof"
+            ];
+
+
+            /*------------------------------------------
+                    GET AVAILABLE FIELDS
+            ------------------------------------------*/
+
+            const availableFields = Object.keys(allMembers[0])
+                .filter(function (field) {
+                    return !excludedFields.includes(field);
+                });
+
+
+            /*------------------------------------------
+                    CREATE CHECKBOXES
+            ------------------------------------------*/
+
+            const checkboxHTML = availableFields.map(
+                function (field, index) {
+
+                    return `
+                        <label style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:9px 10px;
+                            border-bottom:1px solid #eeeeee;
+                            cursor:pointer;
+                            text-align:left;
+                            font-size:14px;
+                        ">
+
+                            <input
+                                type="checkbox"
+                                class="export-field-checkbox"
+                                value="${field}"
+                                ${index < 6 ? "checked" : ""}>
+
+                            <span>${field}</span>
+
+                        </label>
+                    `;
+                }
+            ).join("");
+
+
+            /*------------------------------------------
+                    SELECT FIELDS POPUP
+            ------------------------------------------*/
+
+            const result = await Swal.fire({
+
+                title: "Select Fields to Export",
+
+                html: `
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        gap:10px;
+                        margin-bottom:12px;
+                    ">
+
+                        <button
+                            type="button"
+                            id="selectAllExportFields"
+                            style="
+                                flex:1;
+                                padding:8px;
+                                border:none;
+                                border-radius:6px;
+                                background:#f97316;
+                                color:white;
+                                cursor:pointer;
+                                font-weight:600;
+                            ">
+                            Select All
+                        </button>
+
+                        <button
+                            type="button"
+                            id="clearAllExportFields"
+                            style="
+                                flex:1;
+                                padding:8px;
+                                border:none;
+                                border-radius:6px;
+                                background:#64748b;
+                                color:white;
+                                cursor:pointer;
+                                font-weight:600;
+                            ">
+                            Clear All
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="exportFieldsContainer"
+                        style="
+                            max-height:400px;
+                            overflow-y:auto;
+                            border:1px solid #dddddd;
+                            border-radius:8px;
+                            text-align:left;
+                        ">
+
+                        ${checkboxHTML}
+
+                    </div>
+                `,
+
+                width: 500,
+
+                showCancelButton: true,
+
+                confirmButtonText: "Download Excel",
+
+                cancelButtonText: "Cancel",
+
+                confirmButtonColor: "#f97316",
+
+                didOpen: function () {
+
+                    const popup =
+                        Swal.getPopup();
+
+                    const checkboxes =
+                        popup.querySelectorAll(
+                            ".export-field-checkbox"
+                        );
+
+
+                    document
+                        .getElementById("selectAllExportFields")
+                        .addEventListener("click", function () {
+
+                            checkboxes.forEach(function (checkbox) {
+                                checkbox.checked = true;
+                            });
+
+                        });
+
+
+                    document
+                        .getElementById("clearAllExportFields")
+                        .addEventListener("click", function () {
+
+                            checkboxes.forEach(function (checkbox) {
+                                checkbox.checked = false;
+                            });
+
+                        });
+
+                },
+
+                preConfirm: function () {
+
+                    const selectedFields =
+                        Array.from(
+                            document.querySelectorAll(
+                                ".export-field-checkbox:checked"
+                            )
+                        ).map(function (checkbox) {
+                            return checkbox.value;
+                        });
+
+
+                    if (selectedFields.length === 0) {
+
+                        Swal.showValidationMessage(
+                            "Please select at least one field."
+                        );
+
+                        return false;
+                    }
+
+
+                    return selectedFields;
+
+                }
+
             });
 
-            return;
 
-        }
-
-
-        /*------------------------------------------
-                COLUMNS TO EXCLUDE
-        ------------------------------------------*/
-
-        const excludedFields = [
-
-            "Photo URL",
-            "Signature URL",
-            "Payment Proof URL",
-            "Photo",
-            "Signature",
-            "Payment Proof"
-
-        ];
-
-
-        /*------------------------------------------
-                PREPARE DATA
-        ------------------------------------------*/
-
-        const exportData = allMembers.map(
-            function (member) {
-
-                const row = {};
-
-                Object.keys(member).forEach(
-                    function (key) {
-
-                        if (
-                            !excludedFields.includes(key)
-                        ) {
-
-                            row[key] =
-                                member[key] ?? "";
-
-                        }
-
-                    }
-                );
-
-                return row;
-
+            if (!result.isConfirmed) {
+                return;
             }
-        );
 
 
-        /*------------------------------------------
-                CREATE WORKBOOK
-        ------------------------------------------*/
-
-        const worksheet =
-            XLSX.utils.json_to_sheet(
-                exportData
-            );
+            const selectedFields =
+                result.value;
 
 
-        const workbook =
-            XLSX.utils.book_new();
+            /*------------------------------------------
+                    SORT MEMBERS BY MEMBERSHIP ID
+            ------------------------------------------*/
+
+            const sortedMembers =
+                [...allMembers].sort(function (a, b) {
+
+                    const idA =
+                        String(a["Membership ID"] || "").trim();
+
+                    const idB =
+                        String(b["Membership ID"] || "").trim();
 
 
-        XLSX.utils.book_append_sheet(
-            workbook,
-            worksheet,
-            "Members"
-        );
+                    // Members without Membership ID appear last
+                    if (!idA && !idB) return 0;
+                    if (!idA) return 1;
+                    if (!idB) return -1;
 
 
-        /*------------------------------------------
-                COLUMN WIDTH
-        ------------------------------------------*/
-
-        const columns =
-            Object.keys(exportData[0]);
-
-
-        worksheet["!cols"] =
-            columns.map(
-                function (column) {
-
-                    let maxLength =
-                        column.length;
-
-                    exportData.forEach(
-                        function (row) {
-
-                            const value =
-                                String(
-                                    row[column] || ""
-                                );
-
-                            if (
-                                value.length >
-                                maxLength
-                            ) {
-
-                                maxLength =
-                                    value.length;
-
-                            }
-
+                    return idA.localeCompare(
+                        idB,
+                        undefined,
+                        {
+                            numeric: true,
+                            sensitivity: "base"
                         }
                     );
 
-                    return {
-                        wch:
-                            Math.min(
-                                Math.max(
-                                    maxLength + 2,
-                                    12
-                                ),
-                                35
-                            )
-                    };
+                });
+
+
+            /*------------------------------------------
+                    FORMAT DATE AND TIME
+            ------------------------------------------*/
+
+            function formatExcelValue(value) {
+
+                if (
+                    value === null ||
+                    value === undefined ||
+                    value === ""
+                ) {
+                    return "";
+                }
+
+
+                const text =
+                    String(value);
+
+
+                if (
+                    text.match(
+                        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
+                    )
+                ) {
+
+                    const date =
+                        new Date(text);
+
+
+                    if (!isNaN(date.getTime())) {
+
+                        return new Intl.DateTimeFormat(
+                            "en-IN",
+                            {
+                                timeZone: "Asia/Kolkata",
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                                hour12: false
+                            }
+                        ).format(date);
+
+                    }
 
                 }
+
+
+                return value;
+
+            }
+
+
+            /*------------------------------------------
+                    PREPARE SELECTED DATA
+            ------------------------------------------*/
+
+            const exportData =
+                sortedMembers.map(function (member) {
+
+                    const row = {};
+
+                    selectedFields.forEach(function (field) {
+
+                        row[field] =
+                            formatExcelValue(member[field]);
+
+                    });
+
+                    return row;
+
+                });
+
+
+            /*------------------------------------------
+                    CREATE WORKSHEET
+            ------------------------------------------*/
+
+            const worksheet =
+                XLSX.utils.json_to_sheet(exportData);
+
+
+            const workbook =
+                XLSX.utils.book_new();
+
+
+            XLSX.utils.book_append_sheet(
+                workbook,
+                worksheet,
+                "Members"
             );
 
 
-        /*------------------------------------------
-                DOWNLOAD
-        ------------------------------------------*/
+            /*------------------------------------------
+                    COLUMN WIDTH
+            ------------------------------------------*/
 
-        const today =
-            new Date()
-                .toISOString()
-                .split("T")[0];
+            worksheet["!cols"] =
+                selectedFields.map(function (field) {
 
-
-        XLSX.writeFile(
-            workbook,
-            `SHERPAS_Members_${today}.xlsx`
-        );
+                    let maxLength =
+                        field.length;
 
 
-        Swal.fire({
+                    exportData.forEach(function (row) {
 
-            icon: "success",
+                        const value =
+                            String(row[field] || "");
 
-            title: "Excel Exported",
 
-            text:
-                allMembers.length +
-                " members exported successfully.",
+                        if (value.length > maxLength) {
+                            maxLength = value.length;
+                        }
 
-            timer: 1800,
+                    });
 
-            showConfirmButton: false
+
+                    return {
+                        wch: Math.min(
+                            Math.max(maxLength + 2, 12),
+                            35
+                        )
+                    };
+
+                });
+
+
+            /*------------------------------------------
+                    DOWNLOAD FILE
+            ------------------------------------------*/
+
+            const today =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+
+            XLSX.writeFile(
+                workbook,
+                `SHERPAS_Members_${today}.xlsx`
+            );
+
+
+            Swal.fire({
+                icon: "success",
+                title: "Excel Exported",
+                text:
+                    exportData.length +
+                    " members exported successfully.",
+                timer: 1800,
+                showConfirmButton: false
+            });
 
         });
-
-    });
 
 function printMembershipCard(){
 
@@ -1327,6 +1553,224 @@ async function generateApplicationPDF(index) {
         });
 
     }
+
+}
+
+/* =========================================
+   RENEW MEMBERSHIP FORM
+========================================= */
+
+async function openRenewalForm() {
+
+    if (!selectedMember) {
+        Swal.fire(
+            "Error",
+            "Please select a member first.",
+            "error"
+        );
+        return;
+    }
+
+    const member = selectedMember;
+
+    const memberName =
+        member["Full Name"] || "";
+
+    const membershipID =
+        member["Membership ID"] || "";
+
+    const currentValidity =
+        member["Membership Valid Until"] ||
+        member["Renewal Date"] ||
+        "Not available";
+
+    let renewalFee = "";
+
+    try {
+
+        const token =
+            sessionStorage.getItem("sherpas_admin_token");
+
+        const params = new URLSearchParams();
+
+        params.append("action", "GET_SETTINGS");
+        params.append("token", token);
+        params.append("data", JSON.stringify({}));
+
+        const response =
+            await fetch(API_URL, {
+                method: "POST",
+                body: params
+            });
+
+        const result =
+            await response.json();
+
+        if (result.success && result.settings) {
+
+            renewalFee =
+                result.settings["Renewal Fee"] || "";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load renewal fee:",
+            error
+        );
+
+    }
+
+    Swal.fire({
+
+        target: document.body,
+
+        backdrop: true,
+
+        allowOutsideClick: false,
+
+        allowEscapeKey: true,
+
+        heightAuto: false,
+
+        customClass: {
+            popup: "renewal-popup"
+        },
+
+        title: "Renew Membership",
+
+
+        html: `
+
+            <div style="text-align:left">
+
+                <p>
+                    <strong>Member Name:</strong>
+                    ${memberName}
+                </p>
+
+                <p>
+                    <strong>Membership ID:</strong>
+                    ${membershipID}
+                </p>
+
+                <p>
+                    <strong>Current Valid Until:</strong>
+                    ${currentValidity}
+                </p>
+
+                <label>
+                    <strong>Renewal Amount</strong>
+                </label>
+
+                <input
+                    id="renewalAmount"
+                    class="swal2-input"
+                    type="number"
+                    value="${renewalFee}"
+                    min="0"
+                    step="0.01"
+                    placeholder="Renewal amount">
+
+                <label>
+                    <strong>Renewal Date</strong>
+                </label>
+
+                <input
+                    id="renewalDate"
+                    class="swal2-input"
+                    type="date">
+
+                <label>
+                    <strong>Payment Proof</strong>
+                </label>
+
+                <input
+                    id="renewalPaymentProof"
+                    class="swal2-file"
+                    type="file"
+                    accept="image/*,.pdf">
+
+            </div>
+
+        `,
+
+        showCancelButton: true,
+
+        confirmButtonText: "Submit Renewal",
+
+        cancelButtonText: "Cancel",
+
+        focusConfirm: false,
+
+        preConfirm: () => {
+
+            const amount =
+                document.getElementById(
+                    "renewalAmount"
+                ).value;
+
+            const date =
+                document.getElementById(
+                    "renewalDate"
+                ).value;
+
+            const proof =
+                document.getElementById(
+                    "renewalPaymentProof"
+                ).files[0];
+
+            if (!amount) {
+
+                Swal.showValidationMessage(
+                    "Please enter the renewal amount."
+                );
+
+                return false;
+
+            }
+
+            if (!date) {
+
+                Swal.showValidationMessage(
+                    "Please select the renewal date."
+                );
+
+                return false;
+
+            }
+
+            if (!proof) {
+
+                Swal.showValidationMessage(
+                    "Please upload payment proof."
+                );
+
+                return false;
+
+            }
+
+            return {
+                amount,
+                date,
+                proof
+            };
+
+        }
+
+    }).then(async result => {
+
+        if (!result.isConfirmed) {
+            return;
+        }
+
+        await submitRenewalRequest(
+            member,
+            result.value
+        );
+
+    });
 
 }
 

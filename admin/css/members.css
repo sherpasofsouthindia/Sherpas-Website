@@ -838,3 +838,29 @@ IMAGE VIEWER
 
 }
 
+/* =========================================
+   RENEWAL POPUP
+========================================= */
+
+.renewal-popup {
+    z-index: 10000 !important;
+}
+
+.swal2-container {
+    z-index: 10000 !important;
+}
+
+.swal2-popup.renewal-popup {
+    position: relative;
+}
+
+.swal2-popup.renewal-popup .swal2-input {
+    width: 80%;
+    margin: 8px auto;
+}
+
+.swal2-popup.renewal-popup .swal2-file {
+    width: 80%;
+    margin: 8px auto;
+}
+

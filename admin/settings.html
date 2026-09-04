@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | Sherpas Admin</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/settings.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <img src="assets/logo.png" class="logo">
+
+        <h2>SHERPAS OF SOUTH INDIA</h2>
+
+        <p>Ride • Explore • Conquer</p>
+
+        <nav>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a href="members.html">
+                <i class="fa-solid fa-users"></i>
+                Members
+            </a>
+
+            <a href="events.html">
+                <i class="fa-solid fa-calendar-days"></i>
+                Events & Rides
+            </a>
+
+            <a href="gallery.html">
+                <i class="fa-solid fa-image"></i>
+                Gallery
+            </a>
+
+            <a href="messages.html">
+                <i class="fa-solid fa-envelope"></i>
+                Messages
+            </a>
+
+            <a href="settings.html" class="active">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+            <a href="login.html">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Admin Settings</h1>
+
+                <p>Manage your Sherpas Membership System</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORGANIZATION DETAILS -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+
+                <div>
+                    <h2>Organization Details</h2>
+                    <p>Basic information about your organization</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+                <div class="form-group">
+
+                    <label for="organizationName">
+                        Organization Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="organizationName"
+                        placeholder="Enter organization name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="organizationPhone">
+                        Organization Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="organizationPhone"
+                        placeholder="Enter phone number">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="organizationEmail">
+                        Organization Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="organizationEmail"
+                        placeholder="Enter email address">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="websiteURL">
+                        Website URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="websiteURL"
+                        placeholder="Enter website URL">
+
+                </div>
+
+
+                <div class="form-group full-width">
+
+                    <label for="organizationAddress">
+                        Organization Address
+                    </label>
+
+                    <textarea
+                        id="organizationAddress"
+                        rows="3"
+                        placeholder="Enter organization address"></textarea>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MEMBERSHIP SETTINGS -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+
+                <div>
+                    <h2>Membership Settings</h2>
+                    <p>Configure membership numbering and fees</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+                <div class="form-group">
+
+                    <label for="membershipPrefix">
+                        Membership Prefix
+                    </label>
+
+                    <input
+                        type="text"
+                        id="membershipPrefix"
+                        placeholder="Example: SSI">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="startingMembershipNumber">
+                        Starting Membership Number
+                    </label>
+
+                    <input
+                        type="number"
+                        id="startingMembershipNumber"
+                        min="1"
+                        placeholder="Example: 1">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="membershipFee">
+                        Membership Fee
+                    </label>
+
+                    <input
+                        type="number"
+                        id="membershipFee"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter membership fee">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="renewalFee">
+                        Renewal Fee
+                    </label>
+
+                    <input
+                        type="number"
+                        id="renewalFee"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter renewal fee">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPLICATION SETTINGS -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <div>
+                    <h2>Application Settings</h2>
+                    <p>Control new member applications</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+                <div class="form-group">
+
+                    <label for="applicationPrefix">
+                        Application Prefix
+                    </label>
+
+                    <input
+                        type="text"
+                        id="applicationPrefix"
+                        placeholder="Example: APP">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="registrationEnabled">
+                        Registration Enabled
+                    </label>
+
+                    <select id="registrationEnabled">
+
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAYMENT SETTINGS -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+
+                <div>
+                    <h2>Payment Settings</h2>
+                    <p>Configure payment-related information</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+                <div class="form-group">
+
+                    <label for="adminEmail">
+                        Admin Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        placeholder="Enter admin email">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACTIONS -->
+
+        <div class="settings-actions">
+
+            <button
+                type="button"
+                id="reloadSettingsBtn"
+                class="secondary-btn">
+
+                <i class="fa-solid fa-rotate-right"></i>
+                Reload Settings
+
+            </button>
+
+
+            <button
+                type="button"
+                id="saveSettingsBtn"
+                class="save-btn">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Settings
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="settingsMessage"
+            class="settings-message">
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="js/form-utils.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/admin-auth.js"></script>
+
+</body>
+
+</html>
+
