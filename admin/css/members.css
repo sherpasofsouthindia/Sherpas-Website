@@ -125,7 +125,7 @@ border-radius:50%;
     margin:2px;
     cursor:pointer;
     color:#fff;
-    background:#34495e;
+    background:#0367cb;
     transition:.3s;
 }
 
@@ -684,29 +684,74 @@ IMAGE VIEWER
 
 }
 
-.profile-actions button{
+/* =========================================
+   MEMBER ACTION BUTTON COLORS
+========================================= */
 
-    padding:12px 22px;
-
-    border:none;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    color:#fff;
-
+.profile-actions button {
+    color: #ffffff !important;
+    border: none !important;
+    padding: 12px 22px !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.25s ease;
 }
 
-.btn-success{
-
-    background:#16a34a;
-
+/* Approve / Success */
+.profile-actions .btn-success {
+    background-color: #16a34a !important;
 }
+
+/* Edit / Primary */
+.profile-actions .btn-primary {
+    background-color: #2563eb !important;
+}
+
+/* Reject / Danger */
+.profile-actions .btn-danger {
+    background-color: #dc2626 !important;
+}
+
+/* Print Card / Info */
+.profile-actions .btn-info {
+    background-color: #0891b2 !important;
+}
+
+/* Deactivate / Warning */
+.profile-actions .btn-warning {
+    background-color: #f59e0b !important;
+    color: #ffffff !important;
+}
+
+/* Hover colors */
+.profile-actions .btn-success:hover {
+    background-color: #15803d !important;
+}
+
+.profile-actions .btn-primary:hover {
+    background-color: #1d4ed8 !important;
+}
+
+.profile-actions .btn-danger:hover {
+    background-color: #b91c1c !important;
+}
+
+.profile-actions .btn-info:hover {
+    background-color: #0e7490 !important;
+}
+
+.profile-actions .btn-warning:hover {
+    background-color: #d97706 !important;
+}
+
+/* Button movement on hover */
+.profile-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+}
+
 
 .btn-primary{
 
@@ -863,4 +908,69 @@ IMAGE VIEWER
     width: 80%;
     margin: 8px auto;
 }
+
+/* =========================================
+   ACTION BUTTON TOOLTIP
+========================================= */
+
+.icon-btn,
+.profile-actions button,
+.add-btn,
+.refresh-btn,
+.export-btn,
+.save-btn {
+    position: relative;
+}
+
+/* Tooltip text */
+.icon-btn::after,
+.profile-actions button::after,
+.add-btn::after,
+.refresh-btn::after,
+.export-btn::after,
+.save-btn::after {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+
+    background: #111827;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 100000;
+
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Show tooltip */
+.icon-btn:hover::after,
+.profile-actions button:hover::after,
+.add-btn:hover::after,
+.refresh-btn:hover::after,
+.export-btn:hover::after,
+.save-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Tooltip names */
+.icon-btn[title]::after,
+.profile-actions button[title]::after,
+.add-btn[title]::after,
+.refresh-btn[title]::after,
+.export-btn[title]::after,
+.save-btn[title]::after {
+    content: attr(title);
+}
+
 

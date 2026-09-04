@@ -171,9 +171,7 @@ ${member.Status}
             class="icon-btn"
             onclick="viewMember(${allMembers.indexOf(member)})"
             title="View Member">
-
             <i class="fa-solid fa-eye"></i>
-
         </button>
 
 
@@ -349,7 +347,7 @@ function viewMember(index){
 
             <p><strong>Registration :</strong> ${member["Vehicle Registration"] || "-"}</p>
 
-            <p><strong>Driving Licence :</strong> ${member["Driving Licence"] || "-"}</p>
+            <p><strong>Driving License :</strong> ${member["Driving License"] || "-"}</p>
 
         </div>
 
