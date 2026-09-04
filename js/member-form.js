@@ -1006,3 +1006,25 @@ if (logo) {
     });
 
 }
+
+
+/* Vehicle Registration Number Formatting */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const vehicleRegistration = document.getElementById("vehiclereg");
+
+    if (vehicleRegistration) {
+
+        vehicleRegistration.addEventListener("input", function () {
+
+            this.value = this.value
+                .toUpperCase()
+                .replace(/\s+/g, "")
+                .replace(/-/g, "");
+
+        });
+
+    }
+
+});
+
