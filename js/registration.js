@@ -6,7 +6,7 @@ const EVENTS_API =
     "https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
 
 const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbzZwnRIuTBjdy9OmYxXaiOXI10aITdffJaVEQ-4W6tf1uz_lyInrcNOdWjm-O7ACQ2L/exec";
+    "https://script.google.com/macros/s/AKfycbwJxFWdujXDPqqTL3lNvj6Zs7Rwi_lvDhjFzadp12MFMwM25HjU7HpizeuncuwTPisD/exec";
 
 
 /*==================================================

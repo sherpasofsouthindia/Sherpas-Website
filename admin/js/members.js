@@ -1732,48 +1732,58 @@ async function openRenewalForm() {
         member["Membership ID"] || "";
 
     const currentValidity =
-        member["Membership Valid Until"] ||
-        member["Renewal Date"] ||
-        "Not available";
+        member["Membership Valid Until"] || "";
 
-    let renewalFee = "";
-
-    try {
-
-        const token =
-            sessionStorage.getItem("sherpas_admin_token");
-
-        const params = new URLSearchParams();
-
-        params.append("action", "GET_SETTINGS");
-        params.append("token", token);
-        params.append("data", JSON.stringify({}));
-
-        const response =
-            await fetch(API_URL, {
-                method: "POST",
-                body: params
-            });
-
-        const result =
-            await response.json();
-
-        if (result.success && result.settings) {
-
-            renewalFee =
-                result.settings["Renewal Fee"] || "";
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load renewal fee:",
-            error
+    if (!currentValidity) {
+        Swal.fire(
+            "Cannot Renew",
+            "Current membership expiry date is not available.",
+            "warning"
         );
-
+        return;
     }
 
+    const expiryDate =
+        new Date(currentValidity);
+
+    if (isNaN(expiryDate.getTime())) {
+        Swal.fire(
+            "Cannot Renew",
+            "The current membership expiry date is invalid.",
+            "error"
+        );
+        return;
+    }
+
+    const formatDate = date => {
+        return date.toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        );
+    };
+
+    // Initial values shown immediately
+    let renewalFee = "Loading...";
+    let validityMonths = 12;
+
+    const calculateNewExpiry = months => {
+        const newDate = new Date(expiryDate);
+
+        newDate.setMonth(
+            newDate.getMonth() + Number(months)
+        );
+
+        return newDate;
+    };
+
+    let newExpiryDate =
+        calculateNewExpiry(validityMonths);
+
+    // Open popup immediately
     Swal.fire({
 
         target: document.body,
@@ -1792,7 +1802,6 @@ async function openRenewalForm() {
 
         title: "Renew Membership",
 
-
         html: `
 
             <div style="text-align:left">
@@ -1809,33 +1818,35 @@ async function openRenewalForm() {
 
                 <p>
                     <strong>Current Valid Until:</strong>
-                    ${currentValidity}
+                    ${formatDate(expiryDate)}
+                </p>
+
+                <p>
+                    <strong>Renewal Fee:</strong>
+                    <span id="renewalFeeDisplay">
+                        ${renewalFee}
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Validity:</strong>
+                    <span id="renewalValidityDisplay">
+                        ${validityMonths} months
+                    </span>
+                </p>
+
+                <p>
+                    <strong>New Valid Until:</strong>
+                    <span id="newExpiryDisplay">
+                        ${formatDate(newExpiryDate)}
+                    </span>
                 </p>
 
                 <label>
-                    <strong>Renewal Amount</strong>
-                </label>
-
-                <input
-                    id="renewalAmount"
-                    class="swal2-input"
-                    type="number"
-                    value="${renewalFee}"
-                    min="0"
-                    step="0.01"
-                    placeholder="Renewal amount">
-
-                <label>
-                    <strong>Renewal Date</strong>
-                </label>
-
-                <input
-                    id="renewalDate"
-                    class="swal2-input"
-                    type="date">
-
-                <label>
                     <strong>Payment Proof</strong>
+                    <span style="font-weight:normal;">
+                        (Optional)
+                    </span>
                 </label>
 
                 <input
@@ -1858,55 +1869,13 @@ async function openRenewalForm() {
 
         preConfirm: () => {
 
-            const amount =
-                document.getElementById(
-                    "renewalAmount"
-                ).value;
-
-            const date =
-                document.getElementById(
-                    "renewalDate"
-                ).value;
-
             const proof =
                 document.getElementById(
                     "renewalPaymentProof"
                 ).files[0];
 
-            if (!amount) {
-
-                Swal.showValidationMessage(
-                    "Please enter the renewal amount."
-                );
-
-                return false;
-
-            }
-
-            if (!date) {
-
-                Swal.showValidationMessage(
-                    "Please select the renewal date."
-                );
-
-                return false;
-
-            }
-
-            if (!proof) {
-
-                Swal.showValidationMessage(
-                    "Please upload payment proof."
-                );
-
-                return false;
-
-            }
-
             return {
-                amount,
-                date,
-                proof
+                proof: proof || null
             };
 
         }
@@ -1921,6 +1890,253 @@ async function openRenewalForm() {
             member,
             result.value
         );
+
+    });
+
+    // Load settings after popup is already visible
+    try {
+
+        const token =
+            sessionStorage.getItem(
+                "sherpas_admin_token"
+            ) || "";
+
+        const params = new URLSearchParams();
+
+        params.append(
+            "action",
+            "GET_SETTINGS"
+        );
+
+        params.append(
+            "token",
+            token
+        );
+
+        params.append(
+            "data",
+            JSON.stringify({})
+        );
+
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: params
+        });
+
+        const result = await response.json();
+
+        const settings =
+            result.data || {};
+
+        if (result.success) {
+
+            renewalFee =
+                settings["Renewal Fee"] || "";
+
+            validityMonths =
+                Number(
+                    settings["Membership Validity"]
+                ) || 12;
+
+            newExpiryDate =
+                calculateNewExpiry(validityMonths);
+
+            const feeElement =
+                document.getElementById(
+                    "renewalFeeDisplay"
+                );
+
+            const validityElement =
+                document.getElementById(
+                    "renewalValidityDisplay"
+                );
+
+            const expiryElement =
+                document.getElementById(
+                    "newExpiryDisplay"
+                );
+
+            if (feeElement) {
+                feeElement.textContent =
+                    "₹" + renewalFee;
+            }
+
+            if (validityElement) {
+                validityElement.textContent =
+                    validityMonths + " months";
+            }
+
+            if (expiryElement) {
+                expiryElement.textContent =
+                    formatDate(newExpiryDate);
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load renewal settings:",
+            error
+        );
+
+        const feeElement =
+            document.getElementById(
+                "renewalFeeDisplay"
+            );
+
+        if (feeElement) {
+            feeElement.textContent =
+                "Unable to load";
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   SUBMIT RENEWAL REQUEST
+========================================= */
+
+async function submitRenewalRequest(member, renewalData) {
+
+    try {
+
+        const token =
+            sessionStorage.getItem("sherpas_admin_token") || "";
+
+        if (!token) {
+            Swal.fire(
+                "Session Expired",
+                "Please login again.",
+                "error"
+            );
+            return;
+        }
+
+        Swal.fire({
+            title: "Processing Renewal",
+            text: "Please wait...",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+
+        // Payment proof is optional
+
+        let proofBase64 = "";
+
+        if (renewalData && renewalData.proof) {
+
+            proofBase64 =
+                await fileToBase64(
+                    renewalData.proof
+                );
+
+        }
+
+
+        const renewalPayload = {
+
+            membershipID:
+                member["Membership ID"] || "",
+
+            renewalPaymentProof:
+                proofBase64
+
+        };
+
+
+        const params = new URLSearchParams();
+
+        params.append(
+            "action",
+            "SUBMIT_RENEWAL"
+        );
+
+        params.append(
+            "token",
+            token
+        );
+
+        params.append(
+            "data",
+            JSON.stringify(renewalPayload)
+        );
+
+
+        const response =
+            await fetch(API_URL, {
+                method: "POST",
+                body: params
+            });
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+            throw new Error(
+                result.message ||
+                "Unable to complete renewal."
+            );
+        }
+
+
+        Swal.fire({
+            icon: "success",
+            title: "Membership Renewed",
+            text:
+                result.message ||
+                "Membership renewed successfully."
+        });
+
+
+        // Refresh the member details/list
+
+        if (typeof loadMembers === "function") {
+            await loadMembers();
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Renewal submission error:",
+            error
+        );
+
+        Swal.fire(
+            "Renewal Failed",
+            error.message ||
+            "Unable to complete renewal.",
+            "error"
+        );
+
+    }
+
+}
+/* =========================================
+   FILE TO BASE64
+========================================= */
+
+function fileToBase64(file) {
+
+    return new Promise(function(resolve, reject) {
+
+        const reader = new FileReader();
+
+        reader.onload = function() {
+            resolve(reader.result);
+        };
+
+        reader.onerror = function(error) {
+            reject(error);
+        };
+
+        reader.readAsDataURL(file);
 
     });
 
