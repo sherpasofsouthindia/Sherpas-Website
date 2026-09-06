@@ -348,8 +348,8 @@ background:#56627b;
 .cards .card {
     position: relative;
     overflow: hidden;
-    padding: 25px;
-    min-height: 145px;
+    padding: 10px;
+    min-height: 80px;
     border: 1px solid #e5e7eb;
     border-radius: 16px;
     background: #ffffff;
@@ -433,7 +433,7 @@ background:#56627b;
     padding: 24px;
     border: 1px solid #8a8c90;
     border-radius: 16px;
-    background: #370202;
+    background: #1f2937;
     box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
 }
 

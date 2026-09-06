@@ -504,7 +504,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const form=document.getElementById("memberForm");
 
-    const requiredFields = memberForm.querySelectorAll("[required]");
+    const requiredFields = form.querySelectorAll("[required]");
 
     for (const field of requiredFields) {
 

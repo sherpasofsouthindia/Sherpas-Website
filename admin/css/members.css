@@ -275,14 +275,14 @@ cursor:pointer;
 .stats-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
+    gap:10px;
     margin:25px 0;
 }
 
 .stat-card{
     background:#243044;
     border-radius:10px;
-    padding:8px;
+    padding:5px;
     color:#fff;
     box-shadow:0 8px 20px rgba(0,0,0,.25);
     transition:.3s;
@@ -1500,7 +1500,7 @@ IMAGE VIEWER
 }
 
 .members-page .table-card {
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .members-page .table-card th {
@@ -1511,3 +1511,124 @@ IMAGE VIEWER
     color: #ffffff !important;
 }
 
+/* =========================================================
+   MEMBERS PAGE - INTERNAL MEMBER LIST SCROLL
+========================================================= */
+
+.members-page {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.members-page .container {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.members-page .content {
+    height: 100vh;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Keep the page header and statistics visible */
+.members-page .page-header,
+.members-page .stats-grid {
+    flex-shrink: 0;
+}
+
+/* Member listing becomes the scrolling area */
+.members-page .table-card {
+    flex: none;
+    min-height: 0;
+
+    height: 760px;
+    max-height: calc(100vh - 260px);
+
+    margin-top: 25px;
+    margin-bottom: 20px;
+
+    overflow-y: auto;
+    overflow-x: auto;
+
+    border-radius: 16px;
+}
+
+.members-page .table-card tbody tr {
+    height: 68px;
+}
+
+.members-page .table-card tbody td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Normal table heading */
+.members-page .table-card thead {
+    position: static;
+    z-index: auto;
+}
+
+/* Prevent table columns from becoming too narrow */
+.members-page .table-card table {
+    min-width: 900px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Scrollbar styling */
+.members-page .table-card::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+.members-page .table-card::-webkit-scrollbar-track {
+    background: #172033;
+    border-radius: 10px;
+}
+
+.members-page .table-card::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border-radius: 10px;
+}
+
+.members-page .table-card::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Firefox */
+.members-page .table-card {
+    scrollbar-width: thin;
+    scrollbar-color: #64748b #172033;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .members-page .content {
+        overflow: hidden;
+    }
+
+    .members-page .page-header {
+        flex-shrink: 0;
+    }
+
+    .members-page .stats-grid {
+        flex-shrink: 0;
+    }
+
+    .members-page .table-card {
+        margin-top: 15px;
+        margin-bottom: 12px;
+    }
+
+}
