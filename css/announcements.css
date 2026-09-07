@@ -500,3 +500,29 @@ body {
     cursor: pointer;
 }
 
+/* =========================================================
+   PLACE ANNOUNCEMENT TICKER AT THE BOTTOM OF HERO
+   ========================================================= */
+
+.public-announcements {
+    position: relative;
+    z-index: 20;
+
+    margin-top: -54px;
+}
+
+/* Keep the ticker visible above the hero background */
+.public-announcements .announcement-label,
+.public-announcements .announcement-window,
+.public-announcements .announcement-controls {
+    position: relative;
+    z-index: 21;
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    .public-announcements {
+        margin-top: -48px;
+    }
+}
+
