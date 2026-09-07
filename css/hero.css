@@ -760,3 +760,21 @@
     }
 
 }
+
+/* ==================================================
+   DESKTOP HERO - 80% ZOOMED OUT STYLE
+   ================================================== */
+
+@media (min-width: 769px) {
+
+    .hero-content {
+        width: 900px;
+        max-width: 90%;
+        padding: 60px;
+
+        transform: scale(0.80);
+        transform-origin: center center;
+    }
+
+}
+
