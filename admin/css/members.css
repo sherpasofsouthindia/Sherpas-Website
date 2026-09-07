@@ -1664,3 +1664,137 @@ IMAGE VIEWER
 
 }
 
+/* =========================================================
+   MEMBERS PAGE - DESKTOP AND MOBILE LAYOUT FIX
+   ========================================================= */
+
+/* Allow the complete page to scroll normally */
+.members-page,
+.members-page html,
+.members-page body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+.members-page .container {
+    min-height: 100vh;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.members-page .content {
+    min-width: 0;
+    min-height: 100vh;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Header controls */
+.members-page .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.members-page .page-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Member table area */
+.members-page .table-card {
+    width: 100%;
+    max-width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Keep the table wide enough to show all columns */
+.members-page .table-card table {
+    min-width: 900px;
+    width: 100%;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .members-page .content {
+        padding: 15px;
+        overflow: visible !important;
+    }
+
+    .members-page .page-header {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .members-page .page-actions {
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .members-page .page-actions input {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .members-page .page-actions button,
+    .members-page .page-actions a {
+        flex: 1 1 auto;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .members-page .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .members-page .table-card {
+        width: 100%;
+        height: auto !important;
+        max-height: none !important;
+        margin-top: 15px;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .members-page .table-card table {
+        min-width: 900px;
+        width: 900px;
+    }
+}
+
+/* Very small mobile screens */
+@media (max-width: 420px) {
+
+    .members-page .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .members-page .page-actions button,
+    .members-page .page-actions a {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+}
+
+
