@@ -1632,3 +1632,24 @@ IMAGE VIEWER
     }
 
 }
+
+/* =========================================================
+   MEMBERS ADMIN PAGE - 75% ZOOM-OUT STYLE
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+    body.members-page {
+        zoom: 0.75;
+    }
+
+}
+
+/* Keep the original mobile layout unchanged */
+@media (max-width: 768px) {
+
+    body.members-page {
+        zoom: 1;
+    }
+
+}
