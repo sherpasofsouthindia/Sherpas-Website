@@ -550,3 +550,19 @@ Allow enlarged poster to be viewed
 .event-register-btn i {
     margin-right: 6px;
 }
+
+
+/* =========================================================
+   EVENTS SECTION - REDUCED DESKTOP SIZE
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+    .events-grid {
+        transform: scale(0.80);
+        transform-origin: top center;
+
+        margin-bottom: -90px;
+    }
+
+}
