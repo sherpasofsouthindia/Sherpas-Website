@@ -1634,22 +1634,33 @@ IMAGE VIEWER
 }
 
 /* =========================================================
-   MEMBERS ADMIN PAGE - 75% ZOOM-OUT STYLE
+   MEMBERS PAGE - MOBILE SCROLLING FIX
    ========================================================= */
 
-@media (min-width: 769px) {
+@media (max-width: 900px) {
 
-    body.members-page {
-        zoom: 0.75;
+    html,
+    body {
+        height: auto !important;
+        min-height: 100%;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .content {
+        flex: 1 1 auto;
+        min-height: auto !important;
+        height: auto !important;
+        overflow: visible !important;
     }
 
 }
 
-/* Keep the original mobile layout unchanged */
-@media (max-width: 768px) {
-
-    body.members-page {
-        zoom: 1;
-    }
-
-}
