@@ -417,4 +417,25 @@
     }
 
 }
+/* =========================================================
+   CONTACT SECTION - REDUCED DESKTOP SIZE
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+    .admin-team {
+        transform: scale(0.80);
+        transform-origin: top center;
+
+        margin-bottom: -70px;
+    }
+
+    .contact-form {
+        transform: scale(0.80);
+        transform-origin: top center;
+
+        margin-bottom: -80px;
+    }
+
+}
 
