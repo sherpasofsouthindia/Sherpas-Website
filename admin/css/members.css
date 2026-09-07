@@ -1796,5 +1796,21 @@ IMAGE VIEWER
         width: 100%;
     }
 }
+/* =========================================================
+   MEMBERS PAGE - DESKTOP 80% VIEW
+   ========================================================= */
+
+@media (min-width: 769px) {
+    body.members-page {
+        zoom: 0.80;
+    }
+}
+
+@media (max-width: 768px) {
+    body.members-page {
+        zoom: 1;
+    }
+}
+
 
 
