@@ -659,10 +659,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const submitBtn = document.querySelector(".btn-primary");
 
-            submitBtn.disabled = true;
-
-            submitBtn.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Membership...';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML =
+                    '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Membership...';
+            }
 
             const formData = new URLSearchParams();
 
@@ -690,40 +691,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
             
-            const applicationId = result.data.applicationID;
-
             if (result.success) {
 
+                const applicationId =
+                    result.data && result.data.applicationID
+                        ? result.data.applicationID
+                        : "";
+
                 Swal.fire({
-
                     icon: "success",
-
                     title: "Application Submitted",
-
                     html: `
                         Thank you for applying.<br><br>
                         Your application has been submitted successfully.<br>
                         Our committee will review your application and contact you soon.
                     `
-
                 }).then(() => {
-
                     window.location.href = "./index.html";
-
                 });
 
                 return;
 
-            }else {
+            } else {
 
                 Swal.fire({
-
-                    icon:"error",
-
-                    title:"Submission Failed",
-
-                    text:result.message
-
+                    icon: "error",
+                    title: "Submission Failed",
+                    text: result.message || "Unable to submit application."
                 });
 
             }
@@ -746,12 +740,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         finally {
 
-            const submitBtn = document.querySelector(".btn-primary");
+            const submitBtn = document.querySelector(
+                '#memberForm button[type="submit"], #memberForm .btn-primary'
+            );
 
-            submitBtn.disabled = false;
-
-            submitBtn.innerHTML =
-                '<i class="fa-solid fa-paper-plane"></i> Submit Membership';
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML =
+                    '<i class="fa-solid fa-paper-plane"></i> Submit Membership';
+            }
 
         }
 
