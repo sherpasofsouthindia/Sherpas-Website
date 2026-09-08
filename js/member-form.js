@@ -502,8 +502,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     async function submitMember(){
 
-    const form=document.getElementById("memberForm");
-
+    const form = document.getElementById("memberForm");
     const requiredFields = form.querySelectorAll("[required]");
 
     for (const field of requiredFields) {
@@ -657,7 +656,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
-            const submitBtn = document.querySelector(".btn-primary");
+            const submitBtn = document.querySelector(
+                '#memberForm button[type="submit"], #memberForm .btn-primary'
+            );
 
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -739,16 +740,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
         finally {
-
             const submitBtn = document.querySelector(
                 '#memberForm button[type="submit"], #memberForm .btn-primary'
             );
-
+        
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML =
                     '<i class="fa-solid fa-paper-plane"></i> Submit Membership';
             }
+        }
 
         }
 
