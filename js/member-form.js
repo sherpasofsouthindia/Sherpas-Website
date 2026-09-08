@@ -543,13 +543,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    const photo64=await fileToBase64(photo);
-
-    const payment64=await fileToBase64(payment);
-
-    const signature=document
-    .getElementById("signature-pad")
-    .toDataURL();
+    // Show loading message before processing files
+    Swal.fire({
+        title: "Submitting Membership",
+        html: "Please wait...<br><br>Preparing uploaded files",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    const submitBtn = document.querySelector(
+        '#memberForm button[type="submit"], #memberForm .btn-primary'
+    );
+    
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> Preparing...';
+    }
+    
+    // Convert uploaded files
+    const photo64 = await fileToBase64(photo);
+    const payment64 = await fileToBase64(payment);
+    
+    const signature = document
+        .getElementById("signature-pad")
+        .toDataURL();
 
     const data = {
 
@@ -638,32 +659,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     try {
 
-        Swal.fire({
-
-            title: "Submitting Membership",
-
-            html: "Please wait...<br><br>Uploading Files",
-
-            allowOutsideClick: false,
-
-            allowEscapeKey: false,
-
-            didOpen: () => {
-
-                Swal.showLoading();
-
-            }
-
-        });
-
-            const submitBtn = document.querySelector(".btn-primary");
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML =
-                    '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Membership...';
-            }
-
+        
             const formData = new URLSearchParams();
 
             formData.append("action", "ADD_MEMBER");
