@@ -1,1028 +1,1021 @@
-
 let formChanged = false;
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.querySelectorAll("input, select, textarea").forEach(field => {
+document.querySelectorAll("input, select, textarea").forEach(field => {
 
-        field.addEventListener("input", () => {
+    field.addEventListener("input", () => {
 
-            formChanged = true;
+        formChanged = true;
 
-        });
+    });
 
-        field.addEventListener("change", () => {
+    field.addEventListener("change", () => {
 
-            formChanged = true;
-
-        });
+        formChanged = true;
 
     });
 
 });
 
+});
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Load common form data
-    initializeFormData();
-    
-    // ========================================
-    // Maximum DOB = 18 Years
-    // ========================================
+// Load common form data
+initializeFormData();
 
-    const dobInput = document.getElementById("dob");
+// ========================================
+// Maximum DOB = 18 Years
+// ========================================
 
-    if (dobInput) {
+const dobInput = document.getElementById("dob");
 
-        const maxDate = new Date();
+if (dobInput) {
 
-        maxDate.setFullYear(maxDate.getFullYear() - 18);
+    const maxDate = new Date();
 
-        dobInput.max = maxDate.toISOString().split("T")[0];
+    maxDate.setFullYear(maxDate.getFullYear() - 18);
 
-    }
+    dobInput.max = maxDate.toISOString().split("T")[0];
 
-    // -----------------------------
-    // Application Date
-    // -----------------------------
-    //const applicationDate = document.getElementById("applicationDate");
+}
 
-    //if (applicationDate) {
-    //    applicationDate.value = new Date().toISOString().split("T")[0];
-    //}
+// -----------------------------
+// Application Date
+// -----------------------------
+//const applicationDate = document.getElementById("applicationDate");
 
-    const applicationDate =
-        document.getElementById("applicationDate");
+//if (applicationDate) {
+//    applicationDate.value = new Date().toISOString().split("T")[0];
+//}
 
-    if(applicationDate){
+const applicationDate =
+    document.getElementById("applicationDate");
 
-        applicationDate.value =
-        new Date().toISOString().split("T")[0];
+if(applicationDate){
 
-    }
+    applicationDate.value =
+    new Date().toISOString().split("T")[0];
 
-    // -----------------------------
-    // Health Details
-    // -----------------------------
-    const health = document.getElementById("healthissues");
-    const details = document.getElementById("healthDetailsBox");
+}
 
-    if (health && details) {
+// -----------------------------
+// Health Details
+// -----------------------------
+const health = document.getElementById("healthissues");
+const details = document.getElementById("healthDetailsBox");
 
-        health.addEventListener("change", function () {
+if (health && details) {
 
-            details.style.display =
-                this.value === "Yes" ? "block" : "none";
+    health.addEventListener("change", function () {
 
-        });
-
-    }
-
-    
-    // -----------------------------
-    // Accident History
-    // -----------------------------
-
-    const accident = document.getElementById("accidentHistory");
-    const accidentBox = document.getElementById("accidentDetailsBox");
-
-    if (accident && accidentBox) {
-
-        accident.addEventListener("change", function () {
-
-            accidentBox.style.display =
-                this.value === "Yes" ? "block" : "none";
-
-        });
-
-    }
-
-    // -----------------------------
-    // Other Club
-    // -----------------------------
-    const otherClub = document.getElementById("otherclub");
-    const otherClubBox = document.getElementById("otherClubBox");
-
-    if (otherClub && otherClubBox) {
-
-        otherClub.addEventListener("change", function () {
-
-            otherClubBox.style.display =
-                this.value === "Yes" ? "block" : "none";
-
-        });
-
-    }
-
-    // -----------------------------
-    // Official Post
-    // -----------------------------
-    const officialPost = document.getElementById("officialpost");
-    const officialPostBox = document.getElementById("officialPostBox");
-
-    if (officialPost && officialPostBox) {
-
-        officialPost.addEventListener("change", function () {
-
-            officialPostBox.style.display =
-                this.value === "Yes" ? "block" : "none";
-
-        });
-
-    }
-
-    // -----------------------------
-    // MEMBER PHOTO
-    // CAMERA + GALLERY
-    // -----------------------------
-
-    const photo = document.getElementById("photo");
-    const photoCamera = document.getElementById("photoCamera");
-
-    const takePhotoBtn = document.getElementById("takePhotoBtn");
-    const choosePhotoBtn = document.getElementById("choosePhotoBtn");
-
-    const preview = document.getElementById("photoPreview");
-    const photoFileName = document.getElementById("photoFileName");
-
-
-    // Take Photo button
-    if (takePhotoBtn && photoCamera) {
-
-        takePhotoBtn.addEventListener("click", function () {
-
-            photoCamera.click();
-
-        });
-
-    }
-
-
-    // Choose from Gallery button
-    if (choosePhotoBtn && photo) {
-
-        choosePhotoBtn.addEventListener("click", function () {
-
-            photo.click();
-
-        });
-
-    }
-
-
-    // Process selected photo
-    function handleMemberPhoto(file) {
-
-        if (!file) return;
-
-        // Put the selected file into the main photo input
-        const dataTransfer = new DataTransfer();
-
-        dataTransfer.items.add(file);
-
-        photo.files = dataTransfer.files;
-
-
-        // Show preview
-        if (preview) {
-
-            preview.innerHTML = `
-                <img src="${URL.createObjectURL(file)}"
-                    alt="Member Photo">
-            `;
-
-            preview.style.borderStyle = "solid";
-
-        }
-
-
-        // Show filename
-        if (photoFileName) {
-
-            let name = file.name;
-
-            if (name.length > 30) {
-                name = name.substring(0, 27) + "...";
-            }
-
-            photoFileName.textContent = name;
-
-        }
-
-    }
-
-
-    // Gallery selection
-    if (photo) {
-
-        photo.addEventListener("change", function () {
-
-            handleMemberPhoto(this.files[0]);
-
-        });
-
-    }
-
-
-    // Camera capture
-    if (photoCamera) {
-
-        photoCamera.addEventListener("change", function () {
-
-            handleMemberPhoto(this.files[0]);
-
-        });
-
-    }
-    /*=====================================
-    DIGITAL SIGNATURE
-    ======================================*/
-
-    const canvas = document.getElementById("signature-pad");
-
-    if(canvas){
-
-    const ctx = canvas.getContext("2d");
-
-    ctx.strokeStyle="#000";
-    ctx.lineWidth=2;
-    ctx.lineCap="round";
-
-    let drawing=false;
-
-    function getPos(e){
-
-    const rect=canvas.getBoundingClientRect();
-
-    if(e.touches){
-
-    return{
-
-    x:e.touches[0].clientX-rect.left,
-    y:e.touches[0].clientY-rect.top
-
-    };
-
-    }
-
-    return{
-
-    x:e.clientX-rect.left,
-    y:e.clientY-rect.top
-
-    };
-
-    }
-
-    function startDraw(e){
-
-    drawing=true;
-
-    const pos=getPos(e);
-
-    ctx.beginPath();
-
-    ctx.moveTo(pos.x,pos.y);
-
-    }
-
-    function draw(e){
-
-    if(!drawing)return;
-
-    e.preventDefault();
-
-    const pos=getPos(e);
-
-    ctx.lineTo(pos.x,pos.y);
-
-    ctx.stroke();
-
-    }
-
-    function stopDraw(){
-
-    drawing=false;
-
-    }
-
-    canvas.addEventListener("mousedown",startDraw);
-    canvas.addEventListener("mousemove",draw);
-    canvas.addEventListener("mouseup",stopDraw);
-    canvas.addEventListener("mouseleave",stopDraw);
-
-    canvas.addEventListener("touchstart",startDraw);
-    canvas.addEventListener("touchmove",draw);
-    canvas.addEventListener("touchend",stopDraw);
-
-    document.getElementById("clearSignature")
-    .addEventListener("click",function(){
-
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    });
-
-    }
-
-    const paymentInput = document.getElementById("paymentProof");
-
-    if(paymentInput){
-
-    paymentInput.addEventListener("change",function(){
-
-    const file=this.files[0];
-
-    if(!file) return;
-
-    const reader=new FileReader();
-
-    reader.onload=function(e){
-
-    const img=document.getElementById("paymentPreview");
-
-    img.src=e.target.result;
-    img.style.display="block";
-
-    };
-
-    reader.readAsDataURL(file);
-
-    });
-
-    }
-    const memberForm = document.getElementById("memberForm");
-
-    /*==================================================
-            STEP WIZARD
-    ==================================================*/
-
-    let currentStep = 1;
-    const totalSteps = 12;
-
-    const steps = document.querySelectorAll(".section");
-
-    function showStep(step){
-
-        steps.forEach((section,index)=>{
-
-            if(index === step-1){
-
-                section.style.display="block";
-                section.classList.add("active-step");
-
-            }else{
-
-                section.style.display="none";
-                section.classList.remove("active-step");
-
-            }
-
-        });
-
-        updateProgress();
-
-    }
-
-    function updateProgress(){
-
-        const percent = Math.round((currentStep / totalSteps) * 100);
-
-        document.getElementById("progressFill").style.width = percent + "%";
-
-        document.getElementById("progressText").innerHTML =
-            "Step " + currentStep + " of " + totalSteps;
-
-    }
-
-    /*==================================================
-            NEXT BUTTON
-    ==================================================
-
-    document.querySelectorAll(".next-btn").forEach(btn=>{
-
-        btn.addEventListener("click",function(){
-
-            if(!validateStep(currentStep)){
-                return;
-            }
-
-            if(currentStep<totalSteps){
-
-                currentStep++;
-
-                showStep(currentStep);
-
-                window.scrollTo({
-
-                    top:0,
-
-                    behavior:"smooth"
-
-                });
-
-            }
-
-        });
-
-    });*/
-
-    /*==================================================
-            PREVIOUS BUTTON
-    ==================================================
-
-    document.querySelectorAll(".prev-btn").forEach(btn=>{
-
-        btn.addEventListener("click",function(){
-
-            if(currentStep>1){
-
-                currentStep--;
-
-                showStep(currentStep);
-
-                window.scrollTo({
-
-                    top:0,
-
-                    behavior:"smooth"
-
-                });
-
-            }
-
-        });
-
-    });*/
-
-    /*==================================================
-            STEP VALIDATION
-    ==================================================*/
-
-    function validateStep(step){
-
-        const section=document.getElementById("step"+step);
-
-        const requiredFields=section.querySelectorAll("[required]");
-
-        for(const field of requiredFields){
-
-            if(field.value.trim()===""){
-
-                const label=field
-                    .closest(".form-group")
-                    .querySelector("label")
-                    .innerText;
-
-                Swal.fire({
-
-                icon:"warning",
-
-                title:"Required",
-
-                text:"Please enter " + label
-
-                });
-
-                field.focus();
-
-                return false;
-
-            }
-
-        }
-
-        return true;
-
-    }
-
-    // ===============================
-    // Submit Membership Form
-    // ===============================
-
-    
-    async function submitMember(){
-
-    const form = document.getElementById("memberForm");
-    const requiredFields = form.querySelectorAll("[required]");
-
-    for (const field of requiredFields) {
-
-        if (!field.value.trim()) {
-
-            alert("Please fill: " + (field.previousElementSibling?.innerText || field.name));
-
-            // Open the collapsed section
-            const content = field.closest(".section-content");
-            if (content) {
-                content.style.display = "block";
-            }
-
-            field.focus();
-
-            return;
-        }
-    }
-
-    const photo=document.getElementById("photo").files[0];
-
-    const payment=document.getElementById("paymentProof").files[0];
-
-    if(!photo){
-
-    alert("Please upload Member Photo");
-
-    return;
-
-    }
-
-    if(!payment){
-
-    alert("Please upload Payment Screenshot");
-
-    return;
-
-    }
-
-    const photo64=await fileToBase64(photo);
-
-    const payment64=await fileToBase64(payment);
-
-    const signature=document
-    .getElementById("signature-pad")
-    .toDataURL();
-
-    const data = {
-
-        fullname: document.getElementById("fullname").value.trim(),
-
-        dob: document.getElementById("dob").value,
-
-        gender: document.getElementById("gender").value,
-
-        maritalstatus: document.getElementById("maritalstatus").value,
-
-        aadhaar: document.getElementById("aadhaar").value.trim(),
-
-        father: document.getElementById("father").value.trim(),
-
-        mother: document.getElementById("mother").value.trim(),
-
-        phone: document.getElementById("phone").value.trim(),
-
-        email: document.getElementById("email").value.trim(),
-
-        address: document.getElementById("address").value.trim(),
-
-        state: document.getElementById("state").value,
-
-        district: document.getElementById("district").value,
-
-        pincode: document.getElementById("pincode").value.trim(),
-
-        bloodgroup: document.getElementById("bloodgroup").value,
-
-        motorcyclemodel: document.getElementById("motorcyclemodel").value,
-
-        vehiclevariant: document.getElementById("vehiclevariant").value,
-
-        vehiclereg: document.getElementById("vehiclereg").value.trim(),
-
-        enginenumber: document.getElementById("enginenumber").value.trim(),
-
-        chassisnumber: document.getElementById("chassisnumber").value.trim(),
-
-        license: document.getElementById("license").value.trim(),
-
-        working: document.getElementById("working").value.trim(),
-
-        healthissues: document.getElementById("healthissues").value,
-
-        healthdetails: document.getElementById("healthdetails").value.trim(),
-
-        accident: document.getElementById("accidentHistory").value,
-
-        accidentdetails: document.getElementById("accidentdetails").value.trim(),
-
-        emergency1: document.getElementById("emergency1").value.trim(),
-
-        emergency2: document.getElementById("emergency2").value.trim(),
-
-        otherclub: document.getElementById("otherclub").value,
-
-        otherclubdetails: document.getElementById("otherclubdetails").value.trim(),
-
-        officialpost: document.getElementById("officialpost").value,
-
-        officialpostdetails: document.getElementById("officialpostdetails").value.trim(),
-
-        social: document.getElementById("socialmedia").value.trim(),
-
-        photo: photo64,
-
-        paymentProof: payment64,
-
-        signature: signature,
-
-        // ========================================
-        // TERMS & CONDITIONS
-        // ========================================
-
-        termsAccepted:
-            document.getElementById("agreeTerms").checked
-                ? "Yes"
-                : "No",
-
-        termsVersion: "1.0"
-
-    };
-    
-    try {
-
-        Swal.fire({
-
-            title: "Submitting Membership",
-
-            html: "Please wait...<br><br>Uploading Files",
-
-            allowOutsideClick: false,
-
-            allowEscapeKey: false,
-
-            didOpen: () => {
-
-                Swal.showLoading();
-
-            }
-
-        });
-
-            const submitBtn = document.querySelector(
-                '#memberForm button[type="submit"], #memberForm .btn-primary'
-            );
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML =
-                    '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Membership...';
-            }
-
-            const formData = new URLSearchParams();
-
-            formData.append("action", "ADD_MEMBER");
-            formData.append("data", JSON.stringify(data));
-
-
-            const response = await fetch(API_URL, {
-
-                method: "POST",
-
-                body: formData
-
-            });
-
-            const text = await response.text();
-
-            let result;
-
-            try{
-                result = JSON.parse(text);
-            }
-            catch(e){
-                alert("Server returned:\n\n" + text);
-                return;
-            }
-            
-            if (result.success) {
-
-                const applicationId =
-                    result.data && result.data.applicationID
-                        ? result.data.applicationID
-                        : "";
-
-                Swal.fire({
-                    icon: "success",
-                    title: "Application Submitted",
-                    html: `
-                        Thank you for applying.<br><br>
-                        Your application has been submitted successfully.<br>
-                        Our committee will review your application and contact you soon.
-                    `
-                }).then(() => {
-                    window.location.href = "./index.html";
-                });
-
-                return;
-
-            } else {
-
-                Swal.fire({
-                    icon: "error",
-                    title: "Submission Failed",
-                    text: result.message || "Unable to submit application."
-                });
-
-            }
-
-        }
-        catch (error) {
-
-            console.error(error);
-
-            Swal.fire({
-
-                icon:"error",
-
-                title:"Server Error",
-
-                text:error.message
-
-            });
-
-        }
-        finally {
-            const submitBtn = document.querySelector(
-                '#memberForm button[type="submit"], #memberForm .btn-primary'
-            );
-        
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML =
-                    '<i class="fa-solid fa-paper-plane"></i> Submit Membership';
-            }
-        }
-
-        }
-
-
-
-    }   
-
-    function fileToBase64(file){
-
-    return new Promise((resolve)=>{
-
-    const reader=new FileReader();
-
-    reader.onload=()=>resolve(reader.result);
-
-    reader.readAsDataURL(file);
-
-    });
-
-    }
-
-        
-    showStep(currentStep);
-
-    // ===============================
-    // FORM SUBMIT
-    // ===============================
-
-    memberForm.addEventListener("submit", async function (e) {
-
-        e.preventDefault();
-
-        if (!validateStep(12)) {
-            return;
-        }
-
-        if (!document.getElementById("agreeTerms").checked) {
-            alert("Please accept the declaration.");
-            return;
-        }
-
-        await submitMember();
-
-    });
-
-    function zoomImage(src){
-
-        document.getElementById("viewerImage").src = src;
-
-        document.getElementById("imageViewer").style.display = "flex";
-    }
-
-    function closeImageViewer(){
-
-        document.getElementById("imageViewer").style.display = "none";
-    }
-
-        // ========================================
-        // RESET MEMBERSHIP FORM
-        // ========================================
-
-        const resetButton = document.querySelector(
-            '.btn-secondary[type="reset"]'
-        );
-
-        if (resetButton) {
-
-            resetButton.addEventListener("click", function (e) {
-
-                e.preventDefault();
-
-                Swal.fire({
-                    icon: "warning",
-                    title: "Reset Form?",
-                    text: "All entered information will be cleared.",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, Reset",
-                    cancelButtonText: "Cancel"
-                }).then((result) => {
-
-                    if (!result.isConfirmed) {
-                        return;
-                    }
-
-                    const form = document.getElementById("memberForm");
-
-                    // Reset all form fields
-                    form.reset();
-
-                    // Reset wizard to Step 1
-                    currentStep = 1;
-                    showStep(currentStep);
-
-                    // Reset Member Photo
-                    const photoInput = document.getElementById("photo");
-                    const photoPreview = document.getElementById("photoPreview");
-                    const photoFileName = document.getElementById("photoFileName");
-
-                    if (photoInput) {
-                        photoInput.value = "";
-                    }
-
-                    if (photoPreview) {
-                        photoPreview.innerHTML =
-                            '<i class="fa-solid fa-user"></i>';
-                        photoPreview.style.borderStyle = "";
-                    }
-
-                    if (photoFileName) {
-                        photoFileName.textContent = "No file selected";
-                    }
-
-                    // Reset Payment Screenshot
-                    const paymentInput =
-                        document.getElementById("paymentProof");
-
-                    const paymentPreview =
-                        document.getElementById("paymentPreview");
-
-                    if (paymentInput) {
-                        paymentInput.value = "";
-                    }
-
-                    if (paymentPreview) {
-                        paymentPreview.src = "";
-                        paymentPreview.style.display = "none";
-                    }
-
-                    // Clear Signature
-                    const canvas =
-                        document.getElementById("signature-pad");
-
-                    if (canvas) {
-                        const ctx = canvas.getContext("2d");
-                        ctx.clearRect(
-                            0,
-                            0,
-                            canvas.width,
-                            canvas.height
-                        );
-                    }
-
-                    // Hide conditional sections
-                    const healthDetails =
-                        document.getElementById("healthDetailsBox");
-
-                    if (healthDetails) {
-                        healthDetails.style.display = "none";
-                    }
-
-                    const accidentDetails =
-                        document.getElementById("accidentDetailsBox");
-
-                    if (accidentDetails) {
-                        accidentDetails.style.display = "none";
-                    }
-
-                    const otherClubDetails =
-                        document.getElementById("otherClubBox");
-
-                    if (otherClubDetails) {
-                        otherClubDetails.style.display = "none";
-                    }
-
-                    const officialPostDetails =
-                        document.getElementById("officialPostBox");
-
-                    if (officialPostDetails) {
-                        officialPostDetails.style.display = "none";
-                    }
-
-                    // Reset declaration
-                    const agreeTerms =
-                        document.getElementById("agreeTerms");
-
-                    if (agreeTerms) {
-                        agreeTerms.checked = false;
-                    }
-
-                    // Reset unsaved-change flag
-                    formChanged = false;
-
-                    // Go to top
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    });
-
-                    Swal.fire({
-                        icon: "success",
-                        title: "Form Reset",
-                        text: "All application details have been cleared.",
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-
-                });
-
-            });
-
-        }
-
-        formChanged = false;
-
-    });
-
-
-const logo = document.getElementById("homeLogo");
-
-if (logo) {
-
-    logo.addEventListener("click", function () {
-
-        if (!formChanged) {
-
-            window.location.href = "index.html";
-
-            return;
-
-        }
-
-        Swal.fire({
-
-            icon: "warning",
-
-            title: "Leave Application?",
-
-            text: "You have unsaved changes. Leaving this page will discard your application.",
-
-            showCancelButton: true,
-
-            confirmButtonText: "Leave",
-
-            cancelButtonText: "Stay",
-
-            confirmButtonColor: "#F97316",
-
-            cancelButtonColor: "#334155"
-
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-
-                formChanged = false;
-
-                window.location.href = "index.html";
-
-            }
-
-        });
+        details.style.display =
+            this.value === "Yes" ? "block" : "none";
 
     });
 
 }
 
 
-/* Vehicle Registration Number Formatting */
-document.addEventListener("DOMContentLoaded", function () {
+// -----------------------------
+// Accident History
+// -----------------------------
 
-    const vehicleRegistration = document.getElementById("vehiclereg");
+const accident = document.getElementById("accidentHistory");
+const accidentBox = document.getElementById("accidentDetailsBox");
 
-    if (vehicleRegistration) {
+if (accident && accidentBox) {
 
-        vehicleRegistration.addEventListener("input", function () {
+    accident.addEventListener("change", function () {
 
-            this.value = this.value
-                .toUpperCase()
-                .replace(/\s+/g, "")
-                .replace(/-/g, "");
+        accidentBox.style.display =
+            this.value === "Yes" ? "block" : "none";
+
+    });
+
+}
+
+// -----------------------------
+// Other Club
+// -----------------------------
+const otherClub = document.getElementById("otherclub");
+const otherClubBox = document.getElementById("otherClubBox");
+
+if (otherClub && otherClubBox) {
+
+    otherClub.addEventListener("change", function () {
+
+        otherClubBox.style.display =
+            this.value === "Yes" ? "block" : "none";
+
+    });
+
+}
+
+// -----------------------------
+// Official Post
+// -----------------------------
+const officialPost = document.getElementById("officialpost");
+const officialPostBox = document.getElementById("officialPostBox");
+
+if (officialPost && officialPostBox) {
+
+    officialPost.addEventListener("change", function () {
+
+        officialPostBox.style.display =
+            this.value === "Yes" ? "block" : "none";
+
+    });
+
+}
+
+// -----------------------------
+// MEMBER PHOTO
+// CAMERA + GALLERY
+// -----------------------------
+
+const photo = document.getElementById("photo");
+const photoCamera = document.getElementById("photoCamera");
+
+const takePhotoBtn = document.getElementById("takePhotoBtn");
+const choosePhotoBtn = document.getElementById("choosePhotoBtn");
+
+const preview = document.getElementById("photoPreview");
+const photoFileName = document.getElementById("photoFileName");
+
+
+// Take Photo button
+if (takePhotoBtn && photoCamera) {
+
+    takePhotoBtn.addEventListener("click", function () {
+
+        photoCamera.click();
+
+    });
+
+}
+
+// Choose from Gallery button
+if (choosePhotoBtn && photo) {
+
+    choosePhotoBtn.addEventListener("click", function () {
+
+        photo.click();
+
+    });
+
+}
+
+
+// Process selected photo
+function handleMemberPhoto(file) {
+
+    if (!file) return;
+
+    // Put the selected file into the main photo input
+    const dataTransfer = new DataTransfer();
+
+    dataTransfer.items.add(file);
+
+    photo.files = dataTransfer.files;
+
+
+    // Show preview
+    if (preview) {
+
+        preview.innerHTML = `
+            <img src="${URL.createObjectURL(file)}"
+                alt="Member Photo">
+        `;
+
+        preview.style.borderStyle = "solid";
+
+    }
+
+
+   // Show filename
+    if (photoFileName) {
+
+        let name = file.name;
+
+        if (name.length > 30) {
+            name = name.substring(0, 27) + "...";
+        }
+
+        photoFileName.textContent = name;
+
+    }
+
+}
+
+
+// Gallery selection
+if (photo) {
+
+    photo.addEventListener("change", function () {
+
+        handleMemberPhoto(this.files[0]);
+
+    });
+
+}
+
+
+// Camera capture
+if (photoCamera) {
+
+    photoCamera.addEventListener("change", function () {
+
+        handleMemberPhoto(this.files[0]);
+
+    });
+
+}
+/*=====================================
+DIGITAL SIGNATURE
+======================================*/
+
+const canvas = document.getElementById("signature-pad");
+
+if(canvas){
+
+const ctx = canvas.getContext("2d");
+
+ctx.strokeStyle="#000";
+ctx.lineWidth=2;
+ctx.lineCap="round";
+
+let drawing=false;
+
+function getPos(e){
+
+const rect=canvas.getBoundingClientRect();
+
+if(e.touches){
+
+return{
+
+x:e.touches[0].clientX-rect.left,
+y:e.touches[0].clientY-rect.top
+
+};
+
+}
+
+return{
+
+x:e.clientX-rect.left,
+y:e.clientY-rect.top
+
+};
+
+}
+
+function startDraw(e){
+
+drawing=true;
+
+const pos=getPos(e);
+
+ctx.beginPath();
+
+ctx.moveTo(pos.x,pos.y);
+
+}
+
+function draw(e){
+
+if(!drawing)return;
+
+e.preventDefault();
+
+const pos=getPos(e);
+
+ctx.lineTo(pos.x,pos.y);
+
+ctx.stroke();
+
+}
+
+function stopDraw(){
+
+drawing=false;
+
+}
+
+canvas.addEventListener("mousedown",startDraw);
+canvas.addEventListener("mousemove",draw);
+canvas.addEventListener("mouseup",stopDraw);
+canvas.addEventListener("mouseleave",stopDraw);
+
+canvas.addEventListener("touchstart",startDraw);
+canvas.addEventListener("touchmove",draw);
+canvas.addEventListener("touchend",stopDraw);
+
+document.getElementById("clearSignature")
+.addEventListener("click",function(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+});
+
+}
+
+const paymentInput = document.getElementById("paymentProof");
+
+if(paymentInput){
+
+paymentInput.addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+const img=document.getElementById("paymentPreview");
+
+img.src=e.target.result;
+img.style.display="block";
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
+const memberForm = document.getElementById("memberForm");
+
+/*==================================================
+        STEP WIZARD
+==================================================*/
+
+let currentStep = 1;
+const totalSteps = 12;
+
+const steps = document.querySelectorAll(".section");
+
+function showStep(step){
+
+    steps.forEach((section,index)=>{
+
+        if(index === step-1){
+
+            section.style.display="block";
+            section.classList.add("active-step");
+
+        }else{
+
+            section.style.display="none";
+            section.classList.remove("active-step");
+
+        }
+
+    });
+
+    updateProgress();
+
+}
+
+function updateProgress(){
+
+    const percent = Math.round((currentStep / totalSteps) * 100);
+
+    document.getElementById("progressFill").style.width = percent + "%";
+
+    document.getElementById("progressText").innerHTML =
+        "Step " + currentStep + " of " + totalSteps;
+
+}
+
+/*==================================================
+        NEXT BUTTON
+==================================================
+
+document.querySelectorAll(".next-btn").forEach(btn=>{
+
+    btn.addEventListener("click",function(){
+
+        if(!validateStep(currentStep)){
+            return;
+        }
+
+        if(currentStep<totalSteps){
+
+            currentStep++;
+
+            showStep(currentStep);
+
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+    });
+
+});*/
+
+/*==================================================
+        PREVIOUS BUTTON
+==================================================
+
+document.querySelectorAll(".prev-btn").forEach(btn=>{
+
+    btn.addEventListener("click",function(){
+
+        if(currentStep>1){
+
+            currentStep--;
+
+            showStep(currentStep);
+
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+    });
+
+});*/
+
+/*==================================================
+        STEP VALIDATION
+==================================================*/
+
+function validateStep(step){
+
+    const section=document.getElementById("step"+step);
+
+    const requiredFields=section.querySelectorAll("[required]");
+
+    for(const field of requiredFields){
+
+        if(field.value.trim()===""){
+
+            const label=field
+                .closest(".form-group")
+                .querySelector("label")
+                .innerText;
+
+            Swal.fire({
+
+            icon:"warning",
+
+            title:"Required",
+
+            text:"Please enter " + label
+
+            });
+
+            field.focus();
+
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+// ===============================
+// Submit Membership Form
+// ===============================
+
+
+async function submitMember(){
+
+const form=document.getElementById("memberForm");
+
+const requiredFields = form.querySelectorAll("[required]");
+
+for (const field of requiredFields) {
+
+    if (!field.value.trim()) {
+
+        alert("Please fill: " + (field.previousElementSibling?.innerText || field.name));
+
+        // Open the collapsed section
+        const content = field.closest(".section-content");
+        if (content) {
+            content.style.display = "block";
+        }
+
+        field.focus();
+
+        return;
+    }
+}
+
+const photo=document.getElementById("photo").files[0];
+
+const payment=document.getElementById("paymentProof").files[0];
+
+if(!photo){
+
+alert("Please upload Member Photo");
+
+return;
+
+}
+
+if(!payment){
+
+alert("Please upload Payment Screenshot");
+
+return;
+
+}
+
+const photo64=await fileToBase64(photo);
+
+const payment64=await fileToBase64(payment);
+
+const signature=document
+.getElementById("signature-pad")
+.toDataURL();
+
+const data = {
+
+    fullname: document.getElementById("fullname").value.trim(),
+
+    dob: document.getElementById("dob").value,
+
+    gender: document.getElementById("gender").value,
+
+    maritalstatus: document.getElementById("maritalstatus").value,
+
+    aadhaar: document.getElementById("aadhaar").value.trim(),
+
+    father: document.getElementById("father").value.trim(),
+
+    mother: document.getElementById("mother").value.trim(),
+
+    phone: document.getElementById("phone").value.trim(),
+
+    email: document.getElementById("email").value.trim(),
+
+    address: document.getElementById("address").value.trim(),
+
+    state: document.getElementById("state").value,
+
+    district: document.getElementById("district").value,
+
+    pincode: document.getElementById("pincode").value.trim(),
+
+    bloodgroup: document.getElementById("bloodgroup").value,
+
+    motorcyclemodel: document.getElementById("motorcyclemodel").value,
+
+    vehiclevariant: document.getElementById("vehiclevariant").value,
+
+    vehiclereg: document.getElementById("vehiclereg").value.trim(),
+
+    enginenumber: document.getElementById("enginenumber").value.trim(),
+
+    chassisnumber: document.getElementById("chassisnumber").value.trim(),
+
+    license: document.getElementById("license").value.trim(),
+
+    working: document.getElementById("working").value.trim(),
+
+    healthissues: document.getElementById("healthissues").value,
+
+    healthdetails: document.getElementById("healthdetails").value.trim(),
+
+    accident: document.getElementById("accidentHistory").value,
+
+    accidentdetails: document.getElementById("accidentdetails").value.trim(),
+
+    emergency1: document.getElementById("emergency1").value.trim(),
+
+    emergency2: document.getElementById("emergency2").value.trim(),
+
+    otherclub: document.getElementById("otherclub").value,
+
+    otherclubdetails: document.getElementById("otherclubdetails").value.trim(),
+
+    officialpost: document.getElementById("officialpost").value,
+
+    officialpostdetails: document.getElementById("officialpostdetails").value.trim(),
+
+    social: document.getElementById("socialmedia").value.trim(),
+
+    photo: photo64,
+
+    paymentProof: payment64,
+
+    signature: signature,
+
+    // ========================================
+    // TERMS & CONDITIONS
+    // ========================================
+
+    termsAccepted:
+        document.getElementById("agreeTerms").checked
+            ? "Yes"
+            : "No",
+
+    termsVersion: "1.0"
+
+};
+
+try {
+
+    Swal.fire({
+
+        title: "Submitting Membership",
+
+        html: "Please wait...<br><br>Uploading Files",
+
+        allowOutsideClick: false,
+
+        allowEscapeKey: false,
+
+        didOpen: () => {
+
+            Swal.showLoading();
+
+        }
+
+    });
+
+        const submitBtn = document.querySelector(".btn-primary");
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Membership...';
+        }
+
+        const formData = new URLSearchParams();
+
+        formData.append("action", "ADD_MEMBER");
+        formData.append("data", JSON.stringify(data));
+
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            body: formData
+
+        });
+
+        const text = await response.text();
+
+        let result;
+
+        try{
+            result = JSON.parse(text);
+        }
+        catch(e){
+            alert("Server returned:\n\n" + text);
+            return;
+        }
+        
+        if (result.success) {
+
+            const applicationId =
+                result.data && result.data.applicationID
+                    ? result.data.applicationID
+                    : "";
+
+            Swal.fire({
+                icon: "success",
+                title: "Application Submitted",
+                html: `
+                    Thank you for applying.<br><br>
+                    Your application has been submitted successfully.<br>
+                    Our committee will review your application and contact you soon.
+                `
+            }).then(() => {
+                window.location.href = "./index.html";
+            });
+
+            return;
+
+        } else {
+
+            Swal.fire({
+                icon: "error",
+                title: "Submission Failed",
+                text: result.message || "Unable to submit application."
+            });
+
+        }
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        Swal.fire({
+
+            icon:"error",
+
+            title:"Server Error",
+
+            text:error.message
+
+        });
+
+    }
+    finally {
+
+        const submitBtn = document.querySelector(
+            '#memberForm button[type="submit"], #memberForm .btn-primary'
+        );
+
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML =
+                '<i class="fa-solid fa-paper-plane"></i> Submit Membership';
+        }
+
+    }
+
+
+
+}   
+
+function fileToBase64(file){
+
+return new Promise((resolve)=>{
+
+const reader=new FileReader();
+
+reader.onload=()=>resolve(reader.result);
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+showStep(currentStep);
+
+// ===============================
+// FORM SUBMIT
+// ===============================
+
+memberForm.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    if (!validateStep(12)) {
+        return;
+    }
+
+    if (!document.getElementById("agreeTerms").checked) {
+        alert("Please accept the declaration.");
+        return;
+    }
+
+    await submitMember();
+
+});
+
+function zoomImage(src){
+
+    document.getElementById("viewerImage").src = src;
+
+    document.getElementById("imageViewer").style.display = "flex";
+}
+
+function closeImageViewer(){
+
+    document.getElementById("imageViewer").style.display = "none";
+}
+
+    // ========================================
+    // RESET MEMBERSHIP FORM
+    // ========================================
+
+    const resetButton = document.querySelector(
+        '.btn-secondary[type="reset"]'
+    );
+
+    if (resetButton) {
+
+        resetButton.addEventListener("click", function (e) {
+
+            e.preventDefault();
+
+            Swal.fire({
+                icon: "warning",
+                title: "Reset Form?",
+                text: "All entered information will be cleared.",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Reset",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                const form = document.getElementById("memberForm");
+
+                // Reset all form fields
+                form.reset();
+
+                // Reset wizard to Step 1
+                currentStep = 1;
+                showStep(currentStep);
+
+                // Reset Member Photo
+                const photoInput = document.getElementById("photo");
+                const photoPreview = document.getElementById("photoPreview");
+                const photoFileName = document.getElementById("photoFileName");
+
+                if (photoInput) {
+                    photoInput.value = "";
+                }
+
+                if (photoPreview) {
+                    photoPreview.innerHTML =
+                        '<i class="fa-solid fa-user"></i>';
+                    photoPreview.style.borderStyle = "";
+                }
+
+                if (photoFileName) {
+                    photoFileName.textContent = "No file selected";
+                }
+
+                // Reset Payment Screenshot
+                const paymentInput =
+                    document.getElementById("paymentProof");
+
+                const paymentPreview =
+                    document.getElementById("paymentPreview");
+
+                if (paymentInput) {
+                    paymentInput.value = "";
+                }
+
+                if (paymentPreview) {
+                    paymentPreview.src = "";
+                    paymentPreview.style.display = "none";
+                }
+
+                // Clear Signature
+                const canvas =
+                    document.getElementById("signature-pad");
+
+                if (canvas) {
+                    const ctx = canvas.getContext("2d");
+                    ctx.clearRect(
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+                }
+
+                // Hide conditional sections
+                const healthDetails =
+                    document.getElementById("healthDetailsBox");
+
+                if (healthDetails) {
+                    healthDetails.style.display = "none";
+                }
+
+                const accidentDetails =
+                    document.getElementById("accidentDetailsBox");
+
+                if (accidentDetails) {
+                    accidentDetails.style.display = "none";
+                }
+
+                const otherClubDetails =
+                    document.getElementById("otherClubBox");
+
+                if (otherClubDetails) {
+                    otherClubDetails.style.display = "none";
+                }
+
+                const officialPostDetails =
+                    document.getElementById("officialPostBox");
+
+                if (officialPostDetails) {
+                    officialPostDetails.style.display = "none";
+                }
+
+                // Reset declaration
+                const agreeTerms =
+                    document.getElementById("agreeTerms");
+
+                if (agreeTerms) {
+                    agreeTerms.checked = false;
+                }
+
+                // Reset unsaved-change flag
+                formChanged = false;
+
+                // Go to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Form Reset",
+                    text: "All application details have been cleared.",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+            });
 
         });
 
     }
 
+    formChanged = false;
+
 });
 
+const logo = document.getElementById("homeLogo");
+
+if (logo) {
+
+logo.addEventListener("click", function () {
+
+    if (!formChanged) {
+
+        window.location.href = "index.html";
+
+        return;
+
+    }
+
+    Swal.fire({
+
+        icon: "warning",
+
+        title: "Leave Application?",
+
+        text: "You have unsaved changes. Leaving this page will discard your application.",
+
+        showCancelButton: true,
+
+        confirmButtonText: "Leave",
+
+        cancelButtonText: "Stay",
+
+        confirmButtonColor: "#F97316",
+
+        cancelButtonColor: "#334155"
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            formChanged = false;
+
+            window.location.href = "index.html";
+
+        }
+
+    });
+
+});
+
+}
+
+/* Vehicle Registration Number Formatting */
+document.addEventListener("DOMContentLoaded", function () {
+
+const vehicleRegistration = document.getElementById("vehiclereg");
+
+if (vehicleRegistration) {
+
+    vehicleRegistration.addEventListener("input", function () {
+
+        this.value = this.value
+            .toUpperCase()
+            .replace(/\s+/g, "")
+            .replace(/-/g, "");
+
+    });
+
+}
+
+}
