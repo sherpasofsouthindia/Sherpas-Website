@@ -565,8 +565,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     // Convert uploaded files
-    const photo64 = await compressImageToBase64(photo, 1200, 0.75);
-    const payment64 = await compressImageToBase64(payment, 1600, 0.75);
+    let photo64;
+    let payment64;
+    
+    try {
+    
+        photo64 = await compressImageToBase64(photo, 1000, 0.65);
+        payment64 = await compressImageToBase64(payment, 1200, 0.65);
+    
+    } catch (error) {
+    
+        Swal.fire({
+            icon: "error",
+            title: "Image Processing Failed",
+            text: error.message
+        });
+    
+        return;
+    
+    }
     
     const signature = document
         .getElementById("signature-pad")
@@ -751,7 +768,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }   
 
-    function compressImageToBase64(file, maxSize = 1200, quality = 0.75) {
+   function compressImageToBase64(file, maxSize = 1200, quality = 0.75) {
 
     return new Promise((resolve, reject) => {
 
@@ -762,61 +779,89 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const reader = new FileReader();
 
+        const timeout = setTimeout(() => {
+            reject(new Error("Image processing timed out. Please select a smaller image."));
+        }, 30000);
+
         reader.onload = function (event) {
 
             const img = new Image();
 
             img.onload = function () {
 
-                let width = img.width;
-                let height = img.height;
+                try {
 
-                // Resize large images
-                if (width > maxSize || height > maxSize) {
+                    let width = img.width;
+                    let height = img.height;
 
-                    if (width > height) {
-                        height = Math.round(height * maxSize / width);
-                        width = maxSize;
-                    } else {
-                        width = Math.round(width * maxSize / height);
-                        height = maxSize;
+                    if (!width || !height) {
+                        clearTimeout(timeout);
+                        reject(new Error("Invalid image dimensions."));
+                        return;
                     }
 
+                    if (width > maxSize || height > maxSize) {
+
+                        if (width > height) {
+                            height = Math.round(height * maxSize / width);
+                            width = maxSize;
+                        } else {
+                            width = Math.round(width * maxSize / height);
+                            height = maxSize;
+                        }
+
+                    }
+
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const context = canvas.getContext("2d");
+
+                    if (!context) {
+                        clearTimeout(timeout);
+                        reject(new Error("Unable to process image."));
+                        return;
+                    }
+
+                    context.drawImage(img, 0, 0, width, height);
+
+                    const compressedBase64 =
+                        canvas.toDataURL("image/jpeg", quality);
+
+                    clearTimeout(timeout);
+                    resolve(compressedBase64);
+
+                } catch (error) {
+                    clearTimeout(timeout);
+                    reject(error);
                 }
 
-                const canvas = document.createElement("canvas");
-                canvas.width = width;
-                canvas.height = height;
-
-                const context = canvas.getContext("2d");
-
-                context.drawImage(img, 0, 0, width, height);
-
-                const compressedBase64 =
-                    canvas.toDataURL("image/jpeg", quality);
-
-                resolve(compressedBase64);
             };
 
             img.onerror = function () {
-                reject(new Error("Unable to process the selected image"));
+                clearTimeout(timeout);
+                reject(new Error("Unable to process the selected image."));
             };
 
             img.src = event.target.result;
         };
 
         reader.onerror = function () {
-            reject(new Error("Unable to read the selected file"));
+            clearTimeout(timeout);
+            reject(new Error("Unable to read the selected file."));
         };
 
         reader.onabort = function () {
-            reject(new Error("File reading was cancelled"));
+            clearTimeout(timeout);
+            reject(new Error("File reading was cancelled."));
         };
 
         reader.readAsDataURL(file);
-    });
-}
 
+    });
+
+}
         
     showStep(currentStep);
 
