@@ -1,4 +1,3 @@
-
 let formChanged = false;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -544,13 +543,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    const photo64=await fileToBase64(photo);
-
-    const payment64=await fileToBase64(payment);
-
-    const signature=document
-    .getElementById("signature-pad")
-    .toDataURL();
+    // Show loading message before processing files
+    Swal.fire({
+        title: "Submitting Membership",
+        html: "Please wait...<br><br>Preparing uploaded files",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    const submitBtn = document.querySelector(
+        '#memberForm button[type="submit"], #memberForm .btn-primary'
+    );
+    
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> Preparing...';
+    }
+    
+    // Convert uploaded files
+    let photo64;
+    let payment64;
+    
+    try {
+    
+        photo64 = await compressImageToBase64(photo, 1000, 0.65);
+        payment64 = await compressImageToBase64(payment, 1200, 0.65);
+    
+    } catch (error) {
+    
+        Swal.fire({
+            icon: "error",
+            title: "Image Processing Failed",
+            text: error.message
+        });
+    
+        return;
+    
+    }
+    
+    const signature = document
+        .getElementById("signature-pad")
+        .toDataURL();
 
     const data = {
 
@@ -639,32 +676,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     try {
 
-        Swal.fire({
-
-            title: "Submitting Membership",
-
-            html: "Please wait...<br><br>Uploading Files",
-
-            allowOutsideClick: false,
-
-            allowEscapeKey: false,
-
-            didOpen: () => {
-
-                Swal.showLoading();
-
-            }
-
-        });
-
-            const submitBtn = document.querySelector(".btn-primary");
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML =
-                    '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Membership...';
-            }
-
+        
             const formData = new URLSearchParams();
 
             formData.append("action", "ADD_MEMBER");
@@ -756,20 +768,100 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }   
 
-    function fileToBase64(file){
+   function compressImageToBase64(file, maxSize = 1200, quality = 0.75) {
 
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject) => {
 
-    const reader=new FileReader();
+        if (!file) {
+            reject(new Error("File not selected"));
+            return;
+        }
 
-    reader.onload=()=>resolve(reader.result);
+        const reader = new FileReader();
 
-    reader.readAsDataURL(file);
+        const timeout = setTimeout(() => {
+            reject(new Error("Image processing timed out. Please select a smaller image."));
+        }, 30000);
+
+        reader.onload = function (event) {
+
+            const img = new Image();
+
+            img.onload = function () {
+
+                try {
+
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (!width || !height) {
+                        clearTimeout(timeout);
+                        reject(new Error("Invalid image dimensions."));
+                        return;
+                    }
+
+                    if (width > maxSize || height > maxSize) {
+
+                        if (width > height) {
+                            height = Math.round(height * maxSize / width);
+                            width = maxSize;
+                        } else {
+                            width = Math.round(width * maxSize / height);
+                            height = maxSize;
+                        }
+
+                    }
+
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const context = canvas.getContext("2d");
+
+                    if (!context) {
+                        clearTimeout(timeout);
+                        reject(new Error("Unable to process image."));
+                        return;
+                    }
+
+                    context.drawImage(img, 0, 0, width, height);
+
+                    const compressedBase64 =
+                        canvas.toDataURL("image/jpeg", quality);
+
+                    clearTimeout(timeout);
+                    resolve(compressedBase64);
+
+                } catch (error) {
+                    clearTimeout(timeout);
+                    reject(error);
+                }
+
+            };
+
+            img.onerror = function () {
+                clearTimeout(timeout);
+                reject(new Error("Unable to process the selected image."));
+            };
+
+            img.src = event.target.result;
+        };
+
+        reader.onerror = function () {
+            clearTimeout(timeout);
+            reject(new Error("Unable to read the selected file."));
+        };
+
+        reader.onabort = function () {
+            clearTimeout(timeout);
+            reject(new Error("File reading was cancelled."));
+        };
+
+        reader.readAsDataURL(file);
 
     });
 
-    }
-
+}
         
     showStep(currentStep);
 
@@ -1024,4 +1116,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
