@@ -565,8 +565,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     // Convert uploaded files
-    const photo64 = await fileToBase64(photo);
-    const payment64 = await fileToBase64(payment);
+    const photo64 = await compressImageToBase64(photo, 1200, 0.75);
+    const payment64 = await compressImageToBase64(payment, 1600, 0.75);
     
     const signature = document
         .getElementById("signature-pad")
@@ -751,19 +751,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }   
 
-    function fileToBase64(file){
+    function compressImageToBase64(file, maxSize = 1200, quality = 0.75) {
 
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject) => {
 
-    const reader=new FileReader();
+        if (!file) {
+            reject(new Error("File not selected"));
+            return;
+        }
 
-    reader.onload=()=>resolve(reader.result);
+        const reader = new FileReader();
 
-    reader.readAsDataURL(file);
+        reader.onload = function (event) {
 
+            const img = new Image();
+
+            img.onload = function () {
+
+                let width = img.width;
+                let height = img.height;
+
+                // Resize large images
+                if (width > maxSize || height > maxSize) {
+
+                    if (width > height) {
+                        height = Math.round(height * maxSize / width);
+                        width = maxSize;
+                    } else {
+                        width = Math.round(width * maxSize / height);
+                        height = maxSize;
+                    }
+
+                }
+
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+
+                const context = canvas.getContext("2d");
+
+                context.drawImage(img, 0, 0, width, height);
+
+                const compressedBase64 =
+                    canvas.toDataURL("image/jpeg", quality);
+
+                resolve(compressedBase64);
+            };
+
+            img.onerror = function () {
+                reject(new Error("Unable to process the selected image"));
+            };
+
+            img.src = event.target.result;
+        };
+
+        reader.onerror = function () {
+            reject(new Error("Unable to read the selected file"));
+        };
+
+        reader.onabort = function () {
+            reject(new Error("File reading was cancelled"));
+        };
+
+        reader.readAsDataURL(file);
     });
-
-    }
+}
 
         
     showStep(currentStep);
