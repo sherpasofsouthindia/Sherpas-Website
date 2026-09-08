@@ -18,6 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document
+        .getElementById("vehicleModelFilter")
+        .addEventListener("change", function () {
+            applyPageFilter();
+        });
+
+    document
     .getElementById("imageViewer")
     .addEventListener("click",closeImage);
 
@@ -27,6 +33,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+
+function applyVehicleModelSort() {
+
+    const sortValue =
+        document.getElementById("sortVehicleModel").value;
+
+    let sortedMembers = [...allMembers];
+
+    if (sortValue === "az") {
+
+        sortedMembers.sort((a, b) => {
+            const modelA = String(a["Motorcycle Model"] || "").trim();
+            const modelB = String(b["Motorcycle Model"] || "").trim();
+
+            return modelA.localeCompare(modelB, undefined, {
+                sensitivity: "base"
+            });
+        });
+
+    } else if (sortValue === "za") {
+
+        sortedMembers.sort((a, b) => {
+            const modelA = String(a["Motorcycle Model"] || "").trim();
+            const modelB = String(b["Motorcycle Model"] || "").trim();
+
+            return modelB.localeCompare(modelA, undefined, {
+                sensitivity: "base"
+            });
+        });
+
+    }
+
+    renderMembers(sortedMembers);
+}
+
+function applyVehicleModelFilter() {
+
+    const selectedModel =
+        document.getElementById("vehicleModelFilter").value;
+
+    let filteredMembers = [...allMembers];
+
+    if (selectedModel) {
+        filteredMembers = filteredMembers.filter(member =>
+            String(member["Motorcycle Model"] || "").trim() === selectedModel
+        );
+    }
+
+    renderMembers(filteredMembers);
+}
+
+    
 async function loadMembers() {
 
     try {
@@ -84,6 +142,17 @@ function applyPageFilter() {
     const filter = params.get("filter");
 
     let filtered = [...allMembers];
+
+    const selectedModel =
+        document.getElementById("vehicleModelFilter")
+            ? document.getElementById("vehicleModelFilter").value
+            : "";
+
+    if (selectedModel) {
+        filtered = filtered.filter(member =>
+            String(member["Motorcycle Model"] || "").trim() === selectedModel
+        );
+    }
 
     if (filter === "birthdays") {
 
@@ -219,137 +288,124 @@ function applyPageFilter() {
 
 function renderMembers(members) {
 
-    // Sort members by Membership ID
-    // Members without Membership ID will appear last
+    // Sort by Membership ID by default
     members = [...members].sort((a, b) => {
 
         const idA = String(a["Membership ID"] || "").trim();
         const idB = String(b["Membership ID"] || "").trim();
 
-        // Empty Membership IDs go to the bottom
         if (!idA && !idB) return 0;
         if (!idA) return 1;
         if (!idB) return -1;
 
-        // Natural sorting: SSI-2 comes before SSI-10
         return idA.localeCompare(idB, undefined, {
             numeric: true,
             sensitivity: "base"
         });
     });
 
-    const tbody =
-        document.getElementById("membersTableBody");
-
+    const tbody = document.getElementById("membersTableBody");
 
     tbody.innerHTML = "";
 
-    if (members.length == 0) {
-
-        tbody.innerHTML =
-        "<tr><td colspan='7'>No Members Found</td></tr>";
-
+    if (members.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9">No Members Found</td>
+            </tr>
+        `;
         return;
-
     }
 
-    members.forEach(member => {
+    members.forEach((member, index) => {
+
+        const vehicleModel = member["Motorcycle Model"] || "-";
 
         tbody.innerHTML += `
+            <tr>
 
-<tr>
+                <!-- SERIAL NUMBER -->
+                <td>${index + 1}</td>
 
-<td>${member["Membership ID"]}</td>
+                <!-- MEMBERSHIP ID -->
+                <td>${member["Membership ID"] || "-"}</td>
 
-<td>
+                <!-- PHOTO -->
+                <td>
+                    <img
+                        src="${driveToImage(member["Photo URL"])}"
+                        style="
+                            width:50px;
+                            height:50px;
+                            border-radius:50%;
+                            object-fit:cover;
+                            border:2px solid #ff7a00;
+                        "
+                        onerror="this.src='assets/user.png'"
+                    >
+                </td>
 
-<img
-src="${driveToImage(member["Photo URL"])}"
-style="
-width:50px;
-height:50px;
-border-radius:50%;
-object-fit:cover;
-border:2px solid #ff7a00;"
-onerror="this.src='assets/user.png'">
+                <!-- NAME -->
+                <td>${member["Full Name"] || "-"}</td>
 
-</td>
+                <!-- PHONE -->
+                <td>${member["Phone"] || "-"}</td>
 
-<td>${member["Full Name"]}</td>
+                <!-- VEHICLE MODEL -->
+                <td>${vehicleModel}</td>
 
-<td>${member["Phone"]}</td>
+                <!-- VEHICLE NUMBER -->
+                <td>${member["Vehicle Registration"] || "-"}</td>
 
-<td>${member["Vehicle Registration"] || "-"}</td>
+                <!-- STATUS -->
+                <td>
+                    <span class="${String(member["Status"] || "").toLowerCase()}">
+                        ${member["Status"] || "-"}
+                    </span>
+                </td>
 
-<td>
+                <!-- ACTION -->
+                <td>
 
-<span class="${member.Status.toLowerCase()}">
+                    <button
+                        class="icon-btn"
+                        onclick="viewMember(${allMembers.indexOf(member)})"
+                        title="View Member">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
 
-${member.Status}
+                    ${
+                        String(member["Status"] || "").toLowerCase() === "pending"
+                        ? `
+                            <button
+                                class="icon-btn approve"
+                                onclick="approveMember(${allMembers.indexOf(member)})"
+                                title="Approve Member">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        `
+                        : ""
+                    }
 
-</span>
+                    <button
+                        class="icon-btn"
+                        onclick="editMember(${allMembers.indexOf(member)})"
+                        title="Edit Member">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
 
-</td>
+                    <button
+                        class="icon-btn pdf"
+                        onclick="generateApplicationPDF(${allMembers.indexOf(member)})"
+                        title="Application PDF">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </button>
 
-    <td>
+                </td>
 
-        <!-- VIEW MEMBER -->
-
-        <button
-            class="icon-btn"
-            onclick="viewMember(${allMembers.indexOf(member)})"
-            title="View Member">
-            <i class="fa-solid fa-eye"></i>
-        </button>
-
-
-        <!-- APPROVE -->
-
-        ${(member["Status"] || "").toLowerCase() === "pending" ? `
-
-        <button
-            class="icon-btn approve"
-            onclick="approveMember(${allMembers.indexOf(member)})"
-            title="Approve Member">
-
-            <i class="fa-solid fa-circle-check"></i>
-
-        </button>
-
-        ` : ""}
-
-
-        <!-- EDIT -->
-
-        <button
-            class="icon-btn"
-            onclick="editMember(${allMembers.indexOf(member)})"
-            title="Edit Member">
-
-            <i class="fa-solid fa-pen"></i>
-
-        </button>
-
-
-        <!-- APPLICATION PDF -->
-
-        <button
-            class="icon-btn pdf"
-            onclick="generateApplicationPDF(${allMembers.indexOf(member)})"
-            title="Application PDF">
-
-            <i class="fa-solid fa-file-pdf"></i>
-
-        </button>
-
-    </td>
-
-</tr>
-
-`;
-
+            </tr>
+        `;
     });
-
 }
 
 function updateCounts() {
@@ -499,9 +555,35 @@ function viewMember(index){
 
             <h3>Vehicle Details</h3>
 
-            <p><strong>Registration :</strong> ${member["Vehicle Registration"] || "-"}</p>
+            <p>
+                <strong>Model :</strong>
+                ${member["Motorcycle Model"] || "-"}
+            </p>
 
-            <p><strong>Driving License :</strong> ${member["Driving License"] || "-"}</p>
+            <p>
+                <strong>Colour / Variant :</strong>
+                ${member["Vehicle Colour / Variant"] || "-"}
+            </p>
+
+            <p>
+                <strong>Registration :</strong>
+                ${member["Vehicle Registration"] || "-"}
+            </p>
+
+            <p>
+                <strong>Engine Number :</strong>
+                ${member["Engine Number"] || "-"}
+            </p>
+
+            <p>
+                <strong>Chassis Number :</strong>
+                ${member["Chassis Number"] || "-"}
+            </p>
+
+            <p>
+                <strong>Driving License :</strong>
+                ${member["Driving License"] || "-"}
+            </p>
 
         </div>
 

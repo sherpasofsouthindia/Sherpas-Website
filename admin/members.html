@@ -71,6 +71,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             id="searchMember"
             placeholder="Search Member...">
 
+        <select id="vehicleModelFilter" class="sort-select">
+            <option value="">All Vehicle Models</option>
+            <option value="Royal Enfield Himalayan 450">
+                Royal Enfield Himalayan 450
+            </option>
+            <option value="Royal Enfield Guerrilla 450">
+                Royal Enfield Guerrilla 450
+            </option>
+        </select>
+
         <button id="refreshBtn" class="refresh-btn">
             <i class="fa-solid fa-rotate-right"></i>
             Refresh
@@ -132,21 +142,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <thead>
 
 <tr>
-
-<th>ID</th>
-
-<th>Photo</th>
-
-<th>Name</th>
-
-<th>Phone</th>
-
-<th>Vehicle No</th>
-
-<th>Status</th>
-
-<th>Action</th>
-
+    <th>S.No</th>
+    <th>ID</th>
+    <th>Photo</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Vehicle Model</th>
+    <th>Vehicle No</th>
+    <th>Status</th>
+    <th>Action</th>
 </tr>
 
 </thead>
@@ -156,11 +160,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <tr>
 
-<td colspan="7">
+<td colspan="9">
 
 <i class="fa-solid fa-spinner fa-spin"></i>
 
-Loading Members...
+Loading Members...  
 
 </td>
 
