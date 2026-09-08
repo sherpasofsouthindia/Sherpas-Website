@@ -50,15 +50,20 @@ if (dobInput) {
 //    applicationDate.value = new Date().toISOString().split("T")[0];
 //}
 
-const applicationDate =
-    document.getElementById("applicationDate");
+document.addEventListener("DOMContentLoaded", function () {
+    const applicationDate =
+        document.getElementById("applicationDate");
 
-if(applicationDate){
+    if (applicationDate) {
+        const today = new Date();
 
-    applicationDate.value =
-    new Date().toISOString().split("T")[0];
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
 
-}
+        applicationDate.value = `${year}-${month}-${day}`;
+    }
+});
 
 // -----------------------------
 // Health Details
