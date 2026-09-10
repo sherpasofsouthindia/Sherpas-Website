@@ -681,9 +681,9 @@ function viewMember(index){
                 </button>
 
                 <button class="btn-info"
-                    onclick="printMembershipCard()">
+                    onclick="downloadMembershipCard()">
                     <i class="fa-solid fa-id-card"></i>
-                    Print Card
+                    Download Card
                 </button>
 
                 <button class="btn-success"
@@ -1567,9 +1567,1682 @@ async function rejectSelectedMember(){
 
         });
 
-function printMembershipCard(){
+async function downloadMembershipCard() {
 
-    alert("Coming Soon");
+    if (!selectedMember) {
+        Swal.fire(
+            "Error",
+            "Please select a member first.",
+            "error"
+        );
+        return;
+    }
+
+    const member = selectedMember;
+
+    if (
+        String(member["Status"] || "").toLowerCase() !== "approved"
+    ) {
+        Swal.fire(
+            "Not Available",
+            "Membership card is available only for approved members.",
+            "warning"
+        );
+        return;
+    }
+
+    /* =========================================
+       TEMPORARY MANUAL DATES
+    ========================================= */
+
+    const joinedDate = "5 July 2026";
+    const validUntil = "4 July 2027";
+
+
+    Swal.fire({
+        title: "Preparing Membership Card",
+        text: "Creating Sherpas membership card...",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+
+    /* =========================================
+       IMAGE LOADER
+    ========================================= */
+
+    function loadImage(src) {
+
+        return new Promise((resolve) => {
+
+            if (!src) {
+                resolve(null);
+                return;
+            }
+
+            const img = new Image();
+
+            img.onload = function () {
+                resolve(img);
+            };
+
+            img.onerror = function () {
+                console.error(
+                    "Card image failed:",
+                    src
+                );
+                resolve(null);
+            };
+
+            img.src = src;
+        });
+    }
+
+
+    /* =========================================
+       DRIVE IMAGE LOADER
+    ========================================= */
+
+    async function loadDriveImage(url) {
+
+        if (!url) {
+            return null;
+        }
+
+        try {
+
+            const match =
+                url.match(
+                    /(?:\/d\/|id=)([^\/&?]+)/
+                );
+
+            if (!match || !match[1]) {
+
+                return await loadImage(url);
+
+            }
+
+            const fileId = match[1];
+
+            const response =
+                await fetch(
+                    API_URL +
+                    "?action=GET_MEMBER_IMAGE&fileId=" +
+                    encodeURIComponent(fileId)
+                );
+
+            const result =
+                await response.json();
+
+            if (
+                !result.success ||
+                !result.data
+            ) {
+                return null;
+            }
+
+            return await loadImage(
+                "data:" +
+                result.mimeType +
+                ";base64," +
+                result.data
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                "Drive image error:",
+                error
+            );
+
+            return null;
+        }
+    }
+
+
+    /* =========================================
+       ROUND RECTANGLE
+    ========================================= */
+
+    function roundRect(
+        ctx,
+        x,
+        y,
+        width,
+        height,
+        radius
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x + radius,
+            y
+        );
+
+        ctx.lineTo(
+            x + width - radius,
+            y
+        );
+
+        ctx.quadraticCurveTo(
+            x + width,
+            y,
+            x + width,
+            y + radius
+        );
+
+        ctx.lineTo(
+            x + width,
+            y + height - radius
+        );
+
+        ctx.quadraticCurveTo(
+            x + width,
+            y + height,
+            x + width - radius,
+            y + height
+        );
+
+        ctx.lineTo(
+            x + radius,
+            y + height
+        );
+
+        ctx.quadraticCurveTo(
+            x,
+            y + height,
+            x,
+            y + height - radius
+        );
+
+        ctx.lineTo(
+            x,
+            y + radius
+        );
+
+        ctx.quadraticCurveTo(
+            x,
+            y,
+            x + radius,
+            y
+        );
+
+        ctx.closePath();
+    }
+
+
+    /* =========================================
+       TEXT HELPER
+    ========================================= */
+
+    function text(
+        ctx,
+        value,
+        x,
+        y,
+        font,
+        color,
+        align = "left"
+    ) {
+
+        ctx.font = font;
+        ctx.fillStyle = color;
+        ctx.textAlign = align;
+        ctx.fillText(
+            String(value || "-"),
+            x,
+            y
+        );
+    }
+
+
+    /* =========================================
+       CARD
+    ========================================= */
+
+    try {
+
+        const canvas =
+            document.createElement("canvas");
+
+        canvas.width = 1600;
+        canvas.height = 1000;
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        /* =========================================
+           CARD OUTER BACKGROUND
+        ========================================= */
+
+        ctx.fillStyle = "#eef1f3";
+
+        ctx.fillRect(
+            0,
+            0,
+            1600,
+            1000
+        );
+
+
+        /* =========================================
+           MAIN CARD
+        ========================================= */
+
+        ctx.save();
+
+        ctx.shadowColor =
+            "rgba(0,0,0,0.25)";
+
+        ctx.shadowBlur = 35;
+
+        ctx.shadowOffsetY = 15;
+
+        ctx.fillStyle = "#ffffff";
+
+        roundRect(
+            ctx,
+            35,
+            35,
+            1530,
+            930,
+            35
+        );
+
+        ctx.fill();
+
+        ctx.restore();
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        const headerX = 35;
+        const headerY = 35;
+        const headerW = 1530;
+        const headerH = 300;
+
+
+        ctx.save();
+
+        roundRect(
+            ctx,
+            headerX,
+            headerY,
+            headerW,
+            headerH,
+            35
+        );
+
+        ctx.clip();
+
+
+        const headerImage =
+            await loadImage(
+                "./assets/membership-header.jpg"
+            );
+
+
+        if (headerImage) {
+
+            const scale =
+                Math.max(
+                    headerW / headerImage.width,
+                    headerH / headerImage.height
+                );
+
+            const width =
+                headerImage.width * scale;
+
+            const height =
+                headerImage.height * scale;
+
+            const x =
+                headerX +
+                (headerW - width) / 2;
+
+            const y =
+                headerY +
+                (headerH - height) / 2;
+
+            ctx.drawImage(
+                headerImage,
+                x,
+                y,
+                width,
+                height
+            );
+
+        }
+        else {
+
+            ctx.fillStyle =
+                "#101c29";
+
+            ctx.fillRect(
+                headerX,
+                headerY,
+                headerW,
+                headerH
+            );
+        }
+
+
+        ctx.restore();
+
+
+        /* =========================================
+           ORANGE HEADER LINE
+        ========================================= */
+
+        ctx.fillStyle = "#ff7200";
+
+        ctx.fillRect(
+            35,
+            323,
+            1530,
+            12
+        );
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        const logo =
+            await loadImage(
+                "./assets/logo.png"
+            );
+
+        if (logo) {
+
+            ctx.drawImage(
+                logo,
+                70,
+                65,
+                215,
+                215
+            );
+        }
+
+
+        /* =========================================
+           HEADER TITLE
+        ========================================= */
+
+        text(
+            ctx,
+            "SHERPAS OF SOUTH INDIA",
+            325,
+            145,
+            "bold 60px Arial",
+            "#ffffff"
+        );
+
+
+        text(
+            ctx,
+            "R I D E   •   E X P L O R E   •   C O N Q U E R",
+            330,
+            193,
+            "bold 27px Arial",
+            "#ffffff"
+        );
+
+
+        text(
+            ctx,
+            "More Than Riders • A Family",
+            330,
+            240,
+            "italic 27px Arial",
+            "#ff7200"
+        );
+
+
+        /* =========================================
+           RIGHT HEADER SLOGAN
+        ========================================= */
+
+        text(
+            ctx,
+            "MOUNTAINS",
+            1430,
+            125,
+            "italic 27px Arial",
+            "#ffffff",
+            "center"
+        );
+
+        text(
+            ctx,
+            "FRIENDS",
+            1430,
+            160,
+            "italic 27px Arial",
+            "#ffffff",
+            "center"
+        );
+
+        text(
+            ctx,
+            "LIFETIME STORIES",
+            1430,
+            195,
+            "italic 27px Arial",
+            "#ffffff",
+            "center"
+        );
+
+
+        /* =========================================
+           CONTENT AREA
+        ========================================= */
+
+        const contentX = 35;
+        const contentY = 345;
+        const contentW = 1530;
+        const contentH = 520;
+
+
+        /* WHITE BASE */
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.fillRect(
+            contentX,
+            contentY,
+            contentW,
+            contentH
+        );
+
+
+        /* =========================================
+           CONTENT BACKGROUND IMAGE
+        ========================================= */
+
+        const backgroundImage =
+            await loadImage(
+                "./assets/membership-background.jpg"
+            );
+
+
+        if (backgroundImage) {
+
+            ctx.save();
+
+            ctx.globalAlpha = 0.18;
+
+            const scale =
+                Math.max(
+                    contentW / backgroundImage.width,
+                    contentH / backgroundImage.height
+                );
+
+            const width =
+                backgroundImage.width * scale;
+
+            const height =
+                backgroundImage.height * scale;
+
+            const x =
+                contentX +
+                (contentW - width) / 2;
+
+            const y =
+                contentY +
+                (contentH - height) / 2;
+
+            ctx.drawImage(
+                backgroundImage,
+                x,
+                y,
+                width,
+                height
+            );
+
+            ctx.restore();
+        }
+
+
+        /* =========================================
+           PHOTO
+        ========================================= */
+
+        const photoX = 75;
+        const photoY = 390;
+        const photoW = 350;
+        const photoH = 400;
+
+
+        /* orange frame */
+
+        ctx.fillStyle =
+            "#ff7200";
+
+        roundRect(
+            ctx,
+            photoX - 7,
+            photoY - 7,
+            photoW + 14,
+            photoH + 14,
+            25
+        );
+
+        ctx.fill();
+
+
+        /* white frame */
+
+        ctx.fillStyle =
+            "#ffffff";
+
+        roundRect(
+            ctx,
+            photoX - 3,
+            photoY - 3,
+            photoW + 6,
+            photoH + 6,
+            22
+        );
+
+        ctx.fill();
+
+
+        const photo =
+            await loadDriveImage(
+                member["Photo URL"]
+            );
+
+
+        if (photo) {
+
+            ctx.save();
+
+            roundRect(
+                ctx,
+                photoX,
+                photoY,
+                photoW,
+                photoH,
+                18
+            );
+
+            ctx.clip();
+
+
+            const scale =
+                Math.max(
+                    photoW / photo.width,
+                    photoH / photo.height
+                );
+
+            const width =
+                photo.width * scale;
+
+            const height =
+                photo.height * scale;
+
+            const x =
+                photoX +
+                (photoW - width) / 2;
+
+            const y =
+                photoY +
+                (photoH - height) / 2;
+
+            ctx.drawImage(
+                photo,
+                x,
+                y,
+                width,
+                height
+            );
+
+            ctx.restore();
+
+        }
+        else {
+
+            ctx.fillStyle =
+                "#e5e7eb";
+
+            roundRect(
+                ctx,
+                photoX,
+                photoY,
+                photoW,
+                photoH,
+                18
+            );
+
+            ctx.fill();
+
+            text(
+                ctx,
+                "PHOTO NOT AVAILABLE",
+                photoX + photoW / 2,
+                photoY + photoH / 2,
+                "bold 22px Arial",
+                "#6b7280",
+                "center"
+            );
+        }
+
+
+        /* =========================================
+           MEMBERSHIP ID BOX
+        ========================================= */
+
+        ctx.fillStyle =
+            "#ff7200";
+
+        roundRect(
+            ctx,
+            75,
+            805,
+            350,
+            62,
+            14
+        );
+
+        ctx.fill();
+
+
+        text(
+            ctx,
+            member["Membership ID"] || "-",
+            250,
+            848,
+            "bold 32px Arial",
+            "#111827",
+            "center"
+        );
+
+
+        
+        /* =========================================
+           MEMBER INFORMATION
+        ========================================= */
+
+        const infoX = 480;
+        const valueX = 720;
+
+
+        function drawInfo(
+            label,
+            value,
+            y
+        ) {
+
+            text(
+                ctx,
+                label,
+                infoX,
+                y,
+                "bold 22px Arial",
+                "#14243a"
+            );
+
+            text(
+                ctx,
+                ":",
+                675,
+                y,
+                "bold 22px Arial",
+                "#14243a",
+                "center"
+            );
+
+            text(
+                ctx,
+                value || "-",
+                valueX,
+                y,
+                "21px Arial",
+                "#18263a"
+            );
+        }
+
+
+        text(
+            ctx,
+            "NAME",
+            infoX,
+            430,
+            "bold 22px Arial",
+            "#14243a"
+        );
+
+        text(
+            ctx,
+            ":",
+            675,
+            430,
+            "bold 22px Arial",
+            "#14243a",
+            "center"
+        );
+
+        text(
+            ctx,
+            member["Full Name"] || "-",
+            valueX,
+            430,
+            "bold 30px Arial",
+            "#111827"
+        );
+
+
+        drawInfo(
+            "Date of Birth",
+            member["Date of Birth"]
+                ? new Date(
+                    member["Date of Birth"]
+                  ).toLocaleDateString(
+                    "en-IN",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    }
+                  )
+                : "-",
+            475
+        );
+
+
+        drawInfo(
+            "Blood Group",
+            member["Blood Group"],
+            520
+        );
+
+
+        drawInfo(
+            "Phone",
+            member["Phone"],
+            565
+        );
+
+
+        drawInfo(
+            "Email",
+            member["Email"],
+            610
+        );
+
+
+        drawInfo(
+            "District",
+            member["District"],
+            655
+        );
+
+
+        drawInfo(
+            "Motorcycle",
+            member["Motorcycle Model"],
+            700
+        );
+
+        drawInfo(
+            "Registration No.",
+            member["Vehicle Registration"],
+            745
+        );
+
+
+        drawInfo(
+            "Member Since",
+            joinedDate,
+            790
+        );
+
+
+        drawInfo(
+            "Valid Till",
+            validUntil,
+            835
+        );
+
+
+        /* =========================================
+           RIGHT SIDE DECORATIVE PANEL
+        ========================================= */
+
+        ctx.fillStyle =
+            "rgba(255,255,255,0.80)";
+
+        roundRect(
+            ctx,
+            1210,
+            395,
+            285,
+            190,
+            20
+        );
+
+        ctx.fill();
+
+
+        ctx.strokeStyle =
+            "#ff7200";
+
+        ctx.lineWidth = 3;
+
+        roundRect(
+            ctx,
+            1210,
+            395,
+            285,
+            190,
+            20
+        );
+
+        ctx.stroke();
+
+
+        text(
+            ctx,
+            "SHERPAS",
+            1352,
+            445,
+            "bold 30px Arial",
+            "#14243a",
+            "center"
+        );
+
+
+        text(
+            ctx,
+            "MEMBER",
+            1352,
+            482,
+            "bold 30px Arial",
+            "#ff7200",
+            "center"
+        );
+
+
+        text(
+            ctx,
+            "RIDE • EXPLORE • CONQUER",
+            1352,
+            525,
+            "bold 15px Arial",
+            "#52606d",
+            "center"
+        );
+
+
+        text(
+            ctx,
+            "More Than Riders",
+            1352,
+            555,
+            "italic 17px Arial",
+            "#52606d",
+            "center"
+        );
+
+
+        /* =========================================
+           SIGNATURE
+        ========================================= */
+
+        const signature =
+            await loadDriveImage(
+                member["Signature URL"]
+            );
+
+
+        if (signature) {
+
+            ctx.drawImage(
+                signature,
+                1210,
+                650,
+                250,
+                80
+            );
+
+        }
+        else {
+
+            text(
+                ctx,
+                "Authorized Signatory",
+                1350,
+                710,
+                "italic 22px Arial",
+                "#14243a",
+                "center"
+            );
+        }
+
+
+        ctx.strokeStyle =
+            "#14243a";
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            1190,
+            735
+        );
+
+        ctx.lineTo(
+            1490,
+            735
+        );
+
+        ctx.stroke();
+
+
+        text(
+            ctx,
+            "RIDER SIGNATURE",
+            1340,
+            765,
+            "bold 16px Arial",
+            "#14243a",
+            "center"
+        );
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        ctx.fillStyle =
+            "#08131f";
+
+        roundRect(
+            ctx,
+            35,
+            930,
+            1530,
+            100,
+            35
+        );
+
+        ctx.fill();
+
+
+        /* orange line */
+
+        ctx.fillStyle =
+            "#ff7200";
+
+        ctx.fillRect(
+            70,
+            947,
+            300,
+            4
+        );
+
+        ctx.fillRect(
+            1230,
+            947,
+            300,
+            4
+        );
+
+
+        text(
+            ctx,
+            "SAFE RIDES  •  CLEAN ROADS  •  BETTER TOMORROWS",
+            800,
+            954,
+            "bold 21px Arial",
+            "#ffffff",
+            "center"
+        );
+
+
+        /* =========================================
+           DOWNLOAD
+        ========================================= */
+
+        const imageURL =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        const link =
+            document.createElement("a");
+
+        link.href =
+            imageURL;
+
+        const membershipID =
+            member["Membership ID"] || "MEMBER";
+
+        const fullName =
+            member["Full Name"] || "Member";
+
+        const safeName =
+            String(fullName)
+                .trim()
+                .replace(/[\\/:*?"<>|]/g, "")
+                .replace(/\s+/g, "_");
+
+        link.download =
+            "SHERPAS_" +
+            membershipID +
+            "_" +
+            safeName +
+            "_Card.png";
+
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+
+        Swal.fire({
+            icon: "success",
+            title: "Membership Card Ready",
+            text: "The PNG membership card has been downloaded.",
+            timer: 1800,
+            showConfirmButton: false
+        });
+
+    }
+    catch (error) {
+
+        console.error(
+            "MEMBERSHIP CARD ERROR:",
+            error
+        );
+
+        Swal.fire(
+            "Card Generation Failed",
+            error.message ||
+            "Unable to generate membership card.",
+            "error"
+        );
+    }
+}
+
+
+/* =========================================
+   CARD DRAWING HELPERS
+========================================= */
+
+function drawCardRoundRect(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    radius
+) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x + radius,
+        y
+    );
+
+    ctx.lineTo(
+        x + width - radius,
+        y
+    );
+
+    ctx.quadraticCurveTo(
+        x + width,
+        y,
+        x + width,
+        y + radius
+    );
+
+    ctx.lineTo(
+        x + width,
+        y + height - radius
+    );
+
+    ctx.quadraticCurveTo(
+        x + width,
+        y + height,
+        x + width - radius,
+        y + height
+    );
+
+    ctx.lineTo(
+        x + radius,
+        y + height
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y + height,
+        x,
+        y + height - radius
+    );
+
+    ctx.lineTo(
+        x,
+        y + radius
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y,
+        x + radius,
+        y
+    );
+
+    ctx.closePath();
+
+}
+
+
+/* =========================================
+   HEADER MOUNTAINS
+========================================= */
+
+function drawHeaderMountains(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    color
+) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y + height
+    );
+
+    const points = [
+        [0, 0.75],
+        [0.10, 0.35],
+        [0.18, 0.62],
+        [0.30, 0.18],
+        [0.42, 0.55],
+        [0.54, 0.22],
+        [0.67, 0.58],
+        [0.78, 0.25],
+        [0.90, 0.52],
+        [1.00, 0.18]
+    ];
+
+    points.forEach(function(p) {
+
+        ctx.lineTo(
+            x + width * p[0],
+            y + height * p[1]
+        );
+
+    });
+
+    ctx.lineTo(
+        x + width,
+        y + height
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle =
+        color;
+
+    ctx.fill();
+
+}
+
+
+/* =========================================
+   LIGHT MOUNTAINS
+========================================= */
+
+function drawLightMountains(
+    ctx,
+    x,
+    y,
+    width,
+    height
+) {
+
+    ctx.save();
+
+    ctx.globalAlpha =
+        0.10;
+
+    drawHeaderMountains(
+        ctx,
+        x,
+        y,
+        width,
+        height,
+        "#50606d"
+    );
+
+    ctx.globalAlpha =
+        0.06;
+
+    drawHeaderMountains(
+        ctx,
+        x,
+        y + 45,
+        width,
+        height - 70,
+        "#50606d"
+    );
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   RIDER SILHOUETTE
+========================================= */
+
+function drawRider(
+    ctx,
+    x,
+    y,
+    scale
+) {
+
+    ctx.save();
+
+    ctx.translate(
+        x,
+        y
+    );
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+    ctx.fillStyle =
+        "rgba(3,8,13,0.90)";
+
+
+    /* wheels */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -32,
+        48,
+        18,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        42,
+        48,
+        18,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /* motorcycle */
+
+    ctx.fillRect(
+        -20,
+        30,
+        65,
+        8
+    );
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -5,
+        32
+    );
+
+    ctx.lineTo(
+        20,
+        5
+    );
+
+    ctx.lineTo(
+        45,
+        32
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* rider body */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        4,
+        -10,
+        13,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillRect(
+        -7,
+        2,
+        20,
+        30
+    );
+
+
+    /* arms */
+
+    ctx.lineWidth = 7;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        2,
+        7
+    );
+
+    ctx.lineTo(
+        28,
+        15
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   COMPASS
+========================================= */
+
+function drawCompass(
+    ctx,
+    x,
+    y,
+    radius
+) {
+
+    ctx.save();
+
+    ctx.globalAlpha =
+        0.10;
+
+    ctx.strokeStyle =
+        "#44515d";
+
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        radius,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y - radius
+    );
+
+    ctx.lineTo(
+        x,
+        y + radius
+    );
+
+    ctx.moveTo(
+        x - radius,
+        y
+    );
+
+    ctx.lineTo(
+        x + radius,
+        y
+    );
+
+    ctx.stroke();
+
+
+    ctx.fillStyle =
+        "#44515d";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y - 75
+    );
+
+    ctx.lineTo(
+        x - 10,
+        y
+    );
+
+    ctx.lineTo(
+        x + 10,
+        y
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   MEMBER INFORMATION ROW
+========================================= */
+
+function drawMemberInfoRow(
+    ctx,
+    x,
+    y,
+    label,
+    value,
+    highlight
+) {
+
+    /* background */
+
+    ctx.fillStyle =
+        "rgba(225,230,234,0.70)";
+
+    drawCardRoundRect(
+        ctx,
+        x,
+        y - 34,
+        720,
+        54,
+        10
+    );
+
+    ctx.fill();
+
+
+    /* label */
+
+    ctx.fillStyle =
+        "#52606d";
+
+    ctx.font =
+        "bold 18px Arial";
+
+    ctx.fillText(
+        label,
+        x + 20,
+        y
+    );
+
+
+    /* divider */
+
+    ctx.fillStyle =
+        "#c7cdd2";
+
+    ctx.fillRect(
+        x + 300,
+        y - 22,
+        2,
+        30
+    );
+
+
+    /* value */
+
+    ctx.fillStyle =
+        highlight
+            ? "#ff7200"
+            : "#111827";
+
+    ctx.font =
+        highlight
+            ? "bold 21px Arial"
+            : "bold 19px Arial";
+
+    ctx.fillText(
+        value,
+        x + 330,
+        y
+    );
+
+}
+
+/* =========================================
+   LOAD IMAGE
+========================================= */
+
+async function loadCardImage(src) {
+
+    try {
+
+        if (!src) {
+            return null;
+        }
+
+        /*------------------------------------------
+            GOOGLE DRIVE IMAGE
+        ------------------------------------------*/
+
+        const match =
+            src.match(/(?:\/d\/|id=)([^\/&?]+)/);
+
+        if (match && match[1]) {
+
+            const fileId = match[1];
+
+            const response =
+                await fetch(
+                    API_URL +
+                    "?action=GET_MEMBER_IMAGE&fileId=" +
+                    encodeURIComponent(fileId)
+                );
+
+            const result =
+                await response.json();
+
+            if (
+                !result.success ||
+                !result.data
+            ) {
+                return null;
+            }
+
+            return await loadBase64Image(
+                "data:" +
+                result.mimeType +
+                ";base64," +
+                result.data
+            );
+
+        }
+
+        /*------------------------------------------
+            NORMAL IMAGE URL
+        ------------------------------------------*/
+
+        return await loadBase64Image(src);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Unable to load card image:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+function loadBase64Image(src) {
+
+    return new Promise(function(resolve) {
+
+        const img =
+            new Image();
+
+        img.onload =
+            function() {
+                resolve(img);
+            };
+
+        img.onerror =
+            function() {
+                resolve(null);
+            };
+
+        img.src = src;
+
+    });
 
 }
 
@@ -1806,6 +3479,7 @@ async function openRenewalForm() {
     }
 
     const member = selectedMember;
+
 
     const memberName =
         member["Full Name"] || "";
