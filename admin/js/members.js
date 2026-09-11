@@ -2108,10 +2108,10 @@ async function downloadMembershipCard() {
            MEMBER PHOTO
         ========================================= */
 
-        const photoX = 145;
+        const photoX = 215;
         const photoY = 405;
-        const photoW = 790;
-        const photoH = 390;
+        const photoW = 650;
+        const photoH = 330;
 
 
         /* orange outer frame */
@@ -2238,7 +2238,7 @@ async function downloadMembershipCard() {
             member["Full Name"] || "-",
             540,
             850,
-            "bold 42px Arial",
+            "bold 47px Arial",
             "#111827",
             "center"
         );
@@ -2268,45 +2268,20 @@ async function downloadMembershipCard() {
             (member["Membership ID"] || "-"),
             540,
             920,
-            "bold 28px Arial",
+            "bold 32px Arial",
             "#111827",
             "center"
         );
 
 
-        /* =========================================
-           VEHICLE REGISTRATION
-        ========================================= */
-
-        text(
-            ctx,
-            "REGISTRATION NO.",
-            540,
-            980,
-            "bold 18px Arial",
-            "#52606d",
-            "center"
-        );
-
-        text(
-            ctx,
-            member["Vehicle Registration"] || "-",
-            540,
-            1015,
-            "bold 28px Arial",
-            "#ff7200",
-            "center"
-        );
-
-
-        /* =========================================
+         /* =========================================
            INFORMATION PANEL
         ========================================= */
 
         const panelX = 75;
-        const panelY = 1045;
+        const panelY = 990;
         const panelW = 930;
-        const panelH = 300;
+        const panelH = 350;
 
 
         ctx.fillStyle =
@@ -2341,7 +2316,7 @@ async function downloadMembershipCard() {
                 label,
                 x,
                 y,
-                "bold 18px Arial",
+                "bold 24px Arial",
                 "#52606d"
             );
 
@@ -2350,7 +2325,7 @@ async function downloadMembershipCard() {
                 ":",
                 x + 165,
                 y,
-                "bold 18px Arial",
+                "bold 24px Arial",
                 "#52606d",
                 "center"
             );
@@ -2360,7 +2335,7 @@ async function downloadMembershipCard() {
                 value || "-",
                 x + 190,
                 y,
-                "bold 18px Arial",
+                "bold 24px Arial",
                 "#111827"
             );
         }
@@ -2414,6 +2389,13 @@ async function downloadMembershipCard() {
             420
         );
 
+        drawInfoRow(
+            "Registration No.",
+            member["Vehicle Registration"],
+            105,
+            1240,
+            420
+        );
 
         /* RIGHT COLUMN */
 
@@ -2452,7 +2434,48 @@ async function downloadMembershipCard() {
             420
         );
 
+        function drawRegistrationRow(
+            label,
+            value,
+            x,
+            y
+        ) {
+        
+            text(
+                ctx,
+                label,
+                x,
+                y,
+                "bold 20px Arial",
+                "#52606d"
+            );
+        
+            text(
+                ctx,
+                ":",
+                x + 165,
+                y,
+                "bold 20px Arial",
+                "#52606d",
+                "center"
+            );
+        
+            text(
+                ctx,
+                value || "-",
+                x + 190,
+                y,
+                "bold 22px Arial",
+                "#ff7200"
+            );
+        }
 
+        drawRegistrationRow(
+            "Registration No.",
+            member["Vehicle Registration"],
+            105,
+            1240
+        );
         /* =========================================
            RIDER SIGNATURE
         ========================================= */
@@ -2467,10 +2490,10 @@ async function downloadMembershipCard() {
 
             ctx.drawImage(
                 signature,
-                365,
+                320,
                 1370,
                 350,
-                85
+                75
             );
 
         }
@@ -2497,12 +2520,12 @@ async function downloadMembershipCard() {
 
         ctx.moveTo(
             320,
-            1460
+            1395
         );
 
         ctx.lineTo(
             760,
-            1460
+            1395
         );
 
         ctx.stroke();
@@ -2512,7 +2535,7 @@ async function downloadMembershipCard() {
             ctx,
             "RIDER SIGNATURE",
             540,
-            1490,
+            1425,
             "bold 17px Arial",
             "#14243a",
             "center"
