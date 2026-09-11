@@ -1592,7 +1592,7 @@ async function downloadMembershipCard() {
     }
 
     /* =========================================
-       TEMPORARY MANUAL DATES
+       MEMBERSHIP DATES
     ========================================= */
 
     const joinedDate = "5 July 2026";
@@ -1630,10 +1630,7 @@ async function downloadMembershipCard() {
             };
 
             img.onerror = function () {
-                console.error(
-                    "Card image failed:",
-                    src
-                );
+                console.error("Card image failed:", src);
                 resolve(null);
             };
 
@@ -1643,7 +1640,7 @@ async function downloadMembershipCard() {
 
 
     /* =========================================
-       DRIVE IMAGE LOADER
+       GOOGLE DRIVE IMAGE LOADER
     ========================================= */
 
     async function loadDriveImage(url) {
@@ -1655,14 +1652,10 @@ async function downloadMembershipCard() {
         try {
 
             const match =
-                url.match(
-                    /(?:\/d\/|id=)([^\/&?]+)/
-                );
+                url.match(/(?:\/d\/|id=)([^\/&?]+)/);
 
             if (!match || !match[1]) {
-
                 return await loadImage(url);
-
             }
 
             const fileId = match[1];
@@ -1705,7 +1698,7 @@ async function downloadMembershipCard() {
 
 
     /* =========================================
-       ROUND RECTANGLE
+       HELPERS
     ========================================= */
 
     function roundRect(
@@ -1776,10 +1769,6 @@ async function downloadMembershipCard() {
     }
 
 
-    /* =========================================
-       TEXT HELPER
-    ========================================= */
-
     function text(
         ctx,
         value,
@@ -1793,6 +1782,7 @@ async function downloadMembershipCard() {
         ctx.font = font;
         ctx.fillStyle = color;
         ctx.textAlign = align;
+
         ctx.fillText(
             String(value || "-"),
             x,
@@ -1803,6 +1793,7 @@ async function downloadMembershipCard() {
 
     /* =========================================
        CARD
+       1080 × 1600 PORTRAIT
     ========================================= */
 
     try {
@@ -1810,15 +1801,15 @@ async function downloadMembershipCard() {
         const canvas =
             document.createElement("canvas");
 
-        canvas.width = 1600;
-        canvas.height = 1000;
+        canvas.width = 1080;
+        canvas.height = 1600;
 
         const ctx =
             canvas.getContext("2d");
 
 
         /* =========================================
-           CARD OUTER BACKGROUND
+           OUTER BACKGROUND
         ========================================= */
 
         ctx.fillStyle = "#eef1f3";
@@ -1826,8 +1817,8 @@ async function downloadMembershipCard() {
         ctx.fillRect(
             0,
             0,
-            1600,
-            1000
+            1080,
+            1600
         );
 
 
@@ -1840,19 +1831,20 @@ async function downloadMembershipCard() {
         ctx.shadowColor =
             "rgba(0,0,0,0.25)";
 
-        ctx.shadowBlur = 35;
+        ctx.shadowBlur = 30;
 
-        ctx.shadowOffsetY = 15;
+        ctx.shadowOffsetY = 12;
 
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle =
+            "#ffffff";
 
         roundRect(
             ctx,
-            35,
-            35,
-            1530,
-            930,
-            35
+            25,
+            25,
+            1030,
+            1550,
+            32
         );
 
         ctx.fill();
@@ -1864,11 +1856,10 @@ async function downloadMembershipCard() {
            HEADER
         ========================================= */
 
-        const headerX = 35;
-        const headerY = 35;
-        const headerW = 1530;
-        const headerH = 300;
-
+        const headerX = 25;
+        const headerY = 25;
+        const headerW = 1030;
+        const headerH = 365;
 
         ctx.save();
 
@@ -1878,7 +1869,7 @@ async function downloadMembershipCard() {
             headerY,
             headerW,
             headerH,
-            35
+            32
         );
 
         ctx.clip();
@@ -1934,20 +1925,39 @@ async function downloadMembershipCard() {
             );
         }
 
-
         ctx.restore();
 
 
         /* =========================================
-           ORANGE HEADER LINE
+           DARK HEADER OVERLAY
         ========================================= */
 
-        ctx.fillStyle = "#ff7200";
+        ctx.fillStyle =
+            "rgba(5,15,25,0.35)";
+
+        roundRect(
+            ctx,
+            headerX,
+            headerY,
+            headerW,
+            headerH,
+            32
+        );
+
+        ctx.fill();
+
+
+        /* =========================================
+           ORANGE LINE
+        ========================================= */
+
+        ctx.fillStyle =
+            "#ff7200";
 
         ctx.fillRect(
-            35,
-            323,
-            1530,
+            25,
+            353,
+            1030,
             12
         );
 
@@ -1967,94 +1977,79 @@ async function downloadMembershipCard() {
                 logo,
                 70,
                 65,
-                215,
-                215
+                190,
+                190
             );
         }
 
 
         /* =========================================
-           HEADER TITLE
+           HEADER TEXT
         ========================================= */
 
         text(
             ctx,
-            "SHERPAS OF SOUTH INDIA",
-            325,
-            145,
-            "bold 60px Arial",
+            "SHERPAS OF",
+            300,
+            120,
+            "bold 48px Arial",
             "#ffffff"
         );
-
 
         text(
             ctx,
-            "R I D E   •   E X P L O R E   •   C O N Q U E R",
-            330,
-            193,
-            "bold 27px Arial",
+            "SOUTH INDIA",
+            300,
+            175,
+            "bold 48px Arial",
             "#ffffff"
         );
 
+        text(
+            ctx,
+            "R I D E  •  E X P L O R E  •  C O N Q U E R",
+            300,
+            220,
+            "bold 20px Arial",
+            "#ffffff"
+        );
 
         text(
             ctx,
             "More Than Riders • A Family",
-            330,
-            240,
-            "italic 27px Arial",
+            300,
+            265,
+            "italic 22px Arial",
             "#ff7200"
         );
 
 
         /* =========================================
-           RIGHT HEADER SLOGAN
+           DIGITAL MEMBERSHIP CARD TITLE
         ========================================= */
 
         text(
             ctx,
-            "MOUNTAINS",
-            1430,
-            125,
-            "italic 27px Arial",
-            "#ffffff",
-            "center"
-        );
-
-        text(
-            ctx,
-            "FRIENDS",
-            1430,
-            160,
-            "italic 27px Arial",
-            "#ffffff",
-            "center"
-        );
-
-        text(
-            ctx,
-            "LIFETIME STORIES",
-            1430,
-            195,
-            "italic 27px Arial",
+            "DIGITAL MEMBERSHIP CARD",
+            540,
+            325,
+            "bold 22px Arial",
             "#ffffff",
             "center"
         );
 
 
         /* =========================================
-           CONTENT AREA
+           CONTENT BACKGROUND
         ========================================= */
 
-        const contentX = 35;
-        const contentY = 345;
-        const contentW = 1530;
-        const contentH = 520;
+        const contentX = 25;
+        const contentY = 365;
+        const contentW = 1030;
+        const contentH = 1090;
 
-
-        /* WHITE BASE */
-
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle =
+            "#ffffff";
 
         ctx.fillRect(
             contentX,
@@ -2063,10 +2058,6 @@ async function downloadMembershipCard() {
             contentH
         );
 
-
-        /* =========================================
-           CONTENT BACKGROUND IMAGE
-        ========================================= */
 
         const backgroundImage =
             await loadImage(
@@ -2078,7 +2069,8 @@ async function downloadMembershipCard() {
 
             ctx.save();
 
-            ctx.globalAlpha = 0.18;
+            ctx.globalAlpha =
+                0.12;
 
             const scale =
                 Math.max(
@@ -2113,44 +2105,44 @@ async function downloadMembershipCard() {
 
 
         /* =========================================
-           PHOTO
+           MEMBER PHOTO
         ========================================= */
 
-        const photoX = 75;
-        const photoY = 390;
-        const photoW = 350;
-        const photoH = 400;
+        const photoX = 145;
+        const photoY = 405;
+        const photoW = 790;
+        const photoH = 390;
 
 
-        /* orange frame */
+        /* orange outer frame */
 
         ctx.fillStyle =
             "#ff7200";
 
         roundRect(
             ctx,
-            photoX - 7,
-            photoY - 7,
-            photoW + 14,
-            photoH + 14,
-            25
+            photoX - 8,
+            photoY - 8,
+            photoW + 16,
+            photoH + 16,
+            28
         );
 
         ctx.fill();
 
 
-        /* white frame */
+        /* white inner frame */
 
         ctx.fillStyle =
             "#ffffff";
 
         roundRect(
             ctx,
-            photoX - 3,
-            photoY - 3,
-            photoW + 6,
-            photoH + 6,
-            22
+            photoX - 4,
+            photoY - 4,
+            photoW + 8,
+            photoH + 8,
+            25
         );
 
         ctx.fill();
@@ -2172,7 +2164,7 @@ async function downloadMembershipCard() {
                 photoY,
                 photoW,
                 photoH,
-                18
+                22
             );
 
             ctx.clip();
@@ -2220,7 +2212,7 @@ async function downloadMembershipCard() {
                 photoY,
                 photoW,
                 photoH,
-                18
+                22
             );
 
             ctx.fill();
@@ -2228,9 +2220,9 @@ async function downloadMembershipCard() {
             text(
                 ctx,
                 "PHOTO NOT AVAILABLE",
-                photoX + photoW / 2,
+                540,
                 photoY + photoH / 2,
-                "bold 22px Arial",
+                "bold 25px Arial",
                 "#6b7280",
                 "center"
             );
@@ -2238,7 +2230,22 @@ async function downloadMembershipCard() {
 
 
         /* =========================================
-           MEMBERSHIP ID BOX
+           MEMBER NAME
+        ========================================= */
+
+        text(
+            ctx,
+            member["Full Name"] || "-",
+            540,
+            850,
+            "bold 42px Arial",
+            "#111827",
+            "center"
+        );
+
+
+        /* =========================================
+           MEMBERSHIP ID
         ========================================= */
 
         ctx.fillStyle =
@@ -2246,256 +2253,208 @@ async function downloadMembershipCard() {
 
         roundRect(
             ctx,
-            75,
-            805,
-            350,
-            62,
-            14
+            250,
+            875,
+            580,
+            70,
+            16
         );
 
         ctx.fill();
 
-
         text(
             ctx,
-            member["Membership ID"] || "-",
-            250,
-            848,
-            "bold 32px Arial",
+            "MEMBERSHIP ID  •  " +
+            (member["Membership ID"] || "-"),
+            540,
+            920,
+            "bold 28px Arial",
             "#111827",
             "center"
         );
 
 
-        
         /* =========================================
-           MEMBER INFORMATION
+           VEHICLE REGISTRATION
         ========================================= */
 
-        const infoX = 480;
-        const valueX = 720;
+        text(
+            ctx,
+            "REGISTRATION NO.",
+            540,
+            980,
+            "bold 18px Arial",
+            "#52606d",
+            "center"
+        );
+
+        text(
+            ctx,
+            member["Vehicle Registration"] || "-",
+            540,
+            1015,
+            "bold 28px Arial",
+            "#ff7200",
+            "center"
+        );
 
 
-        function drawInfo(
+        /* =========================================
+           INFORMATION PANEL
+        ========================================= */
+
+        const panelX = 75;
+        const panelY = 1045;
+        const panelW = 930;
+        const panelH = 300;
+
+
+        ctx.fillStyle =
+            "rgba(245,247,249,0.92)";
+
+        roundRect(
+            ctx,
+            panelX,
+            panelY,
+            panelW,
+            panelH,
+            22
+        );
+
+        ctx.fill();
+
+
+        /* =========================================
+           INFO ROW HELPER
+        ========================================= */
+
+        function drawInfoRow(
             label,
             value,
-            y
+            x,
+            y,
+            width
         ) {
 
             text(
                 ctx,
                 label,
-                infoX,
+                x,
                 y,
-                "bold 22px Arial",
-                "#14243a"
+                "bold 18px Arial",
+                "#52606d"
             );
 
             text(
                 ctx,
                 ":",
-                675,
+                x + 165,
                 y,
-                "bold 22px Arial",
-                "#14243a",
+                "bold 18px Arial",
+                "#52606d",
                 "center"
             );
 
             text(
                 ctx,
                 value || "-",
-                valueX,
+                x + 190,
                 y,
-                "21px Arial",
-                "#18263a"
+                "bold 18px Arial",
+                "#111827"
             );
         }
 
 
-        text(
-            ctx,
-            "NAME",
-            infoX,
-            430,
-            "bold 22px Arial",
-            "#14243a"
-        );
+        /* LEFT COLUMN */
 
-        text(
-            ctx,
-            ":",
-            675,
-            430,
-            "bold 22px Arial",
-            "#14243a",
-            "center"
-        );
-
-        text(
-            ctx,
-            member["Full Name"] || "-",
-            valueX,
-            430,
-            "bold 30px Arial",
-            "#111827"
-        );
-
-
-        drawInfo(
+        drawInfoRow(
             "Date of Birth",
             member["Date of Birth"]
                 ? new Date(
                     member["Date of Birth"]
-                  ).toLocaleDateString(
+                ).toLocaleDateString(
                     "en-IN",
                     {
                         day: "2-digit",
                         month: "short",
                         year: "numeric"
                     }
-                  )
+                )
                 : "-",
-            475
+            105,
+            1095,
+            420
         );
 
 
-        drawInfo(
+        drawInfoRow(
             "Blood Group",
             member["Blood Group"],
-            520
+            105,
+            1150,
+            420
         );
 
 
-        drawInfo(
+        drawInfoRow(
             "Phone",
             member["Phone"],
-            565
+            105,
+            1205,
+            420
         );
 
 
-        drawInfo(
-            "Email",
-            member["Email"],
-            610
-        );
-
-
-        drawInfo(
+        drawInfoRow(
             "District",
             member["District"],
-            655
+            105,
+            1260,
+            420
         );
 
 
-        drawInfo(
+        /* RIGHT COLUMN */
+
+        drawInfoRow(
+            "Email",
+            member["Email"],
+            555,
+            1095,
+            420
+        );
+
+
+        drawInfoRow(
             "Motorcycle",
             member["Motorcycle Model"],
-            700
-        );
-
-        drawInfo(
-            "Registration No.",
-            member["Vehicle Registration"],
-            745
+            555,
+            1150,
+            420
         );
 
 
-        drawInfo(
+        drawInfoRow(
             "Member Since",
             joinedDate,
-            790
+            555,
+            1205,
+            420
         );
 
 
-        drawInfo(
+        drawInfoRow(
             "Valid Till",
             validUntil,
-            835
-        );
-
-
-        /* =========================================
-           RIGHT SIDE DECORATIVE PANEL
-        ========================================= */
-
-        ctx.fillStyle =
-            "rgba(255,255,255,0.80)";
-
-        roundRect(
-            ctx,
-            1210,
-            395,
-            285,
-            190,
-            20
-        );
-
-        ctx.fill();
-
-
-        ctx.strokeStyle =
-            "#ff7200";
-
-        ctx.lineWidth = 3;
-
-        roundRect(
-            ctx,
-            1210,
-            395,
-            285,
-            190,
-            20
-        );
-
-        ctx.stroke();
-
-
-        text(
-            ctx,
-            "SHERPAS",
-            1352,
-            445,
-            "bold 30px Arial",
-            "#14243a",
-            "center"
-        );
-
-
-        text(
-            ctx,
-            "MEMBER",
-            1352,
-            482,
-            "bold 30px Arial",
-            "#ff7200",
-            "center"
-        );
-
-
-        text(
-            ctx,
-            "RIDE • EXPLORE • CONQUER",
-            1352,
-            525,
-            "bold 15px Arial",
-            "#52606d",
-            "center"
-        );
-
-
-        text(
-            ctx,
-            "More Than Riders",
-            1352,
             555,
-            "italic 17px Arial",
-            "#52606d",
-            "center"
+            1260,
+            420
         );
 
 
         /* =========================================
-           SIGNATURE
+           RIDER SIGNATURE
         ========================================= */
 
         const signature =
@@ -2508,10 +2467,10 @@ async function downloadMembershipCard() {
 
             ctx.drawImage(
                 signature,
-                1210,
-                650,
-                250,
-                80
+                365,
+                1370,
+                350,
+                85
             );
 
         }
@@ -2519,11 +2478,11 @@ async function downloadMembershipCard() {
 
             text(
                 ctx,
-                "Authorized Signatory",
-                1350,
-                710,
+                "Rider Signature",
+                540,
+                1420,
                 "italic 22px Arial",
-                "#14243a",
+                "#52606d",
                 "center"
             );
         }
@@ -2537,13 +2496,13 @@ async function downloadMembershipCard() {
         ctx.beginPath();
 
         ctx.moveTo(
-            1190,
-            735
+            320,
+            1460
         );
 
         ctx.lineTo(
-            1490,
-            735
+            760,
+            1460
         );
 
         ctx.stroke();
@@ -2552,9 +2511,9 @@ async function downloadMembershipCard() {
         text(
             ctx,
             "RIDER SIGNATURE",
-            1340,
-            765,
-            "bold 16px Arial",
+            540,
+            1490,
+            "bold 17px Arial",
             "#14243a",
             "center"
         );
@@ -2569,42 +2528,40 @@ async function downloadMembershipCard() {
 
         roundRect(
             ctx,
-            35,
-            930,
-            1530,
-            100,
-            35
+            25,
+            1495,
+            1030,
+            80,
+            32
         );
 
         ctx.fill();
 
 
-        /* orange line */
-
         ctx.fillStyle =
             "#ff7200";
 
         ctx.fillRect(
-            70,
-            947,
-            300,
+            55,
+            1515,
+            200,
             4
         );
 
         ctx.fillRect(
-            1230,
-            947,
-            300,
+            825,
+            1515,
+            200,
             4
         );
 
 
         text(
             ctx,
-            "SAFE RIDES  •  CLEAN ROADS  •  BETTER TOMORROWS",
-            800,
-            954,
-            "bold 21px Arial",
+            "SAFE RIDES  •  CLEAN ROADS",
+            540,
+            1545,
+            "bold 18px Arial",
             "#ffffff",
             "center"
         );
@@ -2626,17 +2583,27 @@ async function downloadMembershipCard() {
         link.href =
             imageURL;
 
+
         const membershipID =
-            member["Membership ID"] || "MEMBER";
+            member["Membership ID"] ||
+            "MEMBER";
 
         const fullName =
-            member["Full Name"] || "Member";
+            member["Full Name"] ||
+            "Member";
 
         const safeName =
             String(fullName)
                 .trim()
-                .replace(/[\\/:*?"<>|]/g, "")
-                .replace(/\s+/g, "_");
+                .replace(
+                    /[\\/:*?"<>|]/g,
+                    ""
+                )
+                .replace(
+                    /\s+/g,
+                    "_"
+                );
+
 
         link.download =
             "SHERPAS_" +
@@ -2656,12 +2623,13 @@ async function downloadMembershipCard() {
         Swal.fire({
             icon: "success",
             title: "Membership Card Ready",
-            text: "The PNG membership card has been downloaded.",
+            text: "The portrait PNG membership card has been downloaded.",
             timer: 1800,
             showConfirmButton: false
         });
 
     }
+
     catch (error) {
 
         console.error(
@@ -2677,7 +2645,6 @@ async function downloadMembershipCard() {
         );
     }
 }
-
 
 /* =========================================
    CARD DRAWING HELPERS
