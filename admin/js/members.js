@@ -2453,7 +2453,7 @@ async function downloadMembershipCard() {
             ctx.drawImage(
                 signature,
                 320,
-                1370,
+                1320,
                 350,
                 75
             );
@@ -2482,12 +2482,12 @@ async function downloadMembershipCard() {
 
         ctx.moveTo(
             320,
-            1395
+            1405
         );
 
         ctx.lineTo(
             760,
-            1395
+            1405
         );
 
         ctx.stroke();
