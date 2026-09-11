@@ -2453,7 +2453,7 @@ async function downloadMembershipCard() {
             ctx.drawImage(
                 signature,
                 320,
-                1260,
+                1100,
                 350,
                 75
             );
