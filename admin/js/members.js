@@ -2453,7 +2453,7 @@ async function downloadMembershipCard() {
             ctx.drawImage(
                 signature,
                 320,
-                1100,
+                1300,
                 350,
                 75
             );
@@ -2463,9 +2463,9 @@ async function downloadMembershipCard() {
 
             text(
                 ctx,
-                "Rider Signature",
+                "Not signed",
                 540,
-                1420,
+                1300,
                 "italic 22px Arial",
                 "#52606d",
                 "center"
@@ -2473,7 +2473,7 @@ async function downloadMembershipCard() {
         }
 
 
-        ctx.strokeStyle =
+  /*      ctx.strokeStyle =
             "#14243a";
 
         ctx.lineWidth = 2;
@@ -2502,7 +2502,7 @@ async function downloadMembershipCard() {
             "#14243a",
             "center"
         );
-
+*/
 
         /* =========================================
            FOOTER
