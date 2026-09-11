@@ -2473,12 +2473,12 @@ async function downloadMembershipCard() {
         }
 
 
-  /*      ctx.strokeStyle =
+        ctx.strokeStyle =
             "#14243a";
 
         ctx.lineWidth = 2;
 
-        ctx.beginPath();
+        ctx.beginPath(); 
 
         ctx.moveTo(
             320,
@@ -2502,7 +2502,7 @@ async function downloadMembershipCard() {
             "#14243a",
             "center"
         );
-*/
+
 
         /* =========================================
            FOOTER
