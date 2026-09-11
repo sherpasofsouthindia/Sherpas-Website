@@ -2273,20 +2273,18 @@ async function downloadMembershipCard() {
             "center"
         );
 
-
-         /* =========================================
+        /* =========================================
            INFORMATION PANEL
         ========================================= */
-
+        
         const panelX = 75;
-        const panelY = 990;
+        const panelY = 980;
         const panelW = 930;
-        const panelH = 350;
-
-
+        const panelH = 345;
+        
         ctx.fillStyle =
-            "rgba(245,247,249,0.92)";
-
+            "rgba(245,247,249,0.94)";
+        
         roundRect(
             ctx,
             panelX,
@@ -2295,54 +2293,57 @@ async function downloadMembershipCard() {
             panelH,
             22
         );
-
+        
         ctx.fill();
-
-
+        
+        
         /* =========================================
            INFO ROW HELPER
         ========================================= */
-
+        
         function drawInfoRow(
             label,
             value,
             x,
             y,
-            width
+            valueColor = "#111827",
+            valueFont = "bold 19px Arial"
         ) {
-
+        
             text(
                 ctx,
                 label,
                 x,
                 y,
-                "bold 24px Arial",
+                "bold 19px Arial",
                 "#52606d"
             );
-
+        
             text(
                 ctx,
                 ":",
                 x + 165,
                 y,
-                "bold 24px Arial",
+                "bold 19px Arial",
                 "#52606d",
                 "center"
             );
-
+        
             text(
                 ctx,
                 value || "-",
                 x + 190,
                 y,
-                "bold 24px Arial",
-                "#111827"
+                valueFont,
+                valueColor
             );
         }
-
-
-        /* LEFT COLUMN */
-
+        
+        
+        /* =========================================
+           LEFT COLUMN
+        ========================================= */
+        
         drawInfoRow(
             "Date of Birth",
             member["Date of Birth"]
@@ -2358,124 +2359,85 @@ async function downloadMembershipCard() {
                 )
                 : "-",
             105,
-            1095,
-            420
+            1035
         );
-
-
+        
+        
         drawInfoRow(
             "Blood Group",
             member["Blood Group"],
             105,
-            1150,
-            420
+            1090
         );
-
-
+        
+        
         drawInfoRow(
             "Phone",
             member["Phone"],
             105,
-            1205,
-            420
+            1145
         );
-
-
+        
+        
         drawInfoRow(
             "District",
             member["District"],
             105,
-            1260,
-            420
+            1200
         );
-
+        
+        
+        /* REGISTRATION NUMBER */
+        
         drawInfoRow(
             "Registration No.",
             member["Vehicle Registration"],
             105,
-            1240,
-            420
+            1255,
+            "#ff7200",
+            "bold 21px Arial"
         );
-
-        /* RIGHT COLUMN */
-
+        
+        
+        /* =========================================
+           RIGHT COLUMN
+        ========================================= */
+        
         drawInfoRow(
             "Email",
             member["Email"],
             555,
-            1095,
-            420
+            1035,
+            "#111827",
+            "bold 17px Arial"
         );
-
-
+        
+        
         drawInfoRow(
             "Motorcycle",
             member["Motorcycle Model"],
             555,
-            1150,
-            420
+            1090,
+            "#111827",
+            "bold 17px Arial"
         );
-
-
+        
+        
         drawInfoRow(
             "Member Since",
             joinedDate,
             555,
-            1205,
-            420
+            1145
         );
-
-
+        
+        
         drawInfoRow(
             "Valid Till",
             validUntil,
             555,
-            1260,
-            420
+            1200
         );
-
-        function drawRegistrationRow(
-            label,
-            value,
-            x,
-            y
-        ) {
-        
-            text(
-                ctx,
-                label,
-                x,
-                y,
-                "bold 20px Arial",
-                "#52606d"
-            );
-        
-            text(
-                ctx,
-                ":",
-                x + 165,
-                y,
-                "bold 20px Arial",
-                "#52606d",
-                "center"
-            );
-        
-            text(
-                ctx,
-                value || "-",
-                x + 190,
-                y,
-                "bold 22px Arial",
-                "#ff7200"
-            );
-        }
-
-        drawRegistrationRow(
-            "Registration No.",
-            member["Vehicle Registration"],
-            105,
-            1240
-        );
+         
         /* =========================================
            RIDER SIGNATURE
         ========================================= */
