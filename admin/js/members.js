@@ -2108,10 +2108,10 @@ async function downloadMembershipCard() {
            MEMBER PHOTO
         ========================================= */
 
-        const photoX = 215;
+        const photoX = 330;
         const photoY = 405;
-        const photoW = 650;
-        const photoH = 330;
+        const photoW = 420;
+        const photoH = 390;
 
 
         /* orange outer frame */
@@ -2237,7 +2237,7 @@ async function downloadMembershipCard() {
             ctx,
             member["Full Name"] || "-",
             540,
-            850,
+            840,
             "bold 47px Arial",
             "#111827",
             "center"
