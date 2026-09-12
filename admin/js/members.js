@@ -2344,30 +2344,13 @@ async function downloadMembershipCard() {
            LEFT COLUMN
         ========================================= */
         
-        drawInfoRow(
-            "Date of Birth",
-            member["Date of Birth"]
-                ? new Date(
-                    member["Date of Birth"]
-                ).toLocaleDateString(
-                    "en-IN",
-                    {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric"
-                    }
-                )
-                : "-",
-            105,
-            1035
-        );
-        
+      
         
         drawInfoRow(
             "Blood Group",
             member["Blood Group"],
             105,
-            1090
+            1035
         );
         
         
@@ -2375,7 +2358,7 @@ async function downloadMembershipCard() {
             "Phone",
             member["Phone"],
             105,
-            1145
+            1090
         );
         
         
@@ -2383,7 +2366,7 @@ async function downloadMembershipCard() {
             "District",
             member["District"],
             105,
-            1200
+            1145
         );
         
         
@@ -2393,7 +2376,7 @@ async function downloadMembershipCard() {
             "Registration No.",
             member["Vehicle Registration"],
             105,
-            1255,
+            1200,
             "#ff7200",
             "bold 21px Arial"
         );
@@ -2453,7 +2436,7 @@ async function downloadMembershipCard() {
             ctx.drawImage(
                 signature,
                 320,
-                1300,
+                1310,
                 350,
                 75
             );
@@ -2465,7 +2448,7 @@ async function downloadMembershipCard() {
                 ctx,
                 "Not signed",
                 540,
-                1300,
+                1310,
                 "italic 22px Arial",
                 "#52606d",
                 "center"
@@ -2543,7 +2526,7 @@ async function downloadMembershipCard() {
 
         text(
             ctx,
-            "SAFE RIDES  •  CLEAN ROADS",
+            "SAFE RIDES  •  CLEAN ROADS | www.sherpasofsouthindia.com",
             540,
             1545,
             "bold 18px Arial",
