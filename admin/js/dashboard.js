@@ -29,6 +29,7 @@ async function loadDashboard() {
         loadRecentMembers();
         loadStatistics();
         loadBirthdays();
+        loadWebsiteAnalytics();
         loadMembershipValidity();
         updateStatusGraphic();
 
@@ -511,4 +512,180 @@ function updateStatusGraphic() {
 ========================================= */
 
 window.loadDashboard = loadDashboard;
+
+/* =========================================
+   WEBSITE ANALYTICS
+========================================= */
+
+async function loadWebsiteAnalytics() {
+
+    const status =
+        document.getElementById(
+            "websiteAnalyticsStatus"
+        );
+
+
+    try {
+
+        const response = await fetch(
+            API_URL +
+            "?action=GET_WEBSITE_ANALYTICS"
+        );
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            console.error(
+                "Website analytics error:",
+                result.message
+            );
+
+
+            if (status) {
+
+                status.innerText =
+                    "Unable to load website analytics.";
+
+            }
+
+            return;
+
+        }
+
+
+        const data =
+            result.data;
+
+
+        /* =========================
+           TODAY
+        ========================== */
+
+        setDashboardValue(
+            "websiteTodayVisitors",
+            formatAnalyticsNumber(
+                data.today.visitors
+            )
+        );
+
+
+        setDashboardValue(
+            "websiteTodayViews",
+            formatAnalyticsNumber(
+                data.today.pageViews
+            )
+        );
+
+
+        setDashboardValue(
+            "websiteTodaySessions",
+            formatAnalyticsNumber(
+                data.today.sessions
+            )
+        );
+
+
+        /* =========================
+           LAST 7 DAYS
+        ========================== */
+
+        setDashboardValue(
+            "website7Visitors",
+            formatAnalyticsNumber(
+                data.last7Days.visitors
+            )
+        );
+
+
+        setDashboardValue(
+            "website7Views",
+            formatAnalyticsNumber(
+                data.last7Days.pageViews
+            )
+        );
+
+
+        setDashboardValue(
+            "website7Sessions",
+            formatAnalyticsNumber(
+                data.last7Days.sessions
+            )
+        );
+
+
+        /* =========================
+           LAST 30 DAYS
+        ========================== */
+
+        setDashboardValue(
+            "website30Visitors",
+            formatAnalyticsNumber(
+                data.last30Days.visitors
+            )
+        );
+
+
+        setDashboardValue(
+            "website30Views",
+            formatAnalyticsNumber(
+                data.last30Days.pageViews
+            )
+        );
+
+
+        setDashboardValue(
+            "website30Sessions",
+            formatAnalyticsNumber(
+                data.last30Days.sessions
+            )
+        );
+
+
+        if (status) {
+
+            status.innerText =
+                "Data provided by Google Analytics 4";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Website analytics failed:",
+            error
+        );
+
+
+        if (status) {
+
+            status.innerText =
+                "Website analytics unavailable.";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   FORMAT ANALYTICS NUMBERS
+========================================= */
+
+function formatAnalyticsNumber(value) {
+
+    const number =
+        Number(value || 0);
+
+
+    return number.toLocaleString(
+        "en-IN"
+    );
+
+}
 

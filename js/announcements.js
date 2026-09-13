@@ -3,7 +3,7 @@
    ========================================================= */
 
 const ANNOUNCEMENTS_API =
-    "https://script.google.com/macros/s/AKfycbxilPu-W9G-i0IT8n5dAh7yxc7ba2Jjb68CPS8gw72MbqD7J4m8jpNzKUEepLNhhkC4/exec";
+    "https://script.google.com/macros/s/AKfycbzKCwRLU7LwQh3abivCoit2BhwZ0KGHtkLWkou_axOYbmb52ooIqURJcBNraEd-JQu3/exec";
 
 
 let publicAnnouncements = [];
