@@ -154,6 +154,7 @@
     let heroProgress = 0;
     let heroRunning = true;
     let scrollingStarted = false;
+    let pageInitializing = true;
 
     let lastTime = null;
 
@@ -1120,6 +1121,21 @@
 
     function handleScroll() {
 
+        // Ignore the scroll event generated while
+        // the page is being returned to the Hero.
+        if (pageInitializing) {
+
+            lastScrollY =
+                window.scrollY ||
+                window.pageYOffset ||
+                0;
+
+            lastScrollTime =
+                performance.now();
+
+            return;
+        }
+
         const currentScrollY =
             window.scrollY ||
             window.pageYOffset ||
@@ -1183,7 +1199,13 @@
 
         if (currentScrollY < heroBottom - 20) {
 
+            // User has interrupted the automatic Hero ride
             heroRunning = false;
+
+            // IMPORTANT:
+            // Return the real announcement bar to its
+            // normal document position.
+            releaseAnnouncementTow();
 
             scrollingStarted = false;
 
@@ -1191,7 +1213,12 @@
 
         } else {
 
+            // User is now in the scroll journey
             heroRunning = false;
+
+            // Make absolutely sure the announcement is
+            // no longer fixed/towed.
+            releaseAnnouncementTow();
 
             scrollingStarted = true;
 
@@ -1314,9 +1341,43 @@
      * Start Hero animation.
      */
 
-    requestAnimationFrame(
-        animateHero
-    );
+    // =====================================================
+    // START HERO ANIMATION SAFELY
+    // =====================================================
+
+    function startHeroAnimation() {
+
+        // Make sure we are actually at the top
+        window.scrollTo(0, 0);
+
+        calculatePagePositions();
+
+        lastScrollY =
+            window.scrollY ||
+            window.pageYOffset ||
+            0;
+
+        lastScrollTime =
+            performance.now();
+
+        // Give the browser a moment to finish
+        // scroll restoration/layout.
+        setTimeout(function () {
+
+            pageInitializing = false;
+
+            heroRunning = true;
+
+            lastTime = null;
+
+            requestAnimationFrame(
+                animateHero
+            );
+
+        }, 100);
+    }
+
+    startHeroAnimation();
 
 
     /* =====================================================
