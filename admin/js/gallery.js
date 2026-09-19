@@ -1235,3 +1235,1163 @@ function closeGalleryViewer() {
 
 }
 
+/* ==================================================
+        HERO VIDEO MANAGEMENT
+================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    initializeHeroVideo();
+
+});
+
+
+/* ==================================================
+        INITIALIZE HERO VIDEO
+================================================== */
+
+function initializeHeroVideo() {
+
+    const addButton =
+        document.getElementById("addHeroVideoBtn");
+
+    const closeButton =
+        document.getElementById("closeHeroVideoModal");
+
+    const cancelButton =
+        document.getElementById("cancelHeroVideoBtn");
+
+    const uploadOption =
+        document.getElementById("uploadVideoOption");
+
+    const instagramOption =
+        document.getElementById("instagramVideoOption");
+
+    const videoFile =
+        document.getElementById("heroVideoFile");
+
+    const instagramURL =
+        document.getElementById("heroInstagramURL");
+
+    const saveButton =
+        document.getElementById("saveHeroVideoBtn");
+
+
+    /* ------------------------------------------
+            ADD HERO VIDEO
+    ------------------------------------------ */
+
+    if (addButton) {
+
+        addButton.addEventListener(
+            "click",
+            openHeroVideoModal
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            CLOSE
+    ------------------------------------------ */
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            closeHeroVideoModal
+        );
+
+    }
+
+
+    if (cancelButton) {
+
+        cancelButton.addEventListener(
+            "click",
+            closeHeroVideoModal
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            DIRECT UPLOAD OPTION
+    ------------------------------------------ */
+
+    if (uploadOption) {
+
+        uploadOption.addEventListener(
+            "click",
+            function () {
+
+                selectHeroVideoSource("upload");
+
+            }
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            INSTAGRAM OPTION
+    ------------------------------------------ */
+
+    if (instagramOption) {
+
+        instagramOption.addEventListener(
+            "click",
+            function () {
+
+                selectHeroVideoSource("instagram");
+
+            }
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            VIDEO FILE PREVIEW
+    ------------------------------------------ */
+
+    if (videoFile) {
+
+        videoFile.addEventListener(
+            "change",
+            previewHeroVideo
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            INSTAGRAM URL PREVIEW
+    ------------------------------------------ */
+
+    if (instagramURL) {
+
+        instagramURL.addEventListener(
+            "input",
+            previewInstagramReel
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            SAVE
+    ------------------------------------------ */
+
+    if (saveButton) {
+
+        saveButton.addEventListener(
+            "click",
+            saveHeroVideo
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            CLICK OUTSIDE MODAL
+    ------------------------------------------ */
+
+    const modal =
+        document.getElementById("heroVideoModal");
+
+    if (modal) {
+
+        modal.addEventListener(
+            "click",
+            function (event) {
+
+                if (event.target === modal) {
+
+                    closeHeroVideoModal();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ------------------------------------------
+            LOAD CURRENT HERO VIDEO
+    ------------------------------------------ */
+
+    loadHeroVideo();
+
+}
+
+
+/* ==================================================
+        OPEN MODAL
+================================================== */
+
+function openHeroVideoModal() {
+
+    const modal =
+        document.getElementById("heroVideoModal");
+
+    if (!modal) return;
+
+    modal.classList.add("show");
+
+}
+
+
+/* ==================================================
+        CLOSE MODAL
+================================================== */
+
+function closeHeroVideoModal() {
+
+    const modal =
+        document.getElementById("heroVideoModal");
+
+    if (!modal) return;
+
+    modal.classList.remove("show");
+
+    resetHeroVideoForm();
+
+}
+
+
+/* ==================================================
+        SELECT VIDEO SOURCE
+================================================== */
+
+function selectHeroVideoSource(source) {
+
+    const uploadOption =
+        document.getElementById("uploadVideoOption");
+
+    const instagramOption =
+        document.getElementById("instagramVideoOption");
+
+    const uploadArea =
+        document.getElementById("heroUploadArea");
+
+    const instagramArea =
+        document.getElementById("heroInstagramArea");
+
+
+    if (source === "upload") {
+
+        if (uploadOption) {
+
+            uploadOption.classList.add("active");
+
+        }
+
+        if (instagramOption) {
+
+            instagramOption.classList.remove("active");
+
+        }
+
+        if (uploadArea) {
+
+            uploadArea.style.display = "block";
+
+        }
+
+        if (instagramArea) {
+
+            instagramArea.style.display = "none";
+
+        }
+
+    }
+
+
+    if (source === "instagram") {
+
+        if (uploadOption) {
+
+            uploadOption.classList.remove("active");
+
+        }
+
+        if (instagramOption) {
+
+            instagramOption.classList.add("active");
+
+        }
+
+        if (uploadArea) {
+
+            uploadArea.style.display = "none";
+
+        }
+
+        if (instagramArea) {
+
+            instagramArea.style.display = "block";
+
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+        VIDEO PREVIEW
+================================================== */
+
+function previewHeroVideo() {
+
+    const input =
+        document.getElementById("heroVideoFile");
+
+    const preview =
+        document.getElementById("heroVideoPreview");
+
+    const status =
+        document.getElementById(
+            "heroVideoUploadStatus"
+        );
+
+
+    if (!input || !preview) return;
+
+
+    preview.innerHTML = "";
+
+
+    if (
+        !input.files ||
+        input.files.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const file =
+        input.files[0];
+
+
+    /* ------------------------------------------
+            CHECK VIDEO
+    ------------------------------------------ */
+
+    if (!file.type.startsWith("video/")) {
+
+        alert(
+            "Please select a valid video file."
+        );
+
+        input.value = "";
+
+        return;
+
+    }
+
+
+    /* ------------------------------------------
+            MAX SIZE
+    ------------------------------------------ */
+
+    const maxSize =
+        100 * 1024 * 1024;
+
+
+    if (file.size > maxSize) {
+
+        alert(
+            "Video must be smaller than 100 MB."
+        );
+
+        input.value = "";
+
+        return;
+
+    }
+
+
+    /* ------------------------------------------
+            PREVIEW
+    ------------------------------------------ */
+
+    const video =
+        document.createElement("video");
+
+    video.controls = true;
+
+    video.muted = true;
+
+    video.playsInline = true;
+
+    video.src =
+        URL.createObjectURL(file);
+
+    preview.appendChild(video);
+
+
+    if (status) {
+
+        status.textContent =
+            "Video selected: " +
+            file.name;
+
+    }
+
+}
+
+
+/* ==================================================
+        INSTAGRAM REEL PREVIEW
+================================================== */
+
+function previewInstagramReel() {
+
+    const input =
+        document.getElementById(
+            "heroInstagramURL"
+        );
+
+    const preview =
+        document.getElementById(
+            "heroInstagramPreview"
+        );
+
+
+    if (!input || !preview) return;
+
+
+    const url =
+        input.value.trim();
+
+
+    preview.innerHTML = "";
+
+
+    if (!url) return;
+
+
+    if (
+        !url.includes("instagram.com/reel/")
+    ) {
+
+        preview.innerHTML = `
+
+            <div class="hero-video-url-warning">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                Please enter a valid Instagram Reel URL.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    preview.innerHTML = `
+
+        <div class="hero-instagram-info">
+
+            <i class="fa-brands fa-instagram"></i>
+
+            <span>
+                Instagram Reel URL detected
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+        SAVE HERO VIDEO
+================================================== */
+
+async function saveHeroVideo() {
+
+    const token =
+        sessionStorage.getItem(
+            "sherpas_admin_token"
+        );
+
+
+    if (!token) {
+
+        alert(
+            "Admin session expired. Please login again."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    const uploadOption =
+        document.getElementById(
+            "uploadVideoOption"
+        );
+
+
+    const isUpload =
+        uploadOption &&
+        uploadOption.classList.contains("active");
+
+
+    const status =
+        document.getElementById(
+            "heroVideoUploadStatus"
+        );
+
+
+    const saveButton =
+        document.getElementById(
+            "saveHeroVideoBtn"
+        );
+
+
+    if (saveButton) {
+
+        saveButton.disabled = true;
+
+    }
+
+
+    try {
+
+        /* ======================================
+                DIRECT UPLOAD
+        ====================================== */
+
+        if (isUpload) {
+
+            const input =
+                document.getElementById(
+                    "heroVideoFile"
+                );
+
+
+            if (
+                !input ||
+                !input.files ||
+                input.files.length === 0
+            ) {
+
+                alert(
+                    "Please select a video file."
+                );
+
+                return;
+
+            }
+
+
+            const file =
+                input.files[0];
+
+
+            if (status) {
+
+                status.textContent =
+                    "Uploading video...";
+
+            }
+
+
+            const result =
+                await uploadHeroVideoToCloudinary(
+                    file
+                );
+
+
+            const saveResult =
+                await saveHeroVideoRecord(
+                    {
+                        type: "UPLOAD",
+                        url: result.secure_url,
+                        publicID: result.public_id,
+                        fileName: file.name
+                    },
+                    token
+                );
+
+
+            if (
+                !saveResult ||
+                !saveResult.success
+            ) {
+
+                throw new Error(
+                    saveResult.message ||
+                    "Unable to save hero video."
+                );
+
+            }
+
+        }
+
+
+        /* ======================================
+                INSTAGRAM REEL
+        ====================================== */
+
+        else {
+
+            const input =
+                document.getElementById(
+                    "heroInstagramURL"
+                );
+
+
+            const url =
+                input
+                    ? input.value.trim()
+                    : "";
+
+
+            if (
+                !url ||
+                !url.includes("instagram.com/reel/")
+            ) {
+
+                alert(
+                    "Please enter a valid Instagram Reel URL."
+                );
+
+                return;
+
+            }
+
+
+            if (status) {
+
+                status.textContent =
+                    "Saving Instagram Reel...";
+
+            }
+
+
+            const saveResult =
+                await saveHeroVideoRecord(
+                    {
+                        type: "INSTAGRAM",
+                        url: url
+                    },
+                    token
+                );
+
+
+            if (
+                !saveResult ||
+                !saveResult.success
+            ) {
+
+                throw new Error(
+                    saveResult.message ||
+                    "Unable to save Instagram Reel."
+                );
+
+            }
+
+        }
+
+
+        if (status) {
+
+            status.textContent =
+                "Hero video saved successfully.";
+
+        }
+
+
+        await loadHeroVideo();
+
+
+        alert(
+            "Hero video saved successfully."
+        );
+
+
+        closeHeroVideoModal();
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Hero video save failed:",
+            error
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "Error: " +
+                error.message;
+
+        }
+
+
+        alert(
+            "Hero video could not be saved.\n\n" +
+            error.message
+        );
+
+    }
+    finally {
+
+        if (saveButton) {
+
+            saveButton.disabled = false;
+
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+        CLOUDINARY VIDEO UPLOAD
+================================================== */
+
+async function uploadHeroVideoToCloudinary(file) {
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "file",
+        file
+    );
+
+
+    formData.append(
+        "upload_preset",
+        CLOUDINARY_UPLOAD_PRESET
+    );
+
+
+    const videoUploadURL =
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
+
+
+    const response =
+        await fetch(
+            videoUploadURL,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Cloudinary video upload failed. HTTP " +
+            response.status
+        );
+
+    }
+
+
+    const result =
+        await response.json();
+
+
+    if (!result.secure_url) {
+
+        throw new Error(
+            "Cloudinary did not return a video URL."
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* ==================================================
+        SAVE HERO VIDEO RECORD
+================================================== */
+
+async function saveHeroVideoRecord(
+    data,
+    token
+) {
+
+    const formData =
+        new URLSearchParams();
+
+
+    formData.append(
+        "action",
+        "ADD_HERO_VIDEO"
+    );
+
+
+    formData.append(
+        "token",
+        token
+    );
+
+
+    formData.append(
+        "data",
+        JSON.stringify(data)
+    );
+
+
+    const response =
+        await fetch(
+            GALLERY_API,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Hero video API HTTP error: " +
+            response.status
+        );
+
+    }
+
+
+    return await response.json();
+
+}
+
+
+/* ==================================================
+        LOAD HERO VIDEO
+================================================== */
+
+async function loadHeroVideo() {
+
+    const container =
+        document.getElementById(
+            "currentHeroVideo"
+        );
+
+
+    if (!container) return;
+
+
+    try {
+
+        const response =
+            await fetch(
+                GALLERY_API +
+                "?action=GET_HERO_VIDEO"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Hero video API HTTP error: " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !result.success ||
+            !result.data
+        ) {
+
+            renderHeroVideoEmpty();
+
+            return;
+
+        }
+
+
+        renderCurrentHeroVideo(
+            result.data
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Hero video loading failed:",
+            error
+        );
+
+        renderHeroVideoEmpty();
+
+    }
+
+}
+
+
+/* ==================================================
+        RENDER CURRENT HERO VIDEO
+================================================== */
+
+function renderCurrentHeroVideo(videoData) {
+
+    const container =
+        document.getElementById(
+            "currentHeroVideo"
+        );
+
+
+    const status =
+        document.getElementById(
+            "heroVideoStatus"
+        );
+
+
+    if (!container) return;
+
+
+    const type =
+        String(
+            videoData.type || ""
+        ).toUpperCase();
+
+
+    if (status) {
+
+        status.textContent =
+            "Active";
+
+    }
+
+
+    if (type === "INSTAGRAM") {
+
+        container.innerHTML = `
+
+            <div class="current-hero-video-content">
+
+                <div class="hero-video-preview-box">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                    <span>
+                        Instagram Reel
+                    </span>
+
+                </div>
+
+
+                <div class="hero-video-details">
+
+                    <strong>
+                        Instagram Reel
+                    </strong>
+
+                    <small>
+                        ${escapeHTML(videoData.url)}
+                    </small>
+
+                    <span class="hero-video-active">
+                        ACTIVE
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+    else {
+
+        container.innerHTML = `
+
+            <div class="current-hero-video-content">
+
+                <div class="hero-video-preview-box">
+
+                    <video
+                        src="${escapeHTML(videoData.url)}"
+                        controls
+                        muted
+                        playsinline>
+                    </video>
+
+                </div>
+
+
+                <div class="hero-video-details">
+
+                    <strong>
+                        Uploaded Video
+                    </strong>
+
+                    <small>
+                        ${escapeHTML(
+                            videoData.fileName || ""
+                        )}
+                    </small>
+
+                    <span class="hero-video-active">
+                        ACTIVE
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+        EMPTY HERO VIDEO
+================================================== */
+
+function renderHeroVideoEmpty() {
+
+    const container =
+        document.getElementById(
+            "currentHeroVideo"
+        );
+
+
+    const status =
+        document.getElementById(
+            "heroVideoStatus"
+        );
+
+
+    if (status) {
+
+        status.textContent =
+            "No video selected";
+
+    }
+
+
+    if (!container) return;
+
+
+    container.innerHTML = `
+
+        <div class="hero-video-empty">
+
+            <i class="fa-solid fa-film"></i>
+
+            <h4>No Hero Video</h4>
+
+            <p>
+                Add an uploaded video or Instagram Reel
+                to display on the homepage.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+        RESET FORM
+================================================== */
+
+function resetHeroVideoForm() {
+
+    const file =
+        document.getElementById(
+            "heroVideoFile"
+        );
+
+
+    const instagram =
+        document.getElementById(
+            "heroInstagramURL"
+        );
+
+
+    const preview =
+        document.getElementById(
+            "heroVideoPreview"
+        );
+
+
+    const instagramPreview =
+        document.getElementById(
+            "heroInstagramPreview"
+        );
+
+
+    const status =
+        document.getElementById(
+            "heroVideoUploadStatus"
+        );
+
+
+    if (file) {
+
+        file.value = "";
+
+    }
+
+
+    if (instagram) {
+
+        instagram.value = "";
+
+    }
+
+
+    if (preview) {
+
+        preview.innerHTML = "";
+
+    }
+
+
+    if (instagramPreview) {
+
+        instagramPreview.innerHTML = "";
+
+    }
+
+
+    if (status) {
+
+        status.textContent = "";
+
+    }
+
+
+    selectHeroVideoSource("upload");
+
+}

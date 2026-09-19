@@ -33,64 +33,14 @@
 <link rel="stylesheet" href="css/contact.css">
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/events.css">
-<link rel="stylesheet" href="css/announcements.css">
-<link rel="stylesheet" href="css/journey-animation.css">
-
+<link rel="stylesheet" href="css/announcements.css"
+>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
 <body>
-
-
-    <!-- =====================================================
-        SHERPAS RIDER JOURNEY ANIMATION
-        ===================================================== -->
-
-    <div id="riderJourneyLayer">
-
-        <!-- Mud road PNG -->
-        <img
-            id="journeyMudRoad"
-            src="assets/mud-road.png"
-            alt=""
-            draggable="false"
-        >
-
-        <!-- Rear wheel PNG -->
-        <img
-            id="journeyRearWheel"
-            src="assets/back-tyre.png"
-            alt=""
-            draggable="false"
-        >
-
-        <!-- Front wheel PNG -->
-        <img
-            id="journeyFrontWheel"
-            src="assets/front-tyre.png"
-            alt=""
-            draggable="false"
-        >
-
-        <!-- Dust particles -->
-        <div id="journeyDust"></div>
-
-        <!-- Bike shadow -->
-        <div id="journeyBikeShadow"></div>
-
-        <!-- Himalayan 450 rider -->
-        <img
-            id="journeyBike"
-            src="assets/himalayan-rider.png"
-            alt=""
-            draggable="false"
-        >
-
-        <div id="journeyHeadlight"></div>
-
-    </div>
 
 <header>
 
@@ -147,79 +97,58 @@
 
 </header>
 
-<!-- =========================================
-     SHERPAS HERO
-     Background Image Slider + Floating Video
-========================================== -->
-
 <section class="hero">
 
+    <!-- =========================================
+         SUBTLE HERO VIDEO
+         Loaded from Gallery / Cloudinary
+    ========================================== -->
+    <div
+        id="heroVideoLayer"
+        class="hero-video-layer"
+        aria-hidden="true"
+    >
+        <video
+            id="heroBackgroundVideo"
+            muted
+            autoplay
+            loop
+            playsinline
+            preload="metadata">
+        </video>
+
+        <div class="hero-video-shade"></div>
+    </div>
+
+
+    <!-- =========================================
+         HERO CONTENT
+    ========================================== -->
     <div class="overlay">
 
-        <div class="hero-main-layout">
+        <div class="hero-content">
 
-            <!-- =====================================
-                 HERO TEXT
-            ====================================== -->
+            <h1>SHERPAS OF SOUTH INDIA</h1>
 
-            <div class="hero-content">
+            <h2>Ride • Explore • Conquer</h2>
 
-                <h1>SHERPAS  OF   SOUTH   INDIA</h1>
+            <p>
+                Where Every Ride Becomes A Story
+            </p>
 
-                <h2>Ride • Explore • Conquer</h2>
+            <div class="hero-buttons">
 
-                <p>
-                    Where Every Ride Becomes A Story
-                </p>
+                <a
+                    href="membership.html"
+                    class="join-btn">
+                    Become a Rider
+                </a>
 
-                <div class="hero-buttons">
-
-                    <a
-                        href="membership.html"
-                        class="join-btn">
-                        Become a Rider
-                    </a>
-
-                    <a
-                        href="index.html#events"
-                        class="btn-secondary">
-                        Explore Events
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- =====================================
-                 FLOATING HERO VIDEO
-            ====================================== -->
-
-            <div
-                id="heroVideoCard"
-                class="hero-video-card"
-                style="display:none;"
-            >
-
-                <div class="hero-video-frame">
-
-                    <video
-                        id="heroFloatingVideo"
-                        muted
-                        autoplay
-                        loop
-                        playsinline
-                        preload="metadata">
-                    </video>
-
-                    <div class="hero-video-gradient"></div>
-
-                    <div class="hero-video-caption">
-                        <span>THE SHERPAS EXPERIENCE</span>
-                        <small>Ride • Explore • Conquer</small>
-                    </div>
-
-                </div>
+                <a
+                    href="index.html#events"
+                    class="btn-secondary">
+                    Explore Events
+                </a>
 
             </div>
 
@@ -231,44 +160,11 @@
     <!-- =========================================
          SCROLL DOWN
     ========================================== -->
-
     <div class="scroll-down">
         ↓
     </div>
 
 </section>
-
-
-<!-- =========================================
-     LARGE VIDEO MODAL
-========================================== -->
-
-<div
-    id="heroVideoModal"
-    class="hero-video-modal"
-    aria-hidden="true">
-
-    <div class="hero-video-modal-content">
-
-        <button
-            type="button"
-            id="heroVideoClose"
-            class="hero-video-close"
-            aria-label="Close video">
-
-            <i class="fa-solid fa-xmark"></i>
-
-        </button>
-
-        <video
-            id="heroModalVideo"
-            controls
-            playsinline>
-        </video>
-
-    </div>
-
-</div>
 
 
 
@@ -779,8 +675,6 @@ emailjs.init({
 <script src="js/events.js"></script>
 <script src="js/gallery-public.js"></script>
 <script src="js/announcements.js"></script>
-<script src="js/journey-animation.js"></script>
-
 
 
 

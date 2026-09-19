@@ -13,7 +13,7 @@
 
     min-height: 54px;
 
-    padding: 0 7%;
+    padding: 0;
 
     background: #000b2f;
 
@@ -526,3 +526,10 @@ body {
     }
 }
 
+/* Remove space below announcement bar */
+
+.public-announcements,
+.announcements {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}

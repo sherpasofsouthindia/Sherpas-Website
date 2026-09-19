@@ -137,7 +137,7 @@ section{
     }
 
     .hero-content h1 {
-        font-size: clamp(30px, 9vw, 48px) !important;
+        font-size: clamp(21px, 9vw, 48px) !important;
         line-height: 1.1;
         word-break: normal;
     }
@@ -353,4 +353,29 @@ section{
         font-size: 35px;
     }
 
+}
+
+
+/* ==================================================
+   HERO TYPOGRAPHY
+   ================================================== */
+
+.hero-content h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 750;
+    letter-spacing: 3px;
+    word-spacing: 20px;
+}
+
+.hero-content h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+}
+
+.hero-content p {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+    word-spacing: 3px;
 }

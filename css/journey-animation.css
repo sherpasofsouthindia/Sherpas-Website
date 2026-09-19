@@ -1,0 +1,627 @@
+/* =========================================================
+   SHERPAS OF SOUTH INDIA
+   HIMALAYAN 450 RIDER JOURNEY
+   ========================================================= */
+
+#riderJourneyLayer {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 15;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PREVENT RIDER JOURNEY ASSET FLASH ON PAGE LOAD
+   ========================================================= */
+
+#journeyBike,
+#journeyRearWheel,
+#journeyFrontWheel,
+#journeyMudRoad,
+#journeyBikeShadow {
+    opacity: 0;
+}
+
+
+
+/* =========================================================
+   BIKE
+   ========================================================= */
+
+#journeyBike {
+    position: absolute;
+
+    width: 150px;
+    height: auto;
+
+    left: 0;
+    top: 0;
+
+    display: block;
+
+    opacity: 0;
+
+    transform-origin: center center;
+
+    filter:
+        drop-shadow(0 10px 12px rgba(0,0,0,0.35));
+
+    will-change:
+        left,
+        top,
+        transform,
+        opacity,
+        filter;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+
+/* =========================================================
+   BIKE SHADOW
+   ========================================================= */
+
+/* =========================================================
+   HIMALAYAN BIKE SHADOW
+   ========================================================= */
+
+#journeyBikeShadow {
+    position: fixed;
+
+    width: 150px;
+    height: 28px;
+
+    background: rgba(0, 0, 0, 0.42);
+
+    border-radius: 50%;
+
+    filter: blur(10px);
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+
+    z-index: 12;
+
+    opacity: 0;
+
+    transition: opacity 0.2s ease;
+}
+
+
+/* Smaller shadow on mobile */
+
+@media (max-width: 768px) {
+
+    #journeyBikeShadow {
+        width: 105px;
+        height: 20px;
+
+        filter: blur(7px);
+    }
+}
+
+
+/* =========================================================
+   VERTICAL ADVENTURE ROAD
+   ========================================================= */
+
+#journeyRoadLine {
+    position: absolute;
+
+    left: 30px;
+
+    top: 0;
+
+    width: 2px;
+
+    height: 100%;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(230,160,55,0.30) 0px,
+            rgba(230,160,55,0.30) 16px,
+            transparent 16px,
+            transparent 34px
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity 0.4s ease;
+
+    will-change:
+        opacity;
+}
+
+
+/* =========================================================
+   DUST CONTAINER
+   ========================================================= */
+
+#journeyDust {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+
+/* =========================================================
+   INDIVIDUAL DUST PARTICLES
+   ========================================================= */
+
+.journey-dust-particle {
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: rgba(210,190,160,0.45);
+
+    filter: blur(1px);
+
+    opacity: 0;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+/* Different dust sizes */
+
+.journey-dust-particle:nth-child(2) {
+    width: 6px;
+    height: 6px;
+}
+
+.journey-dust-particle:nth-child(3) {
+    width: 3px;
+    height: 3px;
+}
+
+.journey-dust-particle:nth-child(4) {
+    width: 5px;
+    height: 5px;
+}
+
+.journey-dust-particle:nth-child(5) {
+    width: 2px;
+    height: 2px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    #journeyBike {
+        width: 95px;
+    }
+
+    #journeyBikeShadow {
+        width: 70px;
+        height: 10px;
+    }
+
+    #journeyRoadLine {
+        left: 12px;
+        width: 1px;
+    }
+
+    .journey-dust-particle {
+        width: 3px;
+        height: 3px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    #journeyBike {
+        width: 85px;
+    }
+
+    #journeyRoadLine {
+        left: 10px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #journeyBike,
+    #journeyBikeShadow,
+    #journeyRoadLine,
+    #journeyDust {
+        transition: none !important;
+    }
+}
+
+/* =========================================================
+   RIDER MOTION EFFECTS
+   ========================================================= */
+
+#journeyDust {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 13;
+}
+
+.journey-dust-particle {
+    pointer-events: none;
+
+    will-change:
+        left,
+        top,
+        opacity,
+        transform;
+}
+
+/* =========================================================
+   REAL HIMALAYAN WHEEL PNGs
+   ========================================================= */
+
+#journeyWheelLayer {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 12;
+}
+
+.journey-wheel-image {
+    position: absolute;
+
+    display: block;
+
+    max-width: none;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    transform-origin: center center;
+
+    will-change: transform;
+}
+
+
+/* =========================================================
+   REAL MUD ROAD
+   ========================================================= */
+
+#journeyMudRoad {
+    position: absolute;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    background-repeat: repeat-y;
+
+    background-position: center top;
+
+    background-size: 100% auto;
+
+    opacity: 0;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DUST
+   ========================================================= */
+
+#journeyDust {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 11;
+
+    opacity: 0;
+}
+
+.journey-dust-particle {
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    will-change:
+        left,
+        top,
+        opacity;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    #journeyMudRoad {
+        opacity: 0;
+    }
+
+}
+
+/* =========================================================
+   RIDER JOURNEY LAYERING
+   ========================================================= */
+
+#riderJourneyLayer {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 20;
+}
+
+
+/* Mud road stays behind everything */
+
+#journeyMudRoad {
+    position: fixed;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    max-width: none;
+
+    object-fit: contain;
+
+    object-position: center top;
+
+    opacity: 0;
+}
+
+
+/* Bike */
+
+#journeyBike {
+    position: fixed;
+
+    z-index: 21;
+
+    max-width: none;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    will-change:
+        left,
+        top,
+        transform;
+
+}
+
+
+/* Wheels */
+
+#journeyRearWheel,
+#journeyFrontWheel {
+
+    position: fixed;
+
+    z-index: 20;
+
+    max-width: none;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    transform-origin:
+        center center;
+
+    will-change:
+        left,
+        top,
+        transform;
+
+}
+
+
+/* Dust */
+
+#journeyDust {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 19;
+
+    pointer-events: none;
+}
+
+
+/* Shadow */
+
+#journeyBikeShadow {
+
+    position: fixed;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+/* =========================================================
+   MUD ROAD - SCROLLING JOURNEY ONLY
+   ========================================================= */
+
+#journeyMudRoad {
+    position: fixed;
+
+    top: 0;
+
+    width: 170px;
+    height: 100vh;
+
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    /*
+       Fade the edges so it blends into
+       the website background instead of
+       looking like a rectangular image.
+    */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,0.45) 12%,
+        black 28%,
+        black 72%,
+        rgba(0,0,0,0.45) 88%,
+        transparent 100%
+    );
+
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,0.45) 12%,
+        black 28%,
+        black 72%,
+        rgba(0,0,0,0.45) 88%,
+        transparent 100%
+    );
+
+    filter:
+        saturate(0.75)
+        contrast(0.9);
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+/* Smaller trail on mobile */
+
+@media (max-width: 768px) {
+
+    #journeyMudRoad {
+        width: 110px;
+    }
+}
+
+/* =========================================================
+   HIMALAYAN HERO HEADLIGHT
+   ========================================================= */
+
+#journeyHeadlight {
+    position: fixed;
+
+    width: 10px;
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: rgb(251, 251, 252);
+
+    box-shadow:
+        0 0 8px rgba(208, 234, 247, 0.95),
+        0 0 18px rgba(147, 219, 247, 0.75),
+        0 0 35px rgba(80, 176, 255, 0.45);
+
+    pointer-events: none;
+
+    z-index: 25;
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    will-change:
+        left,
+        top,
+        opacity,
+        transform;
+}
+
+/* ============================================================
+   ANNOUNCEMENT TOWING — HERO TEST
+   ============================================================ */
+
+#publicAnnouncements.announcement-being-towed {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 19 !important;
+    pointer-events: none !important;
+}
+
+/* Remove the white area below the announcement bar */
+body {
+    background: #0b1220;
+}
+
+main {
+    background: #0b1220;
+}

@@ -106,6 +106,73 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
         </header>
 
+        <!-- =========================
+            HERO VIDEO MANAGEMENT
+        ========================== -->
+
+        <section class="hero-video-admin">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>
+                            <i class="fa-solid fa-video"></i>
+                            Hero Video
+                        </h3>
+
+                        <p>
+                            Manage the video displayed on the homepage hero section.
+                        </p>
+                    </div>
+
+                    <div id="heroVideoStatus" class="hero-video-status">
+                        No video selected
+                    </div>
+
+                </div>
+
+
+                <!-- CURRENT HERO VIDEO -->
+
+                <div id="currentHeroVideo" class="current-hero-video">
+
+                    <div class="hero-video-empty">
+
+                        <i class="fa-solid fa-film"></i>
+
+                        <h4>No Hero Video</h4>
+
+                        <p>
+                            Add an uploaded video or Instagram Reel
+                            to display on the homepage.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADD / CHANGE BUTTON -->
+
+                <div class="hero-video-actions">
+
+                    <button
+                        type="button"
+                        id="addHeroVideoBtn"
+                        class="primary-btn">
+
+                        <i class="fa-solid fa-plus"></i>
+                        Add Hero Video
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
 
         <!-- =========================
              GALLERY STATISTICS
@@ -311,6 +378,187 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             </div>
 
         </form>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     HERO VIDEO MODAL
+========================= -->
+
+<div id="heroVideoModal" class="gallery-modal">
+
+    <div class="gallery-modal-content hero-video-modal-content">
+
+        <!-- HEADER -->
+
+        <div class="gallery-modal-header">
+
+            <h2>
+                <i class="fa-solid fa-video"></i>
+                Add Hero Video
+            </h2>
+
+            <button
+                type="button"
+                id="closeHeroVideoModal"
+                class="gallery-close">
+                &times;
+            </button>
+
+        </div>
+
+
+        <!-- VIDEO TYPE -->
+
+        <div class="hero-video-type-selector">
+
+            <label>
+                Video Source
+            </label>
+
+            <div class="hero-video-options">
+
+                <button
+                    type="button"
+                    id="uploadVideoOption"
+                    class="hero-video-option active">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <strong>Direct Upload</strong>
+
+                    <small>
+                        Upload a video file
+                    </small>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="instagramVideoOption"
+                    class="hero-video-option">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                    <strong>Instagram Reel</strong>
+
+                    <small>
+                        Use an Instagram Reel link
+                    </small>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             DIRECT UPLOAD
+        ========================== -->
+
+        <div
+            id="heroUploadArea"
+            class="hero-video-source-area">
+
+            <div class="gallery-form-group">
+
+                <label for="heroVideoFile">
+                    Select Video
+                </label>
+
+                <input
+                    type="file"
+                    id="heroVideoFile"
+                    accept="video/mp4,video/webm,video/ogg">
+
+                <small>
+                    Recommended: MP4, vertical 9:16 video.
+                </small>
+
+            </div>
+
+
+            <div
+                id="heroVideoPreview"
+                class="hero-video-preview">
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             INSTAGRAM REEL
+        ========================== -->
+
+        <div
+            id="heroInstagramArea"
+            class="hero-video-source-area"
+            style="display:none;">
+
+            <div class="gallery-form-group">
+
+                <label for="heroInstagramURL">
+                    Instagram Reel URL
+                </label>
+
+                <input
+                    type="url"
+                    id="heroInstagramURL"
+                    placeholder="https://www.instagram.com/reel/XXXXXXXX/">
+
+                <small>
+                    Paste the public Instagram Reel URL.
+                </small>
+
+            </div>
+
+
+            <div
+                id="heroInstagramPreview"
+                class="hero-instagram-preview">
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div
+            id="heroVideoUploadStatus"
+            class="gallery-upload-status">
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="gallery-modal-actions">
+
+            <button
+                type="button"
+                id="cancelHeroVideoBtn"
+                class="gallery-secondary-btn">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                id="saveHeroVideoBtn"
+                class="gallery-primary-btn">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Hero Video
+
+            </button>
+
+        </div>
 
     </div>
 
