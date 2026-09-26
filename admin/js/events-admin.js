@@ -9,7 +9,7 @@ const API =
 "https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
 
 const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbzKCwRLU7LwQh3abivCoit2BhwZ0KGHtkLWkou_axOYbmb52ooIqURJcBNraEd-JQu3/exec";
+    "https://script.google.com/macros/s/AKfycbw4TCR3KSgv3gBwlmDv7Dgdp3IBRIyponuvm6or_9-9kuswq-AkZNLk0ohxzCbS4OMZ/exec";
 
 
 /*==========================================
@@ -120,6 +120,8 @@ document.addEventListener(
         ======================================*/
 
         loadEvents();
+
+        initializeRegistrationFilters();
 
 
         /*======================================
@@ -6248,10 +6250,6 @@ async function loadRideRegistrations() {
 
         filterRideRegistrations();
 
-        renderRideRegistrations(
-            allRideRegistrations
-        );
-
 
     }
     catch (error) {
@@ -6638,15 +6636,16 @@ function updateBulkRegistrationToolbar() {
 
 
                     return (
-                        payment ===
-                            "verified"
+                        (
+                            payment === "verified"
+                            ||
+                            payment === "not required"
+                        )
                         &&
                         (
-                            approval ===
-                                "pending"
+                            approval === "pending"
                             ||
-                            approval ===
-                                "rejected"
+                            approval === "rejected"
                         )
                     );
 
@@ -7237,8 +7236,11 @@ function renderRideRegistrations(
                         )
                         ||
                         (
-                            paymentStatus.toLowerCase() ===
-                            "verified"
+                            (
+                                paymentStatus.toLowerCase() === "verified"
+                                ||
+                                paymentStatus.toLowerCase() === "not required"
+                            )
                             &&
                             (
                                 approvalStatus.toLowerCase() === "pending"
@@ -7508,7 +7510,11 @@ function renderRideRegistrations(
 
                             <!-- APPROVE REGISTRATION -->
                             ${
-                                paymentStatus.toLowerCase() === "verified"
+                                (
+                                    paymentStatus.toLowerCase() === "verified"
+                                    ||
+                                    paymentStatus.toLowerCase() === "not required"
+                                )
                                 &&
                                 (
                                     approvalStatus.toLowerCase() === "pending"
@@ -10727,6 +10733,13 @@ function openRegistrationView(
                 )}
 
                 ${item(
+                    "Bike Tyre Type",
+                    registration[
+                        "Bike Tyre Type"
+                    ]
+                )}
+
+                ${item(
                     "Vehicle Owner",
                     registration[
                         "Vehicle Owner"
@@ -11309,6 +11322,14 @@ function renderRegistrationEdit(
                         "Vehicle Variant",
                         "Vehicle Variant",
                         registration["Vehicle Variant"]
+                    )}
+
+                    ${editField(
+                        "Bike Tyre Type",
+                        "Bike Tyre Type",
+                        registration["Bike Tyre Type"],
+                        "select",
+                        ["Tube", "Tubeless"]
                     )}
 
                     ${editField(

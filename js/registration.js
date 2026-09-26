@@ -6,7 +6,7 @@ const EVENTS_API =
     "https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
 
 const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbzKCwRLU7LwQh3abivCoit2BhwZ0KGHtkLWkou_axOYbmb52ooIqURJcBNraEd-JQu3/exec";
+    "https://script.google.com/macros/s/AKfycbw4TCR3KSgv3gBwlmDv7Dgdp3IBRIyponuvm6or_9-9kuswq-AkZNLk0ohxzCbS4OMZ/exec";
 
 
 /*==================================================
@@ -1985,6 +1985,38 @@ function fileToBase64(file) {
 
 }
 
+function buildBikeTyreTypeField(previous = {}) {
+    const tyreType = previous["Bike Tyre Type"] || "";
+
+    return `
+        <div class="ride-subsection">
+            <h3>
+                <i class="fa-solid fa-motorcycle"></i>
+                Bike Tyre Type
+            </h3>
+
+            <div class="ride-field">
+                <label for="bikeTyreType">
+                    Bike Tyre Type *
+                </label>
+
+                <select id="bikeTyreType" required>
+                    <option value="">Select Tyre Type</option>
+                    <option value="Tube"
+                        ${tyreType === "Tube" ? "selected" : ""}>
+                        Tube
+                    </option>
+                    <option value="Tubeless"
+                        ${tyreType === "Tubeless" ? "selected" : ""}>
+                        Tubeless
+                    </option>
+                </select>
+            </div>
+        </div>
+    `;
+}
+
+
 /*==================================================
         FIRST RIDE FORM
 ==================================================*/
@@ -1994,6 +2026,7 @@ function buildFirstRideForm() {
     rideFields.innerHTML = `
 
         ${buildVehicleDetails()}
+        ${buildBikeTyreTypeField()}
 
         ${buildEmergencyContactFields()}
 
@@ -2031,6 +2064,8 @@ function buildReturningMemberForm(previous) {
     rideFields.innerHTML = `
 
         ${buildVehicleDetails()}
+
+        ${buildBikeTyreTypeField(previous)}
 
         ${buildEmergencyContactFields(
             previous
@@ -2567,6 +2602,9 @@ registrationForm.addEventListener(
                     document.getElementById(
                         "pollutionValidTo"
                     )?.value || "",
+
+                bikeTyreType:
+                        document.getElementById("bikeTyreType")?.value || "",
 
 
                 /*------------------------------

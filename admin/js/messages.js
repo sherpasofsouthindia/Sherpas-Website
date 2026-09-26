@@ -9,7 +9,7 @@
 --------------------------------------------------------- */
 
 const MESSAGES_API =
-    "https://script.google.com/macros/s/AKfycbzKCwRLU7LwQh3abivCoit2BhwZ0KGHtkLWkou_axOYbmb52ooIqURJcBNraEd-JQu3/exec";
+    "https://script.google.com/macros/s/AKfycbw4TCR3KSgv3gBwlmDv7Dgdp3IBRIyponuvm6or_9-9kuswq-AkZNLk0ohxzCbS4OMZ/exec";
 
 
 let announcements = [];
