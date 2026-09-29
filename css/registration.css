@@ -371,3 +371,56 @@ button {
     font-size: 13px;
 }
 
+
+
+.event-payment {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 16px;
+    position: relative;
+}
+
+.payment-info {
+    flex: 1;
+    padding-top: 4px;
+}
+
+.payment-qr {
+    flex: 0 0 180px;
+    width: 180px;
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-start;
+    margin-top: -8px;
+}
+
+.payment-qr img {
+    display: block;
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    background: #fff;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .event-payment {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .payment-qr {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+        margin-top: 0;
+    }
+
+    .payment-qr img {
+        width: 170px;
+    }
+}

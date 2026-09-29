@@ -148,6 +148,8 @@ async function loadRegistrationPage() {
 
         checkRegistrationAvailability();
 
+        renderPaymentDetails();
+
     }
     catch (error) {
 
@@ -279,6 +281,60 @@ function renderEvent() {
 
     `;
 
+}
+
+/*==================================================
+        RENDER PAYMENT DETAILS
+==================================================*/
+
+function renderPaymentDetails() {
+
+    const paymentRequired =
+        String(
+            registrationSettings?.["Payment Required"] || ""
+        ).toLowerCase() === "yes";
+
+    if (!paymentRequired) {
+        return;
+    }
+
+    const fee =
+        registrationSettings?.["Registration Fee"] || "0";
+
+   eventCard.innerHTML += `
+
+        <div class="event-payment">
+
+            <div class="payment-info">
+                <h3>
+                    <i class="fa-solid fa-credit-card"></i>
+                    Payment Details
+                </h3>
+
+                <p>
+                    Registration Amount:
+                    <strong>₹${escapeHTML(fee)}</strong>
+                </p>
+
+                <p>
+                    Scan the QR code to make the payment.
+                </p>
+
+                <p>
+                    Upload the payment screenshot for verification.
+                </p>
+            </div>
+
+            <div class="payment-qr">
+                <img
+                    src="assets/payment-qr1.png"
+                    alt="Sherpas of South India payment QR code"
+                >
+            </div>
+
+        </div>
+
+    `;
 }
 
 
@@ -1911,22 +1967,7 @@ function buildFinalDeclaration() {
 
             </label>
 
-
-            <label class="check-row">
-
-                <input
-                    type="checkbox"
-                    id="medicalDeclaration"
-                    required
-                >
-
-                <span>
-                    I confirm that I am medically fit to
-                    participate in this ride.
-                </span>
-
-            </label>
-
+           
             
         </div>
 
@@ -2682,7 +2723,7 @@ registrationForm.addEventListener(
 
                 medicalDeclaration:
                     document.getElementById(
-                        "medicalDeclaration"
+                        "medicalFitnessInfo"
                     )?.checked === true
 
             };
