@@ -9,13 +9,13 @@
 ========================================================= */
 
 const heroImages = [
-    "assets/hero1.png",
-    "assets/hero2.png",
-    "assets/hero3.png",
-    "assets/hero4.png",
-    "assets/hero5.png",
-    "assets/hero6.png",
-    "assets/hero7.png"
+    "assets/hero1.webp",
+    "assets/hero2.webp",
+    "assets/hero3.webp",
+    "assets/hero4.webp",
+    "assets/hero5.webp",
+    "assets/hero6.webp",
+    "assets/hero7.webp"
 ];
 
 
