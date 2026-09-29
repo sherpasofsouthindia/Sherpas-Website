@@ -1,5 +1,5 @@
 const EVENTS_API =
-"https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
+"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
 
 
 const container =

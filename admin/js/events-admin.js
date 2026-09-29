@@ -1,15 +1,15 @@
 const EVENTS_API_URL = 
-"https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
+"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
 
 /*==========================================
         EVENTS ADMIN
 ==========================================*/
 
 const API =
-"https://script.google.com/macros/s/AKfycbyEsRyyMII7sBskySkuCUAznl8EOBGL81dj3ijCTRKIwmW6Xkp9Nkfb2kHDGFcTToERnw/exec";
+"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
 
 const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbw4TCR3KSgv3gBwlmDv7Dgdp3IBRIyponuvm6or_9-9kuswq-AkZNLk0ohxzCbS4OMZ/exec";
+    "https://script.google.com/macros/s/AKfycbx3mq93CuUX1ElljYezT6v84WvH5_crpNxbVeOyVzajDZXbmIw1rQU7W_EWs4SlfL9z/exec";
 
 
 /*==========================================
@@ -1379,6 +1379,12 @@ document
                             .value
                             .trim(),
 
+                    startingPoint:
+                        document
+                            .getElementById("eventStartingPoint")
+                            .value
+                            .trim(),
+
                     description:
                         document
                             .getElementById("eventDescription")
@@ -1440,6 +1446,9 @@ document
 
                     eventData["Location"] =
                         eventData.location;
+
+                    eventData["Starting Point"] =
+                        eventData.startingPoint;
 
                     eventData["Description"] =
                         eventData.description;
@@ -1715,6 +1724,9 @@ document.addEventListener(
             "eventDescription"
         ).value =
             event["Description"] || "";
+
+        document.getElementById("eventStartingPoint").value =
+            event["Starting Point"] || "";
 
 
         document.getElementById(
