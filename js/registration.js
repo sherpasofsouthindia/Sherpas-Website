@@ -547,6 +547,11 @@ async function findMember() {
         const result =
             await response.json();
 
+        console.log(
+            "MEMBERS API RESPONSE:",
+            result
+        );
+
 
 
         if (!result.success) {
