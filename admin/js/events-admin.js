@@ -9,7 +9,7 @@ const API =
 "https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
 
 const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbx3mq93CuUX1ElljYezT6v84WvH5_crpNxbVeOyVzajDZXbmIw1rQU7W_EWs4SlfL9z/exec";
+    "https://script.google.com/macros/s/AKfycbxS6qh6fqBbgYpXq0AJutXXGkSwYo9C8HsTCps1M6XDMQMV93Rc-oPYNjLnh6lhgofz/exec";
 
 
 /*==========================================
@@ -8070,6 +8070,11 @@ function exportRegistrationsToExcel() {
                     "Vehicle Variant":
                         registration[
                             "Vehicle Variant"
+                        ] || "",
+
+                    "Bike Tyre Type":
+                        registration[
+                            "Bike Tyre Type"
                         ] || "",
 
                     "Engine Number":

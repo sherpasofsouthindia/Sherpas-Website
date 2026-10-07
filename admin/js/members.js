@@ -2,6 +2,8 @@ let allMembers = [];
 
 let selectedMember = null;
 
+let generatedMembershipCardDataUrl = "";
+
 document.addEventListener("DOMContentLoaded", () => {
 
     loadMembers();
@@ -920,9 +922,23 @@ async function approveMember(index) {
 
     if (!confirm.isConfirmed) return;
 
+    const token =
+        sessionStorage.getItem("sherpas_admin_token") || "";
+
+    if (!token) {
+        Swal.fire(
+            "Session Expired",
+            "Please login again.",
+            "error"
+        );
+        return;
+    }
+
     const formData = new URLSearchParams();
 
     formData.append("action", "APPROVE_MEMBER");
+
+    formData.append("token", token);
 
     formData.append(
         "data",
@@ -938,27 +954,120 @@ async function approveMember(index) {
 
     const result = await response.json();
 
-    if(result.success){
+    if (result.success) {
 
-        Swal.fire({
+        selectedMember = result.data.member;
 
-            icon: "success",
+        try {
+            // Generate membership card
+            generatedMembershipCardDataUrl = "";
+            await downloadMembershipCard();
 
-            title: "Member Approved",
+            if (!generatedMembershipCardDataUrl) {
+                throw new Error("Membership card was not generated.");
+            }
 
-            html: `
-                <h2 style="color:#ff7a00">
-                    ${result.data.memberID}
-                </h2>
+            // Upload card to Drive
+            const uploadForm = new URLSearchParams();
+            uploadForm.append("action", "UPLOAD_MEMBERSHIP_CARD");
+            uploadForm.append("token", token);
+            uploadForm.append("data", JSON.stringify({
+                base64: generatedMembershipCardDataUrl,
+                memberID: result.data.member["Membership ID"]
+            }));
 
-                <p>Application Approved Successfully</p>
-            `
+            const uploadResponse = await fetch(API_URL, {
+                method: "POST",
+                body: uploadForm
+            });
 
-        });
+            const uploadText = await uploadResponse.text();
+
+                let uploadResult;
+
+                try {
+                    uploadResult = JSON.parse(uploadText);
+                } catch (err) {
+                    console.error("DRIVE UPLOAD RESPONSE:", uploadText);
+
+                    throw new Error(
+                        "Drive upload returned HTML or invalid JSON. " +
+                        "Check the Apps Script deployment and API route."
+                    );
+                }
+
+            if (!uploadResult.success) {
+                throw new Error(
+                    uploadResult.message || "Membership card upload failed."
+                );
+            }
+
+            // Send card through WhatsApp
+            const whatsappForm = new URLSearchParams();
+            whatsappForm.append(
+                "action",
+                "SEND_MEMBERSHIP_CARD_WHATSAPP"
+            );
+            whatsappForm.append("token", token);
+            whatsappForm.append("data", JSON.stringify({
+                phone: result.data.member["Phone"],
+                memberName: result.data.member["Full Name"],
+                membershipID: result.data.member["Membership ID"],
+                imageData: generatedMembershipCardDataUrl
+            }));
+
+            const whatsappResponse = await fetch(API_URL, {
+                method: "POST",
+                body: whatsappForm
+            });
+
+            const whatsappText = await whatsappResponse.text();
+
+                let whatsappResult;
+
+                try {
+                    whatsappResult = JSON.parse(whatsappText);
+                } catch (err) {
+                    console.error("WHATSAPP RESPONSE:", whatsappText);
+
+                    throw new Error(
+                        "WhatsApp request returned HTML or invalid JSON. " +
+                        "Check the Apps Script deployment and API route."
+                    );
+                }
+
+            if (!whatsappResult.success) {
+                throw new Error(
+                    whatsappResult.message || "WhatsApp message failed."
+                );
+            }
+
+            Swal.fire({
+                icon: "success",
+                title: "Member Approved",
+                html: `
+                    <h2 style="color:#ff7a00">
+                        ${result.data.memberID}
+                    </h2>
+                    <p>Application Approved Successfully</p>
+                    <p>Membership card saved and sent on WhatsApp.</p>
+                `
+            });
+
+        } catch (err) {
+
+            Swal.fire(
+                "Member Approved, Follow-up Needed",
+                "The member is approved, but the card process needs attention:<br><br>" +
+                err.message,
+                "warning"
+            );
+
+        }
 
         loadMembers();
 
-    }else{
+    } else {
 
         Swal.fire(
             "Error",
@@ -1595,9 +1704,14 @@ async function downloadMembershipCard() {
        MEMBERSHIP DATES
     ========================================= */
 
-    const joinedDate = "5 July 2026";
-    const validUntil = "4 July 2027";
+    //const joinedDate = "5 July 2026";
+    //const validUntil = "4 July 2027";
 
+    const joinedDate =
+        formatDate(member["Approved Date"]);
+
+    const validUntil =
+        formatDate(member["Membership Valid Until"]);
 
     Swal.fire({
         title: "Preparing Membership Card",
@@ -2544,6 +2658,8 @@ async function downloadMembershipCard() {
                 "image/png"
             );
 
+        generatedMembershipCardDataUrl = imageURL;
+
 
         const link =
             document.createElement("a");
@@ -2599,18 +2715,12 @@ async function downloadMembershipCard() {
     }
 
     catch (error) {
-
         console.error(
             "MEMBERSHIP CARD ERROR:",
             error
         );
 
-        Swal.fire(
-            "Card Generation Failed",
-            error.message ||
-            "Unable to generate membership card.",
-            "error"
-        );
+        throw error;
     }
 }
 
