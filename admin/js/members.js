@@ -4,6 +4,10 @@ let selectedMember = null;
 
 let generatedMembershipCardDataUrl = "";
 
+let currentPage = 1;
+
+const membersPerPage = 20;
+
 document.addEventListener("DOMContentLoaded", () => {
 
     loadMembers();
@@ -290,9 +294,27 @@ function applyPageFilter() {
 
 function renderMembers(members) {
 
-    // Sort by Membership ID by default
+    
+    // Sort: Pending first, Approved second, other statuses last
     members = [...members].sort((a, b) => {
 
+        const statusA = String(a["Status"] || "").toLowerCase().trim();
+        const statusB = String(b["Status"] || "").toLowerCase().trim();
+
+        const priority = {
+            pending: 1,
+            approved: 2
+        };
+
+        const priorityA = priority[statusA] || 3;
+        const priorityB = priority[statusB] || 3;
+
+        // Sort by status priority first
+        if (priorityA !== priorityB) {
+            return priorityA - priorityB;
+        }
+
+        // Within each status, sort by Membership ID
         const idA = String(a["Membership ID"] || "").trim();
         const idB = String(b["Membership ID"] || "").trim();
 
@@ -305,6 +327,23 @@ function renderMembers(members) {
             sensitivity: "base"
         });
     });
+
+    
+    // Pagination
+    const totalMembers = members.length;
+    const totalPages = Math.ceil(totalMembers / membersPerPage);
+
+    if (currentPage > totalPages) {
+        currentPage = Math.max(1, totalPages);
+    }
+
+    const startIndex = (currentPage - 1) * membersPerPage;
+
+    members = members.slice(
+        startIndex,
+        startIndex + membersPerPage
+    );
+
 
     const tbody = document.getElementById("membersTableBody");
 
@@ -327,7 +366,7 @@ function renderMembers(members) {
             <tr>
 
                 <!-- SERIAL NUMBER -->
-                <td>${index + 1}</td>
+                <td>${startIndex + index + 1}</td>
 
                 <!-- MEMBERSHIP ID -->
                 <td>${member["Membership ID"] || "-"}</td>
@@ -408,6 +447,8 @@ function renderMembers(members) {
             </tr>
         `;
     });
+
+    renderMembersPagination(totalPages);
 }
 
 function updateCounts() {
@@ -937,7 +978,6 @@ async function approveMember(index) {
     const formData = new URLSearchParams();
 
     formData.append("action", "APPROVE_MEMBER");
-
     formData.append("token", token);
 
     formData.append(
@@ -947,6 +987,8 @@ async function approveMember(index) {
         })
     );
 
+    console.time("APPROVE_API");
+
     const response = await fetch(API_URL, {
         method: "POST",
         body: formData
@@ -954,118 +996,205 @@ async function approveMember(index) {
 
     const result = await response.json();
 
+    console.timeEnd("APPROVE_API");
+
     if (result.success) {
 
         selectedMember = result.data.member;
 
-        try {
-            // Generate membership card
-            generatedMembershipCardDataUrl = "";
-            await downloadMembershipCard();
+        // ==========================================
+        // SHOW APPROVAL IMMEDIATELY
+        // ==========================================
 
-            if (!generatedMembershipCardDataUrl) {
-                throw new Error("Membership card was not generated.");
-            }
+        Swal.fire({
+            icon: "success",
+            title: "Member Approved",
+            html: `
+                <h2 style="color:#ff7a00">
+                    ${result.data.memberID}
+                </h2>
+                <p>Application Approved Successfully</p>
+            `,
+            timer: 2500,
+            showConfirmButton: false
+        });
 
-            // Upload card to Drive
-            const uploadForm = new URLSearchParams();
-            uploadForm.append("action", "UPLOAD_MEMBERSHIP_CARD");
-            uploadForm.append("token", token);
-            uploadForm.append("data", JSON.stringify({
-                base64: generatedMembershipCardDataUrl,
-                memberID: result.data.member["Membership ID"]
-            }));
+        // Refresh member list immediately
+        loadMembers();
 
-            const uploadResponse = await fetch(API_URL, {
-                method: "POST",
-                body: uploadForm
-            });
+        // ==========================================
+        // BACKGROUND CARD PROCESS
+        // ==========================================
 
-            const uploadText = await uploadResponse.text();
+        setTimeout(async () => {
+
+            try {
+
+                // Generate membership card
+                generatedMembershipCardDataUrl = "";
+
+                await downloadMembershipCard(false);
+
+                if (!generatedMembershipCardDataUrl) {
+                    throw new Error(
+                        "Membership card was not generated."
+                    );
+                }
+
+                // ==========================================
+                // UPLOAD CARD TO DRIVE
+                // ==========================================
+
+                const uploadForm = new URLSearchParams();
+
+                uploadForm.append(
+                    "action",
+                    "UPLOAD_MEMBERSHIP_CARD"
+                );
+
+                uploadForm.append(
+                    "token",
+                    token
+                );
+
+                uploadForm.append(
+                    "data",
+                    JSON.stringify({
+                        base64:
+                            generatedMembershipCardDataUrl,
+
+                        memberID:
+                            result.data.member["Membership ID"]
+                    })
+                );
+
+                const uploadResponse = await fetch(
+                    API_URL,
+                    {
+                        method: "POST",
+                        body: uploadForm
+                    }
+                );
+
+                const uploadText =
+                    await uploadResponse.text();
 
                 let uploadResult;
 
                 try {
-                    uploadResult = JSON.parse(uploadText);
+
+                    uploadResult =
+                        JSON.parse(uploadText);
+
                 } catch (err) {
-                    console.error("DRIVE UPLOAD RESPONSE:", uploadText);
+
+                    console.error(
+                        "DRIVE UPLOAD RESPONSE:",
+                        uploadText
+                    );
 
                     throw new Error(
-                        "Drive upload returned HTML or invalid JSON. " +
-                        "Check the Apps Script deployment and API route."
+                        "Drive upload returned HTML or invalid JSON."
                     );
                 }
 
-            if (!uploadResult.success) {
-                throw new Error(
-                    uploadResult.message || "Membership card upload failed."
+                if (!uploadResult.success) {
+
+                    throw new Error(
+                        uploadResult.message ||
+                        "Membership card upload failed."
+                    );
+                }
+
+                // ==========================================
+                // SEND CARD THROUGH WHATSAPP
+                // ==========================================
+
+                const whatsappForm =
+                    new URLSearchParams();
+
+                whatsappForm.append(
+                    "action",
+                    "SEND_MEMBERSHIP_CARD_WHATSAPP"
                 );
-            }
 
-            // Send card through WhatsApp
-            const whatsappForm = new URLSearchParams();
-            whatsappForm.append(
-                "action",
-                "SEND_MEMBERSHIP_CARD_WHATSAPP"
-            );
-            whatsappForm.append("token", token);
-            whatsappForm.append("data", JSON.stringify({
-                phone: result.data.member["Phone"],
-                memberName: result.data.member["Full Name"],
-                membershipID: result.data.member["Membership ID"],
-                imageData: generatedMembershipCardDataUrl
-            }));
+                whatsappForm.append(
+                    "token",
+                    token
+                );
 
-            const whatsappResponse = await fetch(API_URL, {
-                method: "POST",
-                body: whatsappForm
-            });
+                whatsappForm.append(
+                    "data",
+                    JSON.stringify({
 
-            const whatsappText = await whatsappResponse.text();
+                        phone:
+                            result.data.member["Phone"],
+
+                        memberName:
+                            result.data.member["Full Name"],
+
+                        membershipID:
+                            result.data.member["Membership ID"],
+
+                        imageData:
+                            generatedMembershipCardDataUrl
+
+                    })
+                );
+
+                const whatsappResponse =
+                    await fetch(
+                        API_URL,
+                        {
+                            method: "POST",
+                            body: whatsappForm
+                        }
+                    );
+
+                const whatsappText =
+                    await whatsappResponse.text();
 
                 let whatsappResult;
 
                 try {
-                    whatsappResult = JSON.parse(whatsappText);
+
+                    whatsappResult =
+                        JSON.parse(whatsappText);
+
                 } catch (err) {
-                    console.error("WHATSAPP RESPONSE:", whatsappText);
+
+                    console.error(
+                        "WHATSAPP RESPONSE:",
+                        whatsappText
+                    );
 
                     throw new Error(
-                        "WhatsApp request returned HTML or invalid JSON. " +
-                        "Check the Apps Script deployment and API route."
+                        "WhatsApp request returned invalid JSON."
                     );
                 }
 
-            if (!whatsappResult.success) {
-                throw new Error(
-                    whatsappResult.message || "WhatsApp message failed."
+                if (!whatsappResult.success) {
+
+                    throw new Error(
+                        whatsappResult.message ||
+                        "WhatsApp message failed."
+                    );
+                }
+
+                console.log(
+                    "Membership card processed successfully."
                 );
+
+            } catch (err) {
+
+                console.error(
+                    "BACKGROUND CARD PROCESS ERROR:",
+                    err
+                );
+
             }
 
-            Swal.fire({
-                icon: "success",
-                title: "Member Approved",
-                html: `
-                    <h2 style="color:#ff7a00">
-                        ${result.data.memberID}
-                    </h2>
-                    <p>Application Approved Successfully</p>
-                    <p>Membership card saved and sent on WhatsApp.</p>
-                `
-            });
-
-        } catch (err) {
-
-            Swal.fire(
-                "Member Approved, Follow-up Needed",
-                "The member is approved, but the card process needs attention:<br><br>" +
-                err.message,
-                "warning"
-            );
-
-        }
-
-        loadMembers();
+        }, 100);
 
     } else {
 
@@ -1676,7 +1805,7 @@ async function rejectSelectedMember(){
 
         });
 
-async function downloadMembershipCard() {
+async function downloadMembershipCard(showPopup = true) {
 
     if (!selectedMember) {
         Swal.fire(
@@ -1713,15 +1842,17 @@ async function downloadMembershipCard() {
     const validUntil =
         formatDate(member["Membership Valid Until"]);
 
-    Swal.fire({
-        title: "Preparing Membership Card",
-        text: "Creating Sherpas membership card...",
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    if (showPopup) {
+        Swal.fire({
+            title: "Preparing Membership Card",
+            text: "Creating Sherpas membership card...",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    }
 
 
     /* =========================================
@@ -2704,6 +2835,7 @@ async function downloadMembershipCard() {
         document.body.removeChild(link);
 
 
+       if (showPopup) {
         Swal.fire({
             icon: "success",
             title: "Membership Card Ready",
@@ -2711,6 +2843,7 @@ async function downloadMembershipCard() {
             timer: 1800,
             showConfirmButton: false
         });
+    }
 
     }
 
@@ -3941,5 +4074,61 @@ function fileToBase64(file) {
 
     });
 
+}
+
+
+function renderMembersPagination(totalPages) {
+
+    let pagination = document.getElementById("membersPagination");
+
+    if (!pagination) {
+        pagination = document.createElement("div");
+        pagination.id = "membersPagination";
+
+        const tableBody = document.getElementById("membersTableBody");
+        const table = tableBody.closest("table");
+
+        table.insertAdjacentElement("afterend", pagination);
+    }
+
+    if (totalPages <= 1) {
+        pagination.innerHTML = "";
+        return;
+    }
+
+    let html = `
+        <button
+            class="pagination-btn"
+            ${currentPage === 1 ? "disabled" : ""}
+            onclick="changeMembersPage(${currentPage - 1})">
+            Previous
+        </button>
+    `;
+
+    for (let page = 1; page <= totalPages; page++) {
+        html += `
+            <button
+                class="pagination-btn ${page === currentPage ? "active" : ""}"
+                onclick="changeMembersPage(${page})">
+                ${page}
+            </button>
+        `;
+    }
+
+    html += `
+        <button
+            class="pagination-btn"
+            ${currentPage === totalPages ? "disabled" : ""}
+            onclick="changeMembersPage(${currentPage + 1})">
+            Next
+        </button>
+    `;
+
+    pagination.innerHTML = html;
+}
+
+function changeMembersPage(page) {
+    currentPage = page;
+    applyPageFilter();
 }
 

@@ -1832,3 +1832,42 @@ IMAGE VIEWER
 
 
 
+
+#membersPagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 0 6px;
+}
+
+#membersPagination .pagination-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid #3b506b;
+    border-radius: 6px;
+    background: #24364f;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#membersPagination .pagination-btn:hover:not(:disabled) {
+    background: #0875d1;
+    border-color: #0875d1;
+}
+
+#membersPagination .pagination-btn.active {
+    background: #0875d1;
+    border-color: #0875d1;
+    font-weight: 700;
+}
+
+#membersPagination .pagination-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
