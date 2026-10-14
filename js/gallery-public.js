@@ -60,59 +60,56 @@ async function loadPublicGallery() {
 ========================================================= */
 
 function renderGallery(photos) {
-
-    const galleryGrid =
-        document.querySelector(".gallery-grid");
-
+    const galleryGrid = document.querySelector(".gallery-grid");
     galleryGrid.innerHTML = "";
 
     if (!photos.length) {
-
         galleryGrid.innerHTML = `
             <div class="gallery-empty">
                 <i class="fas fa-images"></i>
                 <p>No gallery photos available.</p>
-            </div>
-        `;
-
+            </div>`;
         return;
     }
 
+    // Split the live gallery into three independently scrolling rows.
+    const rowCount = Math.min(3, photos.length);
+    const rows = Array.from({ length: rowCount }, () => []);
+    photos.forEach((photo, index) => rows[index % rowCount].push({ photo, index }));
 
-    photos.forEach((photo, index) => {
+    rows.forEach((rowPhotos, rowIndex) => {
+        if (!rowPhotos.length) return;
 
-        const item =
-            document.createElement("div");
+        const row = document.createElement("div");
+        row.className = `gallery-marquee gallery-marquee-${rowIndex + 1}`;
+        row.setAttribute("aria-label", `Gallery photo row ${rowIndex + 1}`);
 
-        item.className = "gallery-item";
+        const track = document.createElement("div");
+        track.className = "gallery-marquee-track";
 
-        item.innerHTML = `
-            <img
-                src="${photo.imageURL}"
-                alt="${escapeHTML(photo.title || "Sherpas Gallery")}"
-                loading="lazy"
-                data-index="${index}"
-            >
-        `;
+        // Duplicate the row once to create a seamless continuous loop.
+        [...rowPhotos, ...rowPhotos].forEach(({ photo, index }, duplicateIndex) => {
+            const item = document.createElement("div");
+            item.className = "gallery-item";
+            if (duplicateIndex >= rowPhotos.length) item.setAttribute("aria-hidden", "true");
 
+            const image = document.createElement("img");
+            image.src = photo.imageURL;
+            image.alt = duplicateIndex >= rowPhotos.length
+                ? ""
+                : (photo.title || "Sherpas Gallery");
+            image.loading = "lazy";
+            image.dataset.index = index;
+            image.addEventListener("click", () => openLightbox(index));
 
-        const image =
-            item.querySelector("img");
-
-
-        image.addEventListener("click", () => {
-
-            openLightbox(index);
-
+            item.appendChild(image);
+            track.appendChild(item);
         });
 
-
-        galleryGrid.appendChild(item);
-
+        row.appendChild(track);
+        galleryGrid.appendChild(row);
     });
-
 }
-
 
 /* =========================================================
    LIGHTBOX HTML

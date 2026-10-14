@@ -865,3 +865,79 @@ body.gallery-lightbox-open {
 
 }
 
+
+
+/* =========================================================
+   CONTINUOUS SCROLLING GALLERY TILES
+========================================================= */
+.gallery-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: none;
+    overflow: hidden;
+}
+
+.gallery-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.gallery-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 18px;
+    animation: sherpas-gallery-scroll 48s linear infinite;
+    will-change: transform;
+}
+
+.gallery-marquee-2 .gallery-marquee-track {
+    animation-name: sherpas-gallery-scroll-reverse;
+    animation-duration: 56s;
+}
+
+.gallery-marquee-3 .gallery-marquee-track {
+    animation-duration: 64s;
+}
+
+.gallery-marquee:hover .gallery-marquee-track,
+.gallery-marquee:focus-within .gallery-marquee-track {
+    animation-play-state: paused;
+}
+
+.gallery-marquee .gallery-item {
+    flex: 0 0 clamp(220px, 27vw, 370px);
+    width: clamp(220px, 27vw, 370px);
+    aspect-ratio: 4 / 3;
+}
+
+.gallery-marquee .gallery-item:hover {
+    z-index: 2;
+}
+
+@keyframes sherpas-gallery-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes sherpas-gallery-scroll-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+
+@media (max-width: 600px) {
+    .gallery { padding: 70px 0; }
+    .gallery .section-title { padding-left: 20px; padding-right: 20px; }
+    .gallery-grid { gap: 12px; }
+    .gallery-marquee-track { gap: 12px; animation-duration: 38s; }
+    .gallery-marquee-2 .gallery-marquee-track { animation-duration: 44s; }
+    .gallery-marquee .gallery-item { flex-basis: 72vw; width: 72vw; border-radius: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-marquee-track { animation: none; }
+    .gallery-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+}

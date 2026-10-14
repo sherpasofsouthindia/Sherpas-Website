@@ -75,6 +75,273 @@
 }
 </script>
 
+
+<style>
+/* Scoped styling for the lower riding-information section only */
+.seo-riding-section {
+    padding: 70px 6%;
+}
+
+.seo-riding-section .seo-riding-container {
+    width: min(1320px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+}
+
+.seo-riding-section .seo-riding-image {
+    width: 100%;
+    min-width: 0;
+}
+
+.seo-riding-section .seo-riding-image img {
+    display: block;
+    width: 100%;
+    height: clamp(320px, 34vw, 470px);
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.seo-riding-section .seo-riding-content h2 {
+    text-align: left;
+    margin: 0 0 22px;
+    line-height: 1.25;
+}
+
+.seo-riding-section .seo-riding-content h2:not(:first-child) {
+    margin-top: 34px;
+}
+
+.seo-riding-section .seo-riding-content p {
+    text-align: left;
+    line-height: 1.8;
+    margin: 0 0 18px;
+}
+
+@media (max-width: 800px) {
+    .seo-riding-section {
+        padding: 48px 6%;
+    }
+
+    .seo-riding-section .seo-riding-container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .seo-riding-section .seo-riding-image img {
+        height: clamp(230px, 62vw, 380px);
+    }
+
+    .seo-riding-section .seo-riding-content h2,
+    .seo-riding-section .seo-riding-content p {
+        text-align: left;
+    }
+}
+</style>
+
+
+<style>
+/* Compact the two homepage information sections on desktop */
+@media (min-width: 1000px) {
+    #about.about {
+        padding-top: 28px !important;
+        padding-bottom: 28px !important;
+    }
+
+    #about .about-container {
+        gap: clamp(24px, 3vw, 48px) !important;
+    }
+
+    .seo-riding-section {
+        padding-top: 28px !important;
+        padding-bottom: 28px !important;
+    }
+
+    .seo-riding-section .seo-riding-container {
+        gap: 36px !important;
+        grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr) !important;
+    }
+
+    .seo-riding-section .seo-riding-image img {
+        height: 290px !important;
+    }
+
+    .seo-riding-section .seo-riding-content h2 {
+        font-size: clamp(1.35rem, 1.8vw, 1.8rem) !important;
+        margin-bottom: 12px !important;
+    }
+
+    .seo-riding-section .seo-riding-content h2:not(:first-child) {
+        margin-top: 18px !important;
+    }
+
+    .seo-riding-section .seo-riding-content p {
+        font-size: 0.96rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 10px !important;
+    }
+}
+
+@media (max-width: 999px) {
+    .seo-riding-section {
+        padding-top: 36px !important;
+        padding-bottom: 36px !important;
+    }
+}
+</style>
+
+
+<style>
+/* Balanced desktop composition for the two introductory sections */
+@media (min-width: 1000px) {
+    #about.about {
+        padding: 22px 5% 18px !important;
+    }
+
+    #about .about-container {
+        width: min(1450px, 100%) !important;
+        margin-inline: auto !important;
+        grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr) !important;
+        align-items: center !important;
+        gap: clamp(36px, 5vw, 80px) !important;
+    }
+
+    #about .about-photo-stack {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    #about .about-photo-stack img {
+        display: block !important;
+        width: min(100%, 400px) !important;
+        height: 260px !important;
+        max-height: 260px !important;
+        object-fit: cover !important;
+        border-radius: 20px !important;
+    }
+
+    #about .about-text h2 {
+        font-size: 0.95rem !important;
+        letter-spacing: 0.2em !important;
+        margin-bottom: 12px !important;
+    }
+
+    #about .about-text h3 {
+        font-size: clamp(2rem, 3vw, 2.8rem) !important;
+        line-height: 1.12 !important;
+        margin: 0 0 16px !important;
+    }
+
+    #about .about-text > p {
+        font-size: 1rem !important;
+        line-height: 1.65 !important;
+        margin-bottom: 20px !important;
+    }
+
+    #about .about-features {
+        gap: 12px !important;
+    }
+
+    #about .about-features > div {
+        min-height: 54px !important;
+        padding: 14px 18px !important;
+        font-size: 0.98rem !important;
+    }
+
+    .seo-riding-section {
+        padding: 18px 5% 30px !important;
+    }
+
+    .seo-riding-section .seo-riding-container {
+        width: min(1450px, 100%) !important;
+        grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr) !important;
+        gap: clamp(28px, 3vw, 48px) !important;
+        align-items: center !important;
+    }
+
+    .seo-riding-section .seo-riding-image img {
+        width: 100% !important;
+        height: 245px !important;
+        border-radius: 20px !important;
+        object-fit: cover !important;
+    }
+
+    .seo-riding-section .seo-riding-content h2 {
+        font-size: clamp(1.35rem, 1.7vw, 1.75rem) !important;
+        line-height: 1.2 !important;
+        margin: 0 0 10px !important;
+    }
+
+    .seo-riding-section .seo-riding-content h2:not(:first-child) {
+        margin-top: 14px !important;
+    }
+
+    .seo-riding-section .seo-riding-content p {
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+        margin: 0 0 8px !important;
+    }
+
+    .seo-riding-section .seo-riding-content h2::after {
+        margin-top: 10px !important;
+    }
+}
+
+@media (max-width: 999px) {
+    #about.about {
+        padding: 36px 6% !important;
+    }
+
+    .seo-riding-section {
+        padding: 32px 6% !important;
+    }
+}
+
+
+/* Align the lower section's text with the photo */
+.seo-riding-section .seo-riding-container {
+    align-items: center;
+    gap: 36px;
+}
+
+.seo-riding-section .seo-riding-content {
+    text-align: left;
+    align-self: center;
+}
+
+.seo-riding-section .seo-riding-content h2 {
+    text-align: left;
+    line-height: 1.25;
+    margin-bottom: 14px;
+}
+
+.seo-riding-section .seo-riding-content h2::after {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+.seo-riding-section .seo-riding-content p {
+    text-align: left;
+    line-height: 1.65;
+    margin-bottom: 12px;
+}
+
+.seo-riding-section .seo-riding-content h2:not(:first-child) {
+    margin-top: 22px;
+}
+
+@media (max-width: 800px) {
+    .seo-riding-section .seo-riding-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+</style>
+
 </head>
 
 <body>
@@ -384,7 +651,9 @@
 
 <div class="about-image">
 
-<img src="assets/about.webp" alt="About sherpas of south india">
+<div class="about-photo-stack">
+<img src="assets/about.webp" alt="Sherpas of South India riding community">
+</div>
 
 </div>
 
@@ -396,7 +665,7 @@
 
 <p>
 
-Sherpas of South India is a motorcycle riding club and riding community based in South India, bringing together passionate motorcycle enthusiasts from across South India. We organize group rides, motorcycle tours, adventure journeys, social events and community activities while promoting responsible and safe riding. Our members share a passion for exploring new destinations, building lasting friendships and experiencing the open road together.
+A community of passionate riders united by a love for motorcycles, exploration and brotherhood. From scenic coastal roads to winding mountain trails, we ride together, discover new destinations and create lasting memories — always promoting responsible and safe riding.
 
 
 </p>
@@ -419,37 +688,33 @@ Sherpas of South India is a motorcycle riding club and riding community based in
 
 <section class="seo-riding-section">
     <div class="seo-riding-container">
+        <div class="seo-riding-image">
+            <img src="assets/about1.webp"
+                 alt="Sherpas of South India riders exploring scenic roads"
+                 loading="lazy">
+        </div>
 
-        <h2>Motorcycle Riding Club in South India</h2>
+        <div class="seo-riding-content">
+            <h2>Motorcycle Riding Club in South India</h2>
 
-        <p>
-            Sherpas of South India is a motorcycle riding club and riding
-            community based in South India, bringing together riders who share a
-            passion for motorcycles, touring and exploring South India. Our
-            community organizes group motorcycle rides, touring expeditions,
-            adventure journeys, social gatherings and rider-focused activities.
-        </p>
+            <p>
+                Sherpas of South India brings riders together through group rides,
+                touring and a shared passion for motorcycles, exploration and brotherhood.
+            </p>
 
-        <p>
-            Our motorcycle rides cover destinations across
-            <strong>Kerala, Tamil Nadu and Karnataka</strong>, giving members
-            opportunities to explore different landscapes, roads and
-            destinations while enjoying the experience of riding together.
-            From weekend rides to longer motorcycle touring journeys,
-            Sherpas of South India provides a platform for riders to connect,
-            explore and build lasting friendships through responsible and
-            safe riding.
-        </p>
+            <p>
+                We ride across <strong>Kerala, Tamil Nadu and Karnataka</strong>—from
+                weekend escapes to longer adventures—while promoting safe riding,
+                mutual support and lasting friendships.
+            </p>
 
-        <h2>Motorcycle Rides &amp; Touring Across South India</h2>
+            <h2>Ride, Explore &amp; Connect</h2>
 
-        <p>
-            We bring together motorcycle enthusiasts for group rides, touring,
-            adventure journeys and community activities across South India.
-            Sherpas of South India encourages responsible riding, mutual
-            support among riders and a strong sense of motorcycle community.
-        </p>
-
+            <p>
+                Discover new roads, join fellow riders and be part of a community
+                built on adventure, camaraderie and responsible riding.
+            </p>
+        </div>
     </div>
 </section>
 

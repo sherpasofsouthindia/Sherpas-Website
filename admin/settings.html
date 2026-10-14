@@ -368,6 +368,83 @@
 
         </section>
 
+        
+        <!-- TEAM MANAGEMENT -->
+        <section class="settings-card" id="teamManagementCard">
+
+            <div class="settings-card-header">
+                <div class="settings-icon">
+                    <i class="fa-solid fa-people-group"></i>
+                </div>
+                <div>
+                    <h2>Team Management</h2>
+                    <p>Select the members and roles displayed on the website</p>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+
+                <div class="form-group full-width">
+                    <label for="teamMemberSelect">Select Member</label>
+                    <select id="teamMemberSelect">
+                        <option value="">Loading members...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamRoleSelect">Team Category</label>
+                    <select id="teamRoleSelect">
+                        <option value="admin">Admin / Leadership Team</option>
+                        <option value="support">Supporting Team</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamDesignation">Designation / Role</label>
+                    <input
+                        type="text"
+                        id="teamDesignation"
+                        placeholder="e.g. President, Road Captain">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="teamDescription">Short Description</label>
+                    <textarea
+                        id="teamDescription"
+                        rows="2"
+                        placeholder="Brief responsibility or introduction"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="button" id="addTeamMemberBtn" class="save-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Add to Website Team
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="table-responsive">
+                <table class="settings-table">
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Category</th>
+                            <th>Designation</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="websiteTeamTableBody">
+                        <tr>
+                            <td colspan="5">Team settings will appear here.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
 
         <!-- ACTIONS -->
 
