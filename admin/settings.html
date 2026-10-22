@@ -384,12 +384,22 @@
 
             <div class="settings-grid">
 
+                
                 <div class="form-group full-width">
-                    <label for="teamMemberSelect">Select Member</label>
+                    <label for="teamMemberSearch">Search Member</label>
+                    <input
+                        type="text"
+                        id="teamMemberSearch"
+                        placeholder="Search by member name or Membership ID...">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="teamMemberSelect">Select Member (sorted by Membership ID)</label>
                     <select id="teamMemberSelect">
                         <option value="">Loading members...</option>
                     </select>
                 </div>
+            
 
                 <div class="form-group">
                     <label for="teamRoleSelect">Team Category</label>
@@ -406,6 +416,20 @@
                         id="teamDesignation"
                         placeholder="e.g. President, Road Captain">
                 </div>
+
+
+                <div class="form-group">
+                    <label for="teamPosition">Position Number</label>
+                    <input
+                        type="number"
+                        id="teamPosition"
+                        min="1"
+                        step="1"
+                        value="1"
+                        placeholder="e.g. 1">
+                    <small>Smaller numbers appear first on the homepage.</small>
+                </div>
+
 
                 <div class="form-group full-width">
                     <label for="teamDescription">Short Description</label>
@@ -432,6 +456,7 @@
                             <th>Category</th>
                             <th>Designation</th>
                             <th>Description</th>
+                            <th>Position</th>
                             <th>Action</th>
                         </tr>
                     </thead>

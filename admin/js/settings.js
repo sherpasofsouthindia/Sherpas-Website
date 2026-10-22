@@ -192,20 +192,134 @@ if (reloadSettingsBtn) {
 document.addEventListener("DOMContentLoaded", loadSettings);
 
  
-/* =========================================
-   LOAD MEMBERS FOR TEAM MANAGEMENT
-========================================= */
 
+/* =========================================
+   TEAM MANAGEMENT
+========================================= */
 
 let adminTeamMembers = [];
 let approvedTeamMembers = [];
 let editingTeamMembershipID = "";
 
+async function loadTeamMemberOptions() {
+    const select = document.getElementById("teamMemberSelect");
+    if (!select) return;
+
+    select.innerHTML = '<option value="">Loading members...</option>';
+
+    try {
+        const response = await fetch(API_URL);
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.members)) {
+            throw new Error("Unable to load member records.");
+        }
+
+        approvedTeamMembers = result.members
+            .filter(member =>
+                String(member["Status"] || "").trim().toLowerCase() === "approved" &&
+                String(member["Membership ID"] || "").trim() &&
+                String(member["Full Name"] || "").trim()
+            )
+            .sort((a, b) =>
+                String(a["Membership ID"]).trim().localeCompare(
+                    String(b["Membership ID"]).trim(),
+                    undefined,
+                    { numeric: true, sensitivity: "base" }
+                )
+            );
+
+        renderTeamMemberOptions();
+
+    } catch (error) {
+        console.error("Member dropdown error:", error);
+        select.innerHTML =
+            '<option value="">Unable to load members</option>';
+    }
+}
+
+function renderTeamMemberOptions() {
+    const select = document.getElementById("teamMemberSelect");
+    const search = document.getElementById("teamMemberSearch");
+
+    if (!select) return;
+
+    const previousValue =
+        select.value || editingTeamMembershipID;
+
+    const query = String(search?.value || "")
+        .trim()
+        .toLowerCase();
+
+    const filteredMembers = approvedTeamMembers.filter(member => {
+        const id = String(member["Membership ID"] || "").trim();
+        const name = String(member["Full Name"] || "").trim();
+
+        return (
+            name.toLowerCase().includes(query) ||
+            id.toLowerCase().includes(query)
+        );
+    });
+
+    select.replaceChildren();
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = filteredMembers.length
+        ? "Select a member"
+        : "No matching approved members";
+    select.appendChild(placeholder);
+
+    filteredMembers.forEach(member => {
+        const id = String(member["Membership ID"]).trim();
+        const name = String(member["Full Name"]).trim();
+
+        const option = document.createElement("option");
+        option.value = id;
+        option.textContent = `${id} — ${name}`;
+        select.appendChild(option);
+    });
+
+    // Preserve the selected member while searching.
+    if (
+        previousValue &&
+        !Array.from(select.options).some(
+            option => option.value === previousValue
+        )
+    ) {
+        const selectedMember = approvedTeamMembers.find(
+            member =>
+                String(member["Membership ID"]).trim() === previousValue
+        );
+
+        if (selectedMember) {
+            const option = document.createElement("option");
+            option.value = previousValue;
+            option.textContent =
+                `${previousValue} — ${selectedMember["Full Name"]}`;
+            select.appendChild(option);
+        }
+    }
+
+    if (previousValue) {
+        select.value = previousValue;
+    }
+}
+
+// Attach the search listener once.
+const teamMemberSearch = document.getElementById("teamMemberSearch");
+
+if (teamMemberSearch) {
+    teamMemberSearch.addEventListener("input", renderTeamMemberOptions);
+}
+
+
 async function loadAdminTeam() {
     const tbody = document.getElementById("websiteTeamTableBody");
     if (!tbody) return;
 
-    tbody.innerHTML = '<tr><td colspan="5">Loading team members...</td></tr>';
+    tbody.innerHTML =
+        '<tr><td colspan="5">Loading team members...</td></tr>';
 
     try {
         const response = await fetch(API_URL, {
@@ -227,18 +341,6 @@ async function loadAdminTeam() {
         }
 
         adminTeamMembers = result.data;
-
-        // Load approved members to map Membership ID to Full Name.
-        const memberResponse = await fetch(API_URL);
-        const memberResult = await memberResponse.json();
-
-        approvedTeamMembers = memberResult.success &&
-            Array.isArray(memberResult.members)
-            ? memberResult.members.filter(member =>
-                String(member["Status"] || "").trim().toLowerCase() === "approved"
-            )
-            : [];
-
         renderAdminTeam();
 
     } catch (error) {
@@ -248,6 +350,7 @@ async function loadAdminTeam() {
     }
 }
 
+
 function renderAdminTeam() {
     const tbody = document.getElementById("websiteTeamTableBody");
     if (!tbody) return;
@@ -256,7 +359,7 @@ function renderAdminTeam() {
 
     if (adminTeamMembers.length === 0) {
         tbody.innerHTML =
-            '<tr><td colspan="5">No team members added yet.</td></tr>';
+            '<tr><td colspan="6">No team members added yet.</td></tr>';
         return;
     }
 
@@ -268,37 +371,56 @@ function renderAdminTeam() {
             String(member.membershipID || "").trim()
         );
 
-        const fullName = profile
+        const name = profile
             ? String(profile["Full Name"] || "").trim()
             : "Member not found";
 
+        // Member name and Membership ID
         const memberCell = document.createElement("td");
         memberCell.textContent =
-            `${fullName} (${member.membershipID || "-"})`;
+            `${name} (${member.membershipID || "-"})`;
         row.appendChild(memberCell);
 
-        [
-            member.category === "admin" ? "Admin / Leadership" : "Supporting Team",
-            member.designation,
-            member.description
-        ].forEach(value => {
-            const cell = document.createElement("td");
-            cell.textContent = value || "-";
-            row.appendChild(cell);
-        });
+        // Category
+        const categoryCell = document.createElement("td");
+        categoryCell.textContent =
+            member.category === "admin"
+                ? "Admin / Leadership"
+                : "Supporting Team";
+        row.appendChild(categoryCell);
 
+        // Designation
+        const designationCell = document.createElement("td");
+        designationCell.textContent = member.designation || "-";
+        row.appendChild(designationCell);
+
+        // Description
+        const descriptionCell = document.createElement("td");
+        descriptionCell.textContent = member.description || "-";
+        row.appendChild(descriptionCell);
+
+        // Display Order
+        const orderCell = document.createElement("td");
+        orderCell.textContent = member.displayOrder ?? "-";
+        row.appendChild(orderCell);
+
+        // Edit and Delete actions
         const actionCell = document.createElement("td");
 
         const editButton = document.createElement("button");
         editButton.type = "button";
         editButton.textContent = "Edit";
-        editButton.addEventListener("click", () => editAdminTeamMember(member));
+        editButton.addEventListener("click", () => {
+            editAdminTeamMember(member);
+        });
 
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "Delete";
         deleteButton.style.marginLeft = "6px";
-        deleteButton.addEventListener("click", () => deleteAdminTeamMember(member));
+        deleteButton.addEventListener("click", () => {
+            deleteAdminTeamMember(member);
+        });
 
         actionCell.append(editButton, deleteButton);
         row.appendChild(actionCell);
@@ -308,20 +430,23 @@ function renderAdminTeam() {
 }
 
 function editAdminTeamMember(member) {
-    const memberSelect = document.getElementById("teamMemberSelect");
-    const categorySelect = document.getElementById("teamRoleSelect");
-    const designationInput = document.getElementById("teamDesignation");
-    const descriptionInput = document.getElementById("teamDescription");
-    const saveButton = document.getElementById("addTeamMemberBtn");
-
     editingTeamMembershipID = String(member.membershipID || "").trim();
 
-    memberSelect.value = editingTeamMembershipID;
-    categorySelect.value = member.category || "admin";
-    designationInput.value = member.designation || "";
-    descriptionInput.value = member.description || "";
+    document.getElementById("teamMemberSelect").value =
+        editingTeamMembershipID;
+    document.getElementById("teamRoleSelect").value =
+        member.category || "admin";
+    document.getElementById("teamDesignation").value =
+        member.designation || "";
+    
+    document.getElementById("teamPosition").value =
+        member.displayOrder || 1;
 
-    saveButton.innerHTML = "Update Team Member";
+    document.getElementById("teamDescription").value =
+        member.description || "";
+
+    const button = document.getElementById("addTeamMemberBtn");
+    button.innerHTML = "Update Team Member";
 
     showSettingsMessage(
         "Edit the details above, then click Update Team Member."
@@ -333,14 +458,12 @@ function editAdminTeamMember(member) {
 
 async function deleteAdminTeamMember(member) {
     const membershipID = String(member.membershipID || "").trim();
-
     if (!membershipID) return;
 
-    const confirmed = window.confirm(
-        `Remove ${membershipID} from the website team? Their membership record will remain unchanged.`
-    );
-
-    if (!confirmed) return;
+    if (!window.confirm(
+        `Remove ${membershipID} from the website team? ` +
+        "Their main membership record will remain unchanged."
+    )) return;
 
     try {
         const response = await fetch(API_URL, {
@@ -370,7 +493,10 @@ async function deleteAdminTeamMember(member) {
 
     } catch (error) {
         console.error("Team deletion error:", error);
-        showSettingsMessage(error.message || "Unable to delete team member.", "error");
+        showSettingsMessage(
+            error.message || "Unable to delete team member.",
+            "error"
+        );
     }
 }
 
@@ -380,90 +506,34 @@ function cancelAdminTeamEdit() {
     document.getElementById("teamDesignation").value = "";
     document.getElementById("teamDescription").value = "";
 
-    const saveButton = document.getElementById("addTeamMemberBtn");
-    saveButton.innerHTML =
+    const positionInput = document.getElementById("teamPosition");
+    if (positionInput) {
+        const highestPosition = adminTeamMembers.reduce(
+            (max, member) => Math.max(max, Number(member.displayOrder) || 0),
+            0
+        );
+        positionInput.value = highestPosition + 1;
+    }
+
+    const button = document.getElementById("addTeamMemberBtn");
+    button.innerHTML =
         '<i class="fa-solid fa-plus"></i> Add to Website Team';
 }
-
-document.addEventListener("DOMContentLoaded", loadAdminTeam);
-
-
-
-async function loadAdminTeam() {
-    const tbody = document.getElementById("websiteTeamTableBody");
-    if (!tbody) return;
-
-    tbody.innerHTML =
-        '<tr><td colspan="5">Loading admin team...</td></tr>';
-
-    try {
-        
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({
-                action: "GET_ADMIN_TEAM",
-                token: getAdminToken(),
-                data: JSON.stringify({})
-            })
-        });
-
-
-        const result = await response.json();
-
-        if (!result.success || !Array.isArray(result.data)) {
-            throw new Error(result.message || "Unable to load admin team.");
-        }
-
-        if (result.data.length === 0) {
-            tbody.innerHTML =
-                '<tr><td colspan="5">No team members added yet.</td></tr>';
-            return;
-        }
-
-        tbody.innerHTML = "";
-
-        result.data.forEach(member => {
-            const row = document.createElement("tr");
-
-            [
-                member.membershipID,
-                member.category,
-                member.designation,
-                member.description,
-                member.active ? "Active" : "Inactive"
-            ].forEach(value => {
-                const cell = document.createElement("td");
-                cell.textContent = value || "-";
-                row.appendChild(cell);
-            });
-
-            tbody.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("Admin team loading error:", error);
-        tbody.innerHTML =
-            '<tr><td colspan="5">Unable to load admin team.</td></tr>';
-    }
-}
-
-document.addEventListener("DOMContentLoaded", loadAdminTeam);
-
 
 async function saveAdminTeam() {
     const memberSelect = document.getElementById("teamMemberSelect");
     const categorySelect = document.getElementById("teamRoleSelect");
     const designationInput = document.getElementById("teamDesignation");
     const descriptionInput = document.getElementById("teamDescription");
-    const saveButton = document.getElementById("addTeamMemberBtn");
+    const positionInput = document.getElementById("teamPosition");
+    const button = document.getElementById("addTeamMemberBtn");
 
     const membershipID = memberSelect.value;
     const category = categorySelect.value;
     const designation = designationInput.value.trim();
     const description = descriptionInput.value.trim();
+    const displayOrder = Number(positionInput.value);
+
 
     if (!membershipID) {
         showSettingsMessage("Please select a member.", "error");
@@ -476,10 +546,22 @@ async function saveAdminTeam() {
         return;
     }
 
-    saveButton.disabled = true;
-    saveButton.innerHTML = "Saving...";
+    
+    if (!Number.isInteger(displayOrder) || displayOrder < 1) {
+        showSettingsMessage(
+            "Please enter a valid Position Number (1 or greater).",
+            "error"
+        );
+        return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Saving...";
 
     try {
+        const isEditing = Boolean(editingTeamMembershipID);
+
         const response = await fetch(API_URL, {
             method: "POST",
             headers: {
@@ -490,10 +572,13 @@ async function saveAdminTeam() {
                 token: getAdminToken(),
                 data: JSON.stringify({
                     membershipID,
+                    originalMembershipID: isEditing
+                        ? editingTeamMembershipID
+                        : "",
                     category,
                     designation,
                     description,
-                    displayOrder: Date.now(),
+                    displayOrder: displayOrder,
                     active: true
                 })
             })
@@ -505,20 +590,29 @@ async function saveAdminTeam() {
             throw new Error(result.message || "Unable to save team member.");
         }
 
-        showSettingsMessage(result.message || "Team member saved successfully.");
-        designationInput.value = "";
-        descriptionInput.value = "";
+        showSettingsMessage(
+            result.message || "Team member saved successfully."
+        );
 
+        cancelAdminTeamEdit();
+
+        await loadTeamMemberOptions();
         await loadAdminTeam();
 
     } catch (error) {
         console.error("Team save error:", error);
-        showSettingsMessage(error.message || "Unable to save team member.", "error");
+        showSettingsMessage(
+            error.message || "Unable to save team member.",
+            "error"
+        );
     } finally {
-        saveButton.disabled = false;
-        saveButton.innerHTML = '<i class="fa-solid fa-plus"></i> Add to Website Team';
+        button.disabled = false;
+
+        button.innerHTML =
+            '<i class="fa-solid fa-plus"></i> Add to Website Team';
     }
 }
+
 
 const addTeamMemberBtn = document.getElementById("addTeamMemberBtn");
 
@@ -526,3 +620,16 @@ if (addTeamMemberBtn) {
     addTeamMemberBtn.addEventListener("click", saveAdminTeam);
 }
 
+function initializeTeamManagement() {
+    loadTeamMemberOptions();
+    loadAdminTeam();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeTeamManagement
+    );
+} else {
+    initializeTeamManagement();
+}
