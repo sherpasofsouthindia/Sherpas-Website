@@ -64,8 +64,7 @@ if (hero) {
    HERO VIDEO API
 ========================================================= */
 
-const HERO_VIDEO_API =
-    "https://script.google.com/macros/s/AKfycbxIEL_zgLSHaadD0WcaQx3cIJHePMQtiBCeORa7tCpyHWF7vE4fAO9sgqStGRCg95Ja/exec";
+const HERO_VIDEO_API = window.SHERPAS_CONFIG.HERO_VIDEO_API;
 
 
 /* =========================================================

@@ -3,8 +3,7 @@
    Dynamic Gallery + Lightbox
 ========================================================= */
 
-const GALLERY_API =
-    "https://script.google.com/macros/s/AKfycbxIEL_zgLSHaadD0WcaQx3cIJHePMQtiBCeORa7tCpyHWF7vE4fAO9sgqStGRCg95Ja/exec";
+const GALLERY_API = window.SHERPAS_CONFIG.GALLERY_API;
 
 let galleryPhotos = [];
 let currentImageIndex = 0;

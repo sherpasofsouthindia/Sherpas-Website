@@ -2,8 +2,7 @@
    PUBLIC ANNOUNCEMENTS + SOCIAL LINKS
    ========================================================= */
 
-const ANNOUNCEMENTS_API =
-    "https://script.google.com/macros/s/AKfycbyvn7_FB1cp0oTMGzHYEKCEw58Czarc1xVEDQDta4a9Traa3Xpmzt7xR-DrlBuV1OdZ/exec";
+const ANNOUNCEMENTS_API = window.SHERPAS_CONFIG.ANNOUNCEMENTS_API;
 
 
 let publicAnnouncements = [];

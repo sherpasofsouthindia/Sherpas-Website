@@ -1,5 +1,4 @@
-const ADMIN_API =
-"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
+const ADMIN_API = window.SHERPAS_CONFIG.ADMIN_API;
 
 
 async function verifyAdminSession() {

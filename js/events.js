@@ -1,5 +1,4 @@
-const EVENTS_API =
-"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
+const EVENTS_API = window.SHERPAS_CONFIG.EVENTS_API;
 
 
 const container =

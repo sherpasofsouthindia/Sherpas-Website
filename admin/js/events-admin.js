@@ -1,15 +1,6 @@
-const EVENTS_API_URL = 
-"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
-
-/*==========================================
-        EVENTS ADMIN
-==========================================*/
-
-const API =
-"https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
-
-const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbyvn7_FB1cp0oTMGzHYEKCEw58Czarc1xVEDQDta4a9Traa3Xpmzt7xR-DrlBuV1OdZ/exec";
+const EVENTS_API_URL = window.SHERPAS_CONFIG.EVENTS_ADMIN_API;
+const API = window.SHERPAS_CONFIG.EVENTS_ADMIN_API;
+const MEMBERS_API = window.SHERPAS_CONFIG.MAIN_API;
 
 
 /*==========================================

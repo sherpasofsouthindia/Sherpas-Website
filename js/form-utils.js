@@ -2,8 +2,7 @@
             SHERPAS FORM UTILITIES
 ==================================================*/
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyvn7_FB1cp0oTMGzHYEKCEw58Czarc1xVEDQDta4a9Traa3Xpmzt7xR-DrlBuV1OdZ/exec";
+const API_URL = window.SHERPAS_CONFIG.FORM_API;
 
 
 /*==================================================

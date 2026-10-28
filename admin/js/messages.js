@@ -8,9 +8,7 @@
    YOU USED TO TEST GET_ANNOUNCEMENTS
 --------------------------------------------------------- */
 
-const MESSAGES_API =
-    "https://script.google.com/macros/s/AKfycbyvn7_FB1cp0oTMGzHYEKCEw58Czarc1xVEDQDta4a9Traa3Xpmzt7xR-DrlBuV1OdZ/exec";
-
+const MESSAGES_API = window.SHERPAS_CONFIG.MESSAGES_API;
 
 let announcements = [];
 

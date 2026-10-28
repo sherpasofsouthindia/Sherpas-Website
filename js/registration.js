@@ -2,12 +2,8 @@
         SHERPAS PUBLIC REGISTRATION
 ==================================================*/
 
-const EVENTS_API =
-    "https://script.google.com/macros/s/AKfycbwPW66dhlpKT8Npf_YJ6yj9JcoJ3Z9O2Kl5aH-XhN9LQI31o9KrF3iVoRq6zSqOdWbOjA/exec";
-
-const MEMBERS_API =
-    "https://script.google.com/macros/s/AKfycbzKCwRLU7LwQh3abivCoit2BhwZ0KGHtkLWkou_axOYbmb52ooIqURJcBNraEd-JQu3/exec";
-
+const EVENTS_API = window.SHERPAS_CONFIG.EVENTS_API;
+const MEMBERS_API = window.SHERPAS_CONFIG.MEMBERS_API;
 
 /*==================================================
         GLOBAL DATA

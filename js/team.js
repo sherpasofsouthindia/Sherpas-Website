@@ -6,9 +6,8 @@
     "use strict";
 
     // Use the existing main website API endpoint.
-    const TEAM_API_URL =
-        "https://script.google.com/macros/s/AKfycbyvn7_FB1cp0oTMGzHYEKCEw58Czarc1xVEDQDta4a9Traa3Xpmzt7xR-DrlBuV1OdZ/exec";
-
+    const TEAM_API_URL = window.SHERPAS_CONFIG.TEAM_API;
+        
     document.addEventListener("DOMContentLoaded", loadPublicTeam);
 
     async function loadPublicTeam() {

@@ -9,8 +9,7 @@ window.IS_EDIT_MODE = true;
         CONFIG
 ==================================================*/
 
-const EDIT_API_URL =
-    "https://script.google.com/macros/s/AKfycbyvn7_FB1cp0oTMGzHYEKCEw58Czarc1xVEDQDta4a9Traa3Xpmzt7xR-DrlBuV1OdZ/exec";
+const EDIT_API_URL = window.SHERPAS_CONFIG.EDIT_MEMBER_API;
 
 
 /*==================================================
