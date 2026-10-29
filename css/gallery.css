@@ -932,9 +932,14 @@ body.gallery-lightbox-open {
     .gallery { padding: 70px 0; }
     .gallery .section-title { padding-left: 20px; padding-right: 20px; }
     .gallery-grid { gap: 12px; }
-    .gallery-marquee-track { gap: 12px; animation-duration: 38s; }
-    .gallery-marquee-2 .gallery-marquee-track { animation-duration: 44s; }
-    .gallery-marquee .gallery-item { flex-basis: 72vw; width: 72vw; border-radius: 12px; }
+    .gallery-marquee-track { gap: 12px; animation-duration: 65s; }
+    .gallery-marquee-2 .gallery-marquee-track { animation-duration: 75s; }
+    .gallery-marquee .gallery-item {
+        flex-basis: 58vw;
+        width: 58vw;
+        aspect-ratio: 4 / 3;
+        border-radius: 12px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
