@@ -697,7 +697,7 @@ function renderMemberDetails() {
 
         ${detail(
             "Phone",
-            currentMember["Phone"]
+            maskPhoneNumber(currentMember["Phone"])
         )}
         ${/*
        ${detail(
@@ -2909,4 +2909,16 @@ function escapeHTML(value) {
 
         .replace(/'/g, "&#039;");
 
+}
+
+function maskPhoneNumber(phone) {
+    const number = String(phone || "");
+
+    if (number.length <= 5) {
+        return "XXXXX";
+    }
+
+    return number.slice(0, 2) +
+           "X".repeat(number.length - 5) +
+           number.slice(-3);
 }
