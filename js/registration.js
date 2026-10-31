@@ -699,12 +699,12 @@ function renderMemberDetails() {
             "Phone",
             currentMember["Phone"]
         )}
-
-        ${detail(
+        ${/*
+       ${detail(
             "Date of Birth",
             currentMember["Date of Birth"]
         )}
-
+        
         ${detail(
             "Gender",
             currentMember["Gender"]
@@ -714,7 +714,7 @@ function renderMemberDetails() {
             "Blood Group",
             currentMember["Blood Group"]
         )}
-
+        */ ""}
         ${detail(
             "Vehicle Registration",
             currentMember["Vehicle Registration"] ||
