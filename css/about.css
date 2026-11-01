@@ -265,3 +265,29 @@ html{
 @media (prefers-reduced-motion: reduce) {
     .about-photo-stack img { transition: none; }
 }
+
+/* Compact About section on mobile */
+@media (max-width: 600px) {
+
+    .about-text h2 {
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .about-text h3 {
+        font-size: 25px;
+        line-height: 1.25;
+        margin-bottom: 16px;
+    }
+
+    .about-text p {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .about-features div {
+        font-size: 13px;
+        padding: 13px;
+    }
+
+}

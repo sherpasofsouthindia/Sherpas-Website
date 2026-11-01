@@ -191,3 +191,50 @@
     }
 
 }
+
+
+/* Compact Rides section on mobile */
+@media (max-width: 600px) {
+
+    .rides {
+        padding: 40px 16px;
+    }
+
+    .section-title {
+        margin-bottom: 25px;
+    }
+
+    .section-title h2 {
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .section-title h3 {
+        font-size: 25px;
+        line-height: 1.25;
+    }
+
+    .rides-grid {
+        gap: 16px;
+    }
+
+    .ride-card img {
+        height: 180px;
+    }
+
+    .ride-info {
+        padding: 15px;
+    }
+
+    .ride-info h4 {
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+
+    .ride-info p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+}
+

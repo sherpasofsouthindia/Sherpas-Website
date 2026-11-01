@@ -731,3 +731,60 @@ background:#56627b;
 
 }
 
+/* =====================================
+   MOBILE ADMIN NAVIGATION
+===================================== */
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+@media (max-width: 900px) {
+
+    .container {
+        flex-direction: column;
+        position: relative;
+    }
+
+    .dashboard-header {
+        margin-top: 55px;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 10001;
+        width: 45px;
+        height: 45px;
+        align-items: center;
+        justify-content: center;
+        background: #f97316;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .sidebar.active {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 10000;
+    }
+
+    .content {
+        width: 100%;
+        padding-top: 75px;
+    }
+}
