@@ -772,16 +772,24 @@ background:#56627b;
         display: none;
     }
 
+    
+@media (max-width: 900px) {
     .sidebar.active {
         display: block;
         position: fixed;
         top: 0;
         left: 0;
-        width: 280px;
-        height: 100vh;
+        width: min(280px, 85vw);
+        height: 100dvh;
+        min-height: 100vh;
         overflow-y: auto;
         z-index: 10000;
+        box-sizing: border-box;
+        background: #0a1528;
+        box-shadow: 8px 0 25px rgba(0,0,0,0.35);
     }
+}
+
 
     .content {
         width: 100%;
