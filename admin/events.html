@@ -21,6 +21,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <div class="container">
 
+    
+    <!-- MOBILE MENU BUTTON -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+
 <!-- Sidebar -->
     <aside class="sidebar">
 
@@ -994,6 +1003,32 @@ Save Event
 <script src="js/form-utils.js"></script>
 <script src="js/admin-auth.js"></script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuButton = document.getElementById("mobileMenuToggle");
+    const sidebar = document.querySelector(".sidebar");
+
+    if (!menuButton || !sidebar) return;
+
+    const menuIcon = menuButton.querySelector("i");
+
+    menuButton.addEventListener("click", function () {
+        sidebar.classList.toggle("active");
+
+        const isOpen = sidebar.classList.contains("active");
+
+        menuButton.setAttribute("aria-expanded", isOpen);
+        menuButton.setAttribute(
+            "aria-label",
+            isOpen ? "Close navigation menu" : "Open navigation menu"
+        );
+
+        menuIcon.classList.toggle("fa-bars", !isOpen);
+        menuIcon.classList.toggle("fa-xmark", isOpen);
+    });
+});
+</script>
 
 
 

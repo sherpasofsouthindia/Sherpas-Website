@@ -5368,14 +5368,19 @@ async function loadEventDayRiders(
                     .trim()
                     .toLowerCase();
 
+                
                 return (
-                    registrationEventID ===
-                        selectedEventID
+                    registrationEventID === selectedEventID
                     &&
                     approval === "approved"
                     &&
-                    payment === "verified"
+                    (
+                        payment === "verified"
+                        ||
+                        payment === "not required"
+                    )
                 );
+
 
             }
         );
@@ -7792,7 +7797,12 @@ function filterRideRegistrations() {
 
                     registration[
                         "Event Name"
+                    ],
+
+                    registration[
+                        "Vehicle Registration"
                     ]
+
 
                 ]
                 .join(" ")
@@ -9176,7 +9186,8 @@ function getFilteredRideRegistrations(
                 registration["Membership ID"],
                 registration["Full Name"],
                 registration["Phone"],
-                registration["Event Name"]
+                registration["Event Name"],
+                registration["Vehicle Registration"]
             ]
             .join(" ")
             .toLowerCase();
@@ -12969,3 +12980,36 @@ document.addEventListener(
 
     }
 );
+
+
+/* ==========================================
+   EVENT DAY RIDER SEARCH
+========================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("eventDayRiderSearch");
+    const riderList = document.getElementById("eventDayRiderList");
+
+    if (!searchInput || !riderList) return;
+
+    searchInput.addEventListener("input", function () {
+
+        const searchText = searchInput.value.trim().toLowerCase();
+
+        const riderCards = riderList.querySelectorAll(".event-day-rider-card");
+
+        riderCards.forEach(function (card) {
+
+            const riderDetails = card.textContent.toLowerCase();
+
+            card.style.display = riderDetails.includes(searchText)
+                ? ""
+                : "none";
+
+        });
+
+    });
+
+});
+
