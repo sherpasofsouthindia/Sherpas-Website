@@ -7724,6 +7724,23 @@ function filterRideRegistrations() {
         .trim()
         .toLowerCase();
 
+    
+    const showInactiveEvents =
+        document.getElementById("showInactiveEvents")?.checked || false;
+
+    const activeEventIDs = new Set(
+        allEvents
+            .filter(function(event) {
+                return String(event["Status"] || "Active")
+                    .trim()
+                    .toLowerCase() === "active";
+            })
+            .map(function(event) {
+                return String(event["Event ID"] || "").trim();
+            })
+    );
+
+
 
     const filtered =
         allRideRegistrations.filter(
@@ -7736,7 +7753,15 @@ function filterRideRegistrations() {
                     ).trim()
                     ===
                     eventID;
+                
+                
+                const registrationEventID =
+                    String(registration["Event ID"] || "").trim();
 
+                const matchesActiveEvent =
+                    showInactiveEvents ||
+                    activeEventIDs.has(registrationEventID);
+    
 
                 const matchesPayment =
                     !paymentStatus ||
@@ -7817,6 +7842,7 @@ function filterRideRegistrations() {
 
 
                 return (
+                    matchesActiveEvent &&
                     matchesEvent &&
                     matchesPayment &&
                     matchesApproval &&
@@ -9428,7 +9454,9 @@ function initializeRegistrationFilters() {
 
         "registrationApprovalFilter",
 
-        "registrationStatusFilter"
+        "registrationStatusFilter",
+
+        "showInactiveEvents"
 
     ];
 
@@ -12982,32 +13010,34 @@ document.addEventListener(
 );
 
 
+
 /* ==========================================
    EVENT DAY RIDER SEARCH
 ========================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("input", function (e) {
 
-    const searchInput = document.getElementById("eventDayRiderSearch");
+    if (e.target.id !== "eventDayRiderSearch") {
+        return;
+    }
+
+    const searchText = e.target.value.trim().toLowerCase();
+
     const riderList = document.getElementById("eventDayRiderList");
 
-    if (!searchInput || !riderList) return;
+    if (!riderList) return;
 
-    searchInput.addEventListener("input", function () {
+    const riderCards = riderList.querySelectorAll(".event-day-rider-card");
 
-        const searchText = searchInput.value.trim().toLowerCase();
+    riderCards.forEach(function (card) {
 
-        const riderCards = riderList.querySelectorAll(".event-day-rider-card");
+        const riderDetails = card.textContent.toLowerCase();
 
-        riderCards.forEach(function (card) {
-
-            const riderDetails = card.textContent.toLowerCase();
-
-            card.style.display = riderDetails.includes(searchText)
-                ? ""
-                : "none";
-
-        });
+        if (riderDetails.includes(searchText)) {
+            card.style.removeProperty("display");
+        } else {
+            card.style.setProperty("display", "none", "important");
+        }
 
     });
 
